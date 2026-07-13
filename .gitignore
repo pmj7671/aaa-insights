@@ -1,0 +1,25 @@
+# Secrets & config — never commit
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build / render intermediates
+pg-*.jpg
+*.log
+dist/
+build/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
