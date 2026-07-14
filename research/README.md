@@ -21,6 +21,7 @@ understanding customers, brands, and markets.
 | Brand Love & emotional attachment | Nobre (2011), *Should Consumers Be in Love With Brands?* | Journal (JTM) | Passion‑love is more fragile than intimacy/loyalty‑love under disruption. |
 | Brand Love & emotional attachment | Ghani & Tuhin (2016), *Consumer Brand Relationships* | Journal review (IRMM) | Maps the whole CBR field; validates the negative end (hate/avoidance). |
 | Brand Love & emotional attachment | Wardani & Gustia (2016), *Brand Experience/Satisfaction/Trust → Attachment* | Journal (SEM) | Evidence that satisfaction ≠ attachment; trust is the bridge. |
+| Brand Trust | Chaudhuri & Holbrook (2001); Mayer et al. (1995); Delgado-Ballester; Morgan & Hunt (1994) | References (to source) | Ground the v3 Trust extension: trust drivers and trust → loyalty. |
 | Loyalty & customer expectations | BCG (2024), *Loyalty Programs Are Growing…* | Industry study | Differentiation now lives in understanding what customers value. |
 | Search, discovery & marketing trends (GEO) | YouTube/Google (2026), *3 Marketing Opportunities* | Practitioner (Google) | Creators, commerce & AI reshape discovery and word of mouth. |
 | Search, discovery & marketing trends (GEO) | Google (2026), *5 Things from Google's Search Chief* | Practitioner (Google) | AI Search = conversational, multimodal, "query fan‑out" — mirrors our design. |
@@ -99,6 +100,33 @@ short, **satisfaction alone doesn't create attachment — trust is the bridge.**
 customers who aren't attached (a churn risk hiding behind good CSAT). Reinforces measuring Brand Love and
 **trust** as signals *distinct from* satisfaction, and supports surfacing trust drivers, not just
 satisfaction scores.
+
+---
+
+## Theme: Brand Trust
+
+Trust is the second half of the relationship pair with Brand Love: love is the emotional pull, trust is the
+confidence that the brand is reliable, honest, and acts in the customer's interest. The **v3 PRD** adds a
+Trust Index, a driver breakdown, and the Love × Trust segmentation (R-31–R-33, O-12/O-13). These are the
+key sources that ground it — **citations logged now; PDFs to add to this folder next.**
+
+- **Chaudhuri, A. & Holbrook, M. B. (2001). *The Chain of Effects from Brand Trust and Brand Affect to
+  Brand Performance.* Journal of Marketing, 65(2).** Foundational: brand trust and brand affect each drive
+  **loyalty** (both purchase and attitudinal); trust = the customer's willingness to rely on the brand to
+  perform its stated function. → Anchors *why* we measure trust alongside love.
+- **Mayer, R. C., Davis, J. H. & Schoorman, F. D. (1995). *An Integrative Model of Organizational Trust.*
+  Academy of Management Review, 20(3).** The classic decomposition of trust into **ability (competence),
+  benevolence, and integrity.** → The basis for our driver taxonomy in O-12 (reliability/competence,
+  integrity/honesty, benevolence/care) — plus **security/privacy** for the digital age (Q-15).
+- **Delgado-Ballester, E. (2003/2011). *Brand trust scale.*** A validated brand-trust measure
+  (reliability + intentions dimensions). → Reference for the direct Trust battery (R-31).
+- **Morgan, R. M. & Hunt, S. D. (1994). *The Commitment-Trust Theory of Relationship Marketing.* Journal of
+  Marketing, 58(3).** Positions **trust and commitment** as the mediating variables of successful
+  relationship marketing. → Frames trust as a relationship construct, not a satisfaction score (INV-12).
+
+**Product implications.** Together these ground the Trust extension end-to-end: Chaudhuri & Holbrook for the
+love+trust→loyalty logic, Mayer et al. for the **driver taxonomy** (Q-15), Delgado-Ballester for the direct
+scale, and Morgan & Hunt for treating trust as a relationship variable distinct from satisfaction (INV-12).
 
 ---
 

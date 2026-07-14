@@ -10,79 +10,74 @@ and commit.
 ## 1. What we're building
 
 A software service so companies can **survey** customers, collect **reviews, ratings, and comments**,
-and **analyze** that feedback with AI for customer, consumer, and **competitive** insight. The
-differentiated value is what happens *after* feedback arrives — not the survey form, but the insight.
+and **analyze** that feedback with AI for customer, consumer, and **competitive** insight.
 
 **Core capabilities:**
-1. AI theme + sentiment analysis over open text, at scale, with traceability to source responses.
+1. AI theme + sentiment analysis over open text, with traceability to source responses.
 2. Conversational, AI-led surveys that probe with follow-ups like a human interviewer.
-3. A unified feedback hub — surveys, conversational transcripts, imported and web-collected reviews in
-   one place — plus an **aggregate "unified customer" view** (population-level; identity stays optional).
-4. **Competitive insight** — competitors as first-class brands, with aggregate benchmarking and
-   per-competitor deep-dives.
-5. **Brand Love** — a first-class rating scale (Love / Like / Ambiguity / Dislike / Hate), a normalized
-   metric (Brand Love Index), and a benchmark lens.
-6. Insight + recommendations — plain-language narratives and ranked actions, not just charts.
+3. A unified feedback hub + an **aggregate "unified customer" view** (population-level; identity optional).
+4. **Competitive insight** — competitors as first-class brands (benchmark + per-competitor deep-dive).
+5. **Brand Love** — scale (Love / Like / Ambiguity / Dislike / Hate), Brand Love Index, benchmark lens.
+6. **Brand Trust** *(v3)* — a complementary indicator: a Trust question type, a **Trust Index** with driver
+   breakdown (reliability, integrity, benevolence, security/privacy), inferred trust from open text, and a
+   **Love × Trust segmentation** (Devoted / Infatuated / Dependable / At-risk) with actions per quadrant.
+7. Insight + recommendations — plain-language narratives and ranked actions, not just charts.
 
 **Target customer:** SMB / mid-market companies (~10–500 employees) with no in-house research team.
 
 **Hard constraint — lawful & ethical by construction:** externally collected data (incl. competitor
-reviews) is public and lawfully obtained; no bypassing logins/paywalls/controls; provenance kept on
-every item; no individual profiling; **live web collection is gated on the client's legal sign-off**
-(see requirements DPS-7). Prefer official APIs / licensed providers over page collection.
+reviews) is public and lawfully obtained; no bypassing logins/paywalls/controls; provenance kept; no
+individual profiling; **live web collection gated on the client's legal sign-off** (DPS-7). Prefer official
+APIs / licensed providers over page collection.
 
 **Company voice (Active AI Advisors):** lead with the verb, be specific, stay quiet, stay warm.
-Say build/ship/deploy/workflow/test/invariant. Avoid revolutionary, game-changing, leverage, synergize.
+Avoid revolutionary, game-changing, leverage, synergize.
 
 ---
 
 ## 2. How we work — Grounded AI™ (spec-driven, gated)
 
-Development follows AAA's Grounded AI™ pipeline. **No phase starts until the previous artifact is
-approved.** The gate can be fast, but it is never skipped.
+**No phase starts until the previous artifact is approved.** The gate can be fast, but never skipped.
 
 | # | Phase | Artifact | Status |
 |---|-------|----------|--------|
-| 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v2**) | ✅ v2 delivered 2026-07-13 — **awaiting client approval** |
+| 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v3**) | ✅ v3 delivered 2026-07-14 — **awaiting client approval** |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ⏳ Blocked on Gate 1 + §14 answers |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ⏳ Not started |
 | 4 | IMPLEMENT | `src/` (passing tests) | ⏳ Not started |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
-| 6 | DOCUMENT | Delivery Package (`known_limitations`, `maintenance_guide`, `architecture_overview`) | ⏳ Not started |
+| 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
 
-**The safety loop (phases 4–5):** plan → read & search → snapshot (git commit) → patch → verify (run
-tests + diff) → roll back or advance. Commit only green states; a branch per change; the suite gates merge.
+**Safety loop (phases 4–5):** plan → read & search → snapshot (git commit) → patch → verify (tests + diff)
+→ roll back or advance. Commit only green states; a branch per change; the suite gates merge.
 
 ---
 
-## 3. Current status (2026-07-13)
+## 3. Current status (2026-07-14)
 
-- **Phase 1 (SPECIFY) at Requirements v2.** v1 was the initial PRD; **v2** added, per client direction:
-  the aggregate unified-customer view, competitors as first-class brands (benchmark + per-competitor),
-  lawful web/API/CSV collection with a legal-review gate, the Brand Love scale + Index, and an explicit
-  **data model** (§12 of the requirements).
+- **Phase 1 (SPECIFY) at Requirements v3.** v1 = initial PRD; v2 = unified-customer view + competitors +
+  lawful collection + Brand Love + data model; **v3 = Brand Trust extension** (Trust Index, drivers,
+  inference, Love × Trust segmentation; INV-12 keeps Love and Trust distinct).
 - Delivered in three formats: `docs/01_requirements.md` (canonical), `AAA_Insights_PRD.docx` / `.pdf`
-  (formal, AAA-branded, regenerated by `build_docx.js`).
-- **Next action:** client (Paul) approves the PRD and answers the open questions in §14. On approval →
-  Phase 2 CHALLENGE → Requirements v3.
+  (AAA-branded, regenerated by `build_docx.js`).
+- **Next action:** client (Paul) approves the PRD and answers §14. On approval → Phase 2 CHALLENGE → v4.
 
 ### Scoping decisions locked
-- Deliverable: Markdown build spec **and** formal branded Word/PDF.
-- Scope: **MVP + phased roadmap.** Phase 0 (MVP) = own-customer collection/analysis + Brand Love +
-  aggregate unified-customer view + the data model that holds competitor brands. **Competitive
-  collection + benchmarking = Phase 1** (so the MVP is not gated on legal review / source integrations).
-- Target: SMB / mid-market.
-- "Unified customer" = **aggregate** (no individual identity — INV-9). Competitors = **both** aggregate
-  benchmark and per-competitor deep-dive. Collection stays **lawful/ethical**, APIs/licensed first,
-  web collection gated on counsel sign-off. Brand Love = first-class scale + Index.
+- Scope: **MVP + phased roadmap.** MVP = own-customer analysis + Brand Love + **Trust** + aggregate
+  unified-customer view + the data model that holds competitors. Competitive collection/benchmark = Phase 1.
+- "Unified customer" = **aggregate** (no individual identity — INV-9). Competitors = **both** benchmark +
+  per-competitor. Collection stays **lawful/ethical**, web collection gated on counsel sign-off.
+- **Brand Love** grounded in Batra/Ahuvia/Bagozzi (2012). **Brand Trust** *(v3)* added as complementary
+  indicator (Paul's direction, 2026-07-14): "love and trust complement each other." Grounded in Wardani &
+  Gustia (2016) trust→attachment and Nobre (2011) fragile passion-love; driver taxonomy from Mayer et al.
+  (1995). Trust depth for MVP = single-item + inference; driver battery a fast-follow (Q-14).
 
 ### Open questions awaiting client decision (mirror of requirements §14)
-Q1 name · Q2 build-vs-buy survey engine · Q3 model/hosting + residency · Q4 languages · Q5 compliance
-targets · Q6 MVP volume · Q7 pricing · Q8 first design partner · Q9 *(resolved: Brand Love is in;
-remaining = ground it in a published framework e.g. Ahuvia? confirm "Ambiguity" as middle label)* ·
-Q10 which competitors & sources · Q11 collection method + who signs off legally · Q12 confirm 1–5
-normalization + Brand Love Index formula · Q13 collected-data retention.
+Q1 name · Q2 build-vs-buy · Q3 model/hosting · Q4 languages · Q5 compliance · Q6 MVP volume · Q7 pricing ·
+Q8 first design partner · Q9 (Brand Love grounded; confirm "Ambiguity" label) · Q10 competitors/sources ·
+Q11 collection method + legal sign-off · Q12 normalization + Brand Love Index formula · Q13 collected-data
+retention · **Q14 Trust depth (single-item vs driver battery)** · **Q15 Trust driver taxonomy + Index formula**.
 
 ---
 
@@ -95,24 +90,17 @@ aaa-insights/
 ├── AAA_Insights_PRD.docx/.pdf    # formal branded PRD (generated from docs/01_requirements.md)
 ├── build_docx.js                 # generator for the branded Word doc (keep in sync with the spec)
 ├── docs/
-│   ├── 01_requirements.md        # Phase 1 — Requirements v2 (SOURCE OF TRUTH; incl. §12 data model)
-│   ├── 02_spec_review_report.md  # Phase 2 (template)
-│   ├── 03_test_plan.md           # Phase 3 (template)
-│   ├── 05_verification_report.md # Phase 5 (template)
-│   ├── known_limitations.md      # Phase 6 (template)
-│   ├── maintenance_guide.md      # Phase 6 (template)
-│   ├── architecture_overview.md  # Phase 6 (template)
-│   └── deployment_runbook.md     # Phase 7 (template)
-├── research/                     # background inputs (Ahuvia brand-love, BCG loyalty study)
+│   ├── 01_requirements.md        # Phase 1 — Requirements v3 (SOURCE OF TRUTH; §12 data model)
+│   └── … (phase templates 02, 03, 05, known_limitations, maintenance_guide, architecture_overview, runbook)
+├── research/                     # annotated knowledge library (brand love, trust, loyalty, GEO)
 ├── src/                          # Phase 4 implementation (empty until spec approved)
 └── tests/                        # Phase 3 test suite (written before src/)
 ```
 
 **Requirement IDs** are the connective tissue: R- (behaviors), INV- (invariants), E- (edge cases),
-X- (exclusions), DPS- (data/privacy), NFR- (non-functional), O-/I- (outputs/inputs), Q- (open
-questions). Tests and code cite these IDs. When you change behavior, change the spec (bump the version)
-first. **The docx generator (`build_docx.js`) duplicates the spec's content — update it alongside
-`docs/01_requirements.md` so the branded doc doesn't drift, then regenerate.**
+X- (exclusions), DPS- (data/privacy), NFR- (non-functional), O-/I- (outputs/inputs), Q- (open questions).
+When you change behavior, change the spec (bump the version) first. **`build_docx.js` duplicates the spec's
+content — update it alongside `docs/01_requirements.md`, then regenerate.**
 
 ---
 
@@ -123,8 +111,7 @@ node build_docx.js                                              # writes AAA_Ins
 python <docx-skill>/scripts/office/soffice.py --headless --convert-to pdf AAA_Insights_PRD.docx
 ```
 
-Branding (Ink/Paper/Signal palette, Fraunces/Inter/JetBrains Mono) is applied by the generator. Edit
-`docs/01_requirements.md` as the source of truth, mirror changes into `build_docx.js`, then regenerate.
+Edit `docs/01_requirements.md` as the source of truth, mirror changes into `build_docx.js`, then regenerate.
 
 ---
 
@@ -133,24 +120,24 @@ Branding (Ink/Paper/Signal palette, Fraunces/Inter/JetBrains Mono) is applied by
 - **Spec before build.** Don't write `src/` until the PRD is approved and tests exist (Gate 3).
 - **Tests are the definition of done.** Every requirement ID gets at least one test.
 - **Lawful & ethical collection.** Honor DPS-7; no live web collection before legal sign-off.
-- **Honest limitations.** Document what the system can't do as carefully as what it can.
-- **Leave no black boxes.** Anything shipped must be explainable in plain English.
-- **Secrets stay out of git.** No `.env`, keys, or tokens in history (see `.gitignore`).
+- **Love and Trust stay distinct** (INV-12); neither is collapsed into satisfaction.
+- **Honest limitations. Leave no black boxes. Secrets stay out of git** (see `.gitignore`).
 
 ---
 
-## 7. Change log
+## 7. Source control & workflow
 
-- **2026-07-13 (v2)** — Requirements v2: added aggregate unified-customer view (INV-9), competitors as
-  first-class brands with benchmarking + per-competitor deep-dives (R-24–R-29), lawful web/API/CSV
-  collection with DPS-7 compliance gate, Brand Love scale + Index (R-30, O-11), and an explicit data
-  model (§12). Regenerated branded docx/pdf. Awaiting approval.
-- **2026-07-13 (v1)** — Repo created and pushed to `github.com/pmj7671/aaa-insights`. Phase 1 SPECIFY
-  delivered (Requirements v1 / PRD, branded Word/PDF). Added Ahuvia brand-love + BCG loyalty research.
+- GitHub: **github.com/pmj7671/aaa-insights** (private). Working repo is **`C:\Dev\aaa-insights`** (off
+  OneDrive). Commit via **GitHub Desktop** (Summary → Commit to main → Push origin).
+- Claude drops updated files into `C:\Dev\aaa-insights`; Paul commits + pushes. Claude cannot push from the
+  cloud (read-only GitHub connector) but can read to verify.
 
-### Push updates to GitHub (from your machine, in the repo folder)
-```bash
-git add -A
-git commit -m "Requirements v2: unified-customer view, competitive insight, Brand Love, data model"
-git push
-```
+## 8. Change log
+
+- **2026-07-14 (v3)** — Trust extension: Trust question type (R-31), Trust Index + drivers (O-12, R-32),
+  Love × Trust segmentation (O-13, R-33), INV-12 (Love/Trust distinct), data-model Trust fields, E-16,
+  Q-14/Q-15. Added a Brand Trust theme to research/. Regenerated branded docx/pdf.
+- **2026-07-14** — Expanded research library: Nobre (2011), Ghani & Tuhin (2016), Wardani & Gustia (2016),
+  two Google/YouTube GEO pieces. Moved repo off OneDrive to `C:\Dev`; adopted GitHub Desktop.
+- **2026-07-13 (v2)** — Unified-customer view, competitors, lawful collection (DPS-7), Brand Love, data
+  model. **2026-07-13 (v1)** — Repo created; Phase 1 SPECIFY; Ahuvia + BCG research.
