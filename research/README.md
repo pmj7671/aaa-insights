@@ -16,9 +16,14 @@ understanding customers, brands, and markets.
 ## Index
 | Theme | Source | Type | Why it matters |
 |-------|--------|------|----------------|
-| Brand Love & emotional attachment | Batra, Ahuvia & Bagozzi (2012), *Brand Love* | Journal article (JM) | The foundational, validated model of brand love — grounds our Brand Love scale. |
-| Brand Love & emotional attachment | Ahuvia (2023), *Brand Love's Greatest Hits* | Practitioner summary | A citation‑ranked map of the whole brand‑love literature — our reading list. |
-| Loyalty & customer expectations | BCG (2024), *Loyalty Programs Are Growing…* | Industry study | Evidence that differentiation now lives in understanding what customers value. |
+| Brand Love & emotional attachment | Batra, Ahuvia & Bagozzi (2012), *Brand Love* | Journal (JM) | The foundational, validated model — grounds our Brand Love scale. |
+| Brand Love & emotional attachment | Ahuvia (2023), *Brand Love's Greatest Hits* | Practitioner summary | A citation‑ranked map of the literature — our reading list. |
+| Brand Love & emotional attachment | Nobre (2011), *Should Consumers Be in Love With Brands?* | Journal (JTM) | Passion‑love is more fragile than intimacy/loyalty‑love under disruption. |
+| Brand Love & emotional attachment | Ghani & Tuhin (2016), *Consumer Brand Relationships* | Journal review (IRMM) | Maps the whole CBR field; validates the negative end (hate/avoidance). |
+| Brand Love & emotional attachment | Wardani & Gustia (2016), *Brand Experience/Satisfaction/Trust → Attachment* | Journal (SEM) | Evidence that satisfaction ≠ attachment; trust is the bridge. |
+| Loyalty & customer expectations | BCG (2024), *Loyalty Programs Are Growing…* | Industry study | Differentiation now lives in understanding what customers value. |
+| Search, discovery & marketing trends (GEO) | YouTube/Google (2026), *3 Marketing Opportunities* | Practitioner (Google) | Creators, commerce & AI reshape discovery and word of mouth. |
+| Search, discovery & marketing trends (GEO) | Google (2026), *5 Things from Google's Search Chief* | Practitioner (Google) | AI Search = conversational, multimodal, "query fan‑out" — mirrors our design. |
 
 ---
 
@@ -27,52 +32,73 @@ understanding customers, brands, and markets.
 ### Batra, R., Ahuvia, A. C., & Bagozzi, R. P. (2012). *Brand Love.* Journal of Marketing, 76(2), 1–16.
 `Ahuvia_Batra_Bagozzi_2012_Brand-Love_JournalOfMarketing.pdf`
 
-The foundational, empirically‑validated model of brand love. Using a grounded‑theory approach (two
-qualitative studies) plus structural‑equation modeling on survey data, the authors show brand love is
-**not** a simple like/dislike attitude but a **higher‑order construct with seven core elements**:
+The foundational, empirically‑validated model of brand love. Grounded‑theory studies + structural‑equation
+modeling show brand love is **not** a simple like/dislike attitude but a **higher‑order construct with
+seven core elements**: (1) self–brand integration, (2) passion‑driven behaviors, (3) positive emotional
+connection, (4) long‑term relationship, (5) positive attitude valence, (6) attitude certainty/strength,
+(7) anticipated separation distress. Quality beliefs are an antecedent; **outcomes are loyalty, positive
+word of mouth, and resistance to negative information** — and the multi‑element model predicts these better
+than any single "love" measure. Distinguishes love‑as‑emotion (episodic) from love‑as‑relationship
+(durable).
 
-1. **Self–brand integration** — the brand expresses current and desired identity
-2. **Passion‑driven behaviors** — investment of time/money, frequent use
-3. **Positive emotional connection** — affection and a felt sense of "rightness"
-4. **Long‑term relationship** — commitment to long‑term use
-5. **Positive overall attitude valence**
-6. **Attitude certainty and confidence** (strength)
-7. **Anticipated separation distress** — losing the brand would be emotionally painful
-
-Quality beliefs act as an antecedent; the modeled **outcomes are brand loyalty, positive word of mouth,
-and resistance to negative information** — and this multi‑element model predicts those outcomes better
-than any single summary "love" measure. The paper also separates love‑as‑emotion (short, episodic) from
-love‑as‑relationship (durable); brand love is the latter.
-
-**Product implications.**
-- This is the framework that answers PRD open question **Q9** — ground our Brand Love read in
-  Batra/Ahuvia/Bagozzi (2012).
-- The seven elements become the **signals the AI looks for in open text** to *infer* a Brand Love read
-  when there's no direct rating (INV‑4 keeps inferred values labeled as inferred): identity language,
-  passion/usage, emotional connection, longevity, and separation distress.
-- The authors' finding that consumers naturally sort brands into *loved / not‑loved / a fuzzy
-  "sort‑of‑loved" middle* directly **justifies our five‑point scale** —
-  **Love / Like / Ambiguity / Dislike / Hate** — with "Ambiguity" as that fuzzy middle.
-- Because brand love predicts **loyalty, WOM, and resistance to negative information**, the Brand Love
-  Index (O‑11) is a leading indicator worth benchmarking against competitors (O‑9).
+**Product implications.** Answers PRD **Q9** — ground our Brand Love read here. The seven elements become
+the **signals the AI looks for in open text** to infer a Brand Love read (INV‑4 labels inferred values).
+The authors' "sort‑of‑loved" fuzzy middle **justifies the "Ambiguity"** level in
+**Love / Like / Ambiguity / Dislike / Hate**. Because brand love predicts loyalty/WOM/resistance, the
+Brand Love Index (O‑11) is a leading indicator worth benchmarking (O‑9).
 
 ### Ahuvia, A. (2023). *Brand Love's Greatest Hits.* Psychology Today (Aaron Ahuvia, PhD), updated Jul 6, 2023.
 `Ahuvia_2023_Brand-Loves-Greatest-Hits_PsychologyToday.pdf`
 
 A plain‑language map of the field by one of its founders: the ~14 most‑cited brand‑love papers (>300
-citations each), each with a one‑line finding. A fast orientation and a ready‑made reading list.
-Recurring themes across the literature: brand love is **love applied to brands/possessions that carry
-identity or enthusiasm**; it is driven by **self‑identity integration** (both the private self and the
-public/social self) and **hedonic benefit**; and it reliably leads to **loyalty, WOM, and willingness to
-pay a premium**.
+citations each), each with a one‑line finding. Recurring themes: brand love is **love applied to
+brands/possessions that carry identity or enthusiasm**, driven by **self‑identity integration** (private
+and public/social self) and **hedonic benefit**, reliably leading to **loyalty, WOM, and price premium**.
 
-Anchors worth adding to this library next (named here): Carroll & Ahuvia (2006) — the *first* brand‑love
-scale (hedonic + identity → loyalty/WOM); Albert & Merunka (2013); Bergkvist & Bech‑Larsen (2010);
-Wallace, Buil & de Chernatony (2014) — self‑expressive brands and social WOM.
+**Product implications.** Confirms the core design bet — measure identity‑linked *emotional attachment*,
+not just satisfaction. Gives us citations to speak credibly and a shortlist for deepening the library.
 
-**Product implications.** Confirms the core design bet: measuring identity‑linked *emotional attachment*
-(not just satisfaction) is where the differentiated signal lives. Gives us the citations to speak
-credibly and a shortlist for deepening the library.
+### Nobre, H. (2011). *Should Consumers Be in Love With Brands? An Investigation Into the Influence That Specific Consumer‑Brand Relationships Have on the Quality of the Bonds…* Journal of Transnational Management, 16(4), 270–281.
+`Nobre_2011_Should-Consumers-Be-in-Love-With-Brands_JTM.pdf`
+
+SEM across eight known brands, applying interpersonal‑relationship theory's two ideals — **Intimacy‑Loyalty
+vs. Passion**. Finding: **Intimacy‑Loyalty bonds build relationship strength indirectly through
+partner‑quality inferences and hold up better under brand disruption; Passion bonds relate to strength too,
+but less, and don't invoke partner quality — so they're more fragile and more prone to non‑repurchase when
+the brand stumbles** (e.g., the BP spill, Toyota recalls).
+
+**Product implications.** **Not all "love" is equal.** Two customers can both answer "Love," but
+passion‑driven love is more brittle than intimacy/loyalty‑driven love. Argues the product should surface
+*love type* (passion vs. trust/loyalty signals) and track a **resilience outcome** — repurchase and
+sentiment *after* a negative event — as its own measure, not just a point‑in‑time love score.
+
+### Ghani, N. H. B. A., & Tuhin, M. K. W. (2016). *Consumer Brand Relationships.* International Review of Management and Marketing, 6(4), 950–957.
+`Ghani-Tuhin_2016_Consumer-Brand-Relationships_IRMM.pdf`
+
+A literature review mapping the whole **consumer–brand relationship (CBR)** field: brands as relationship
+partners (Fournier 1998), her fifteen relationship types and six‑faceted **Brand Relationship Quality**
+(love/passion, self‑connection, interdependence, commitment, intimacy, brand‑partner quality); Keller's
+brand resonance (behavioral loyalty, attitudinal attachment, sense of community, active engagement); and
+Fetscherin & Heinrich's 2×2 — **brand satisfaction, brand love/passion, brand avoidance, and brand
+hate/divorce**. Positions brand love (Carroll & Ahuvia 2006; Batra et al. 2012) as a strong driver of
+loyalty, WOM, and price premium.
+
+**Product implications.** Our reference map for the relationship constructs worth measuring beyond a single
+love score — attachment, trust, commitment, community/advocacy. The **negative quadrants (avoidance,
+hate/divorce)** validate the negative end of our scale (**Dislike / Hate**) as real, distinct states worth
+detecting — not merely "low satisfaction."
+
+### Wardani, D., & Gustia, R. R. (2016). *Analysis of Brand Experience, Brand Satisfaction and Brand Trust Relationship to Brand Attachment.* Jurnal Ilmu Manajemen & Ekonomika, 9(1), 59–…
+`Wardani-Gustia_2016_Brand-Experience-Satisfaction-Trust-Attachment.pdf`
+
+SEM on 150 BMW owners in Jakarta. Path results: brand experience → satisfaction (✓), but experience → trust
+(✗ n.s.); satisfaction → trust (✓); **satisfaction → attachment (✗ n.s.)**; **trust → attachment (✓)**. In
+short, **satisfaction alone doesn't create attachment — trust is the bridge.**
+
+**Product implications.** Hard evidence that **CSAT ≠ attachment/love.** A brand can have satisfied
+customers who aren't attached (a churn risk hiding behind good CSAT). Reinforces measuring Brand Love and
+**trust** as signals *distinct from* satisfaction, and supports surfacing trust drivers, not just
+satisfaction scores.
 
 ---
 
@@ -82,23 +108,57 @@ credibly and a shortlist for deepening the library.
 `BCG_Loyalty_Programs_2024.pdf` · Crouch, Eppler, Taylor, Mühlenbein, Hearne · Dec 9, 2024 · BCG loyalty
 program survey, May 2024 (second annual).
 
-Direct evidence for the problem AAA Insights addresses. As people join more loyalty programs, **loyalty
-and engagement decline** (the average US consumer now belongs to 15+ programs, up ~10% since 2022;
-Europeans ~9). **Younger consumers switch more readily.** Points and cash back are no longer enough —
-customers now expect **personalized rewards, relevant partnerships, and exclusive experiences**, and the
-benefits they value **vary by region and age cohort**. Traditional strongholds (hotels, airlines) lock in
-loyalty less than they used to; paid memberships (streaming, gaming, credit cards) command the strongest.
+As people join more loyalty programs, **loyalty and engagement decline** (the average US consumer belongs to
+15+ programs, up ~10% since 2022; Europeans ~9). **Younger consumers switch more readily.** Points and cash
+back are no longer enough — customers now expect **personalized rewards, relevant partnerships, and
+exclusive experiences**, and the benefits they value **vary by region and age cohort**. Traditional
+strongholds (hotels, airlines) lock in loyalty less than before; paid memberships command the strongest.
 
-**Product implications.** Differentiation now lives in *understanding what customers value and expect* —
-exactly what the theme/sentiment engine and conversational surveys surface — and in **segmenting** those
-signals (age cohort, region). Reinforces competitive benchmarking (O‑9) and the Brand Love lens over bare
-satisfaction.
+**Product implications.** Differentiation lives in *understanding what customers value and expect* — what
+the theme/sentiment engine and conversational surveys surface — and in **segmenting** those signals.
+Reinforces competitive benchmarking (O‑9) and the Brand Love lens over bare satisfaction.
+
+---
+
+## Theme: Search, discovery & marketing trends (GEO)
+
+### YouTube / Think with Google (Feb 2026). *3 years of streaming leadership, 3 marketing opportunities for brands in 2026.* (Anne Marie Nelson‑Bogle, VP Ads Marketing, YouTube.)
+`Google-YouTube_2026_3-Marketing-Opportunities-2026.pdf`
+
+YouTube has been the #1 US streaming platform for three straight years (Nielsen). The argued opportunities:
+**(1) Creators are the new stars** — 63% of US viewers (83% of Gen Z) prefer creator content over studio
+productions; 1B+ hours/day watched on TVs. **(2) Creator economy & commerce** — $100B+ paid to creators
+over four years; 500k+ creators in YouTube Shopping acting as *trusted guides*; 1B+ conversions from TV
+screens; 81% say YouTube helps them research/discover products. **(3) AI supercharging creativity** — the
+Ask tool, daily AI creation tools, auto‑dubbing, dynamic planning, Asset Studio.
+
+**Product implications.** Two signals for us: creators/advocates are a growing **word‑of‑mouth and discovery
+force** (the very outcomes brand love predicts), and audiences increasingly discover and decide through
+multimodal, creator‑led content. Relevant to AAA's **Active GEO** positioning and to how AAA Insights frames
+"what customers value" — trusted‑voice discovery and experience, not just product attributes.
+
+### Think with Google (Feb 2026). *5 things marketers need to know from Google's Search chief.* (Liz Reid, VP of Search, at IAB ALM 2026.)
+`Google_2026_5-Things-From-Googles-Search-Chief.pdf`
+
+Liz Reid on the AI inflection in Search: **(1) Search is more conversational** — AI Mode is multi‑turn;
+queries are getting longer and more commercially specific, and many lead to follow‑ups. **(2) Search is more
+visual/multimodal** — images, video, Lens, Circle to Search, visual shopping. **(3) SEO/AIO/GEO — build for
+people**: "query fan‑out" breaks one long question into many behind‑the‑scenes sub‑queries, so content that
+does one facet *deeply* beats shallow answer‑everything pages; unique expert content is the moat.
+**(4) AI makes ads more relevant** — longer, specific queries let niche brands surface. **(5) Strengthen
+direct connections** — personalization/subscriptions turn Search into a retention surface.
+
+**Product implications.** Reinforces AAA's **Active GEO** work and validates our **conversational‑survey**
+design: Google's "query fan‑out" is the same probe‑and‑follow‑up logic our AI interviewer uses (R‑7–R‑9).
+"Build depth / unique expert content" is precisely *why this research library exists* — being the sharpest,
+best‑grounded voice is what wins in AI‑mediated discovery.
 
 ---
 
 ## To add next (the backlog — more research coming)
-- **Carroll & Ahuvia (2006)** — the first brand‑love scale.
-- **Fournier (1998)** — consumer–brand relationships (the relationship metaphor).
+- **Carroll & Ahuvia (2006)** — the first brand‑love scale (primary source).
+- **Fournier (1998)** — consumer–brand relationships (the relationship metaphor; primary).
+- **Fetscherin & Heinrich** — brand hate / the negative relationship quadrants (primary).
 - **Thomson, MacInnis & Park (2005)** — emotional attachment to brands.
 - **Reichheld / NPS literature** — loyalty measurement, and its critiques.
 - **Open‑text sentiment & theme‑extraction methods** — for the analysis engine.
