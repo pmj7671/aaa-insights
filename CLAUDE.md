@@ -42,7 +42,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | # | Phase | Artifact | Status |
 |---|-------|----------|--------|
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v5**) | ✅ v5 delivered 2026-07-27 — Closed-Loop pillar added, **ready for client approval** |
-| 2 | CHALLENGE | `docs/02_spec_review_report.md` | ⏳ Next once v4 is approved |
+| 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report delivered 2026-07-27 — 19 findings; **awaiting decisions D-A–D-G** → v6 |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ⏳ Not started |
 | 4 | IMPLEMENT | `src/` (passing tests) | ⏳ Not started |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
@@ -140,6 +140,9 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-07-27 (Phase 2 CHALLENGE)** — Delivered `docs/02_spec_review_report.md`: 19 findings. F-1–F-7 need
+  client decisions (D-A–D-G, mostly the closed-loop identity/consent/legal tensions); F-8–F-19 (security,
+  data-integrity, edge) fold into v6. Awaiting Paul's decisions → then Requirements v6 → TEST FIRST.
 - **2026-07-27 (v5)** — Added the **Closed-Loop / Service Recovery** pillar (posture #2, architected for #3):
   opt-in contactability (I-10, R-34), triggers (R-35), RecoveryCase + lifecycle owned internally (R-36),
   integrations/hand-off (R-37), recovery measurement (R-38, O-15), reinforcement (R-39), prioritization
