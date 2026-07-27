@@ -5,34 +5,19 @@ const {
   PositionalTab, PositionalTabAlignment, PositionalTabLeader
 } = require('docx');
 
-// ---- Brand tokens ----
 const INK = '1A1D21', PAPER = 'F4F1EA', SIGNAL = 'D9763A', SLATE = '6B6F76', MIST = 'E5E2DA';
 const DISPLAY = 'Fraunces', BODY = 'Inter', MONO = 'JetBrains Mono';
 const CONTENT_W = 9360;
 const logo = fs.readFileSync('/root/.claude/skills/aaa-brand-guidelines/AAA_Mark_640.png');
 const NONE = { style: BorderStyle.NONE, size: 0, color: 'auto' };
 
-function eyebrow(text) {
-  return new Paragraph({ spacing: { before: 360, after: 80 },
-    children: [new TextRun({ text: text.toUpperCase(), font: BODY, bold: true, size: 17, color: SLATE, characterSpacing: 40 })] });
-}
-function shortRule() {
-  return new Paragraph({ indent: { right: CONTENT_W - 620 }, spacing: { after: 80 },
-    border: { bottom: { style: BorderStyle.SINGLE, size: 12, color: INK, space: 1 } },
-    children: [new TextRun({ text: '', size: 2 })] });
-}
-function h1(text) {
-  return new Paragraph({ heading: HeadingLevel.HEADING_1, spacing: { before: 120, after: 160 },
-    children: [new TextRun({ text, font: DISPLAY, bold: true, size: 40, color: INK })] });
-}
-function lead(text) {
-  return new Paragraph({ spacing: { before: 60, after: 200 },
-    children: [new TextRun({ text, font: DISPLAY, italics: true, size: 26, color: SLATE })] });
-}
+function eyebrow(text) { return new Paragraph({ spacing: { before: 360, after: 80 }, children: [new TextRun({ text: text.toUpperCase(), font: BODY, bold: true, size: 17, color: SLATE, characterSpacing: 40 })] }); }
+function shortRule() { return new Paragraph({ indent: { right: CONTENT_W - 620 }, spacing: { after: 80 }, border: { bottom: { style: BorderStyle.SINGLE, size: 12, color: INK, space: 1 } }, children: [new TextRun({ text: '', size: 2 })] }); }
+function h1(text) { return new Paragraph({ heading: HeadingLevel.HEADING_1, spacing: { before: 120, after: 160 }, children: [new TextRun({ text, font: DISPLAY, bold: true, size: 40, color: INK })] }); }
+function lead(text) { return new Paragraph({ spacing: { before: 60, after: 200 }, children: [new TextRun({ text, font: DISPLAY, italics: true, size: 26, color: SLATE })] }); }
 function body(segs, opts = {}) {
   const arr = (typeof segs === 'string') ? [{ t: segs }] : segs;
-  return new Paragraph({ spacing: { after: opts.after ?? 140, line: 300 }, alignment: opts.align,
-    children: arr.map(s => new TextRun({ text: s.t, font: s.mono ? MONO : BODY, bold: s.b, italics: s.i, size: s.size ?? 21, color: s.color ?? INK })) });
+  return new Paragraph({ spacing: { after: opts.after ?? 140, line: 300 }, children: arr.map(s => new TextRun({ text: s.t, font: s.mono ? MONO : BODY, bold: s.b, italics: s.i, size: s.size ?? 21, color: s.color ?? INK })) });
 }
 function bullet(id, segs, level = 0) {
   const arr = (typeof segs === 'string') ? [{ t: segs }] : segs;
@@ -41,16 +26,13 @@ function bullet(id, segs, level = 0) {
   arr.forEach(s => kids.push(new TextRun({ text: s.t, font: BODY, bold: s.b, italics: s.i, size: 21, color: s.color ?? INK })));
   return new Paragraph({ numbering: { reference: 'aaa-bullets', level }, spacing: { after: 90, line: 288 }, children: kids });
 }
-function subhead(text) {
-  return new Paragraph({ spacing: { before: 200, after: 90 }, children: [new TextRun({ text, font: BODY, bold: true, size: 22, color: INK })] });
-}
+function subhead(text) { return new Paragraph({ spacing: { before: 200, after: 90 }, children: [new TextRun({ text, font: BODY, bold: true, size: 22, color: INK })] }); }
 function calloutBox(title, lines) {
   const kids = [ new Paragraph({ spacing: { after: 60 }, children: [new TextRun({ text: title, font: BODY, bold: true, size: 20, color: INK })] }) ];
   lines.forEach(l => kids.push(new Paragraph({ spacing: { after: 40, line: 276 }, children: [new TextRun({ text: l, font: BODY, size: 20, color: INK })] })));
   return new Table({ width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: [CONTENT_W],
     borders: { top: NONE, bottom: NONE, right: NONE, insideHorizontal: NONE, insideVertical: NONE, left: { style: BorderStyle.SINGLE, size: 24, color: SIGNAL } },
-    rows: [ new TableRow({ children: [ new TableCell({ width: { size: CONTENT_W, type: WidthType.DXA },
-      shading: { type: ShadingType.CLEAR, fill: MIST, color: 'auto' }, margins: { top: 160, bottom: 160, left: 220, right: 220 }, children: kids }) ] }) ] });
+    rows: [ new TableRow({ children: [ new TableCell({ width: { size: CONTENT_W, type: WidthType.DXA }, shading: { type: ShadingType.CLEAR, fill: MIST, color: 'auto' }, margins: { top: 160, bottom: 160, left: 220, right: 220 }, children: kids }) ] }) ] });
 }
 function table2(headers, rows, widths, opts = {}) {
   const cell = (text, { header, w, mono } = {}) => new TableCell({ width: { size: w, type: WidthType.DXA },
@@ -71,31 +53,30 @@ children.push(new Paragraph({ spacing: { before: 300, after: 260 }, children: [ 
 children.push(new Paragraph({ spacing: { after: 60 }, children: [ new TextRun({ text: 'PRODUCT REQUIREMENTS DOCUMENT', font: BODY, bold: true, size: 18, color: SLATE, characterSpacing: 50 }) ] }));
 children.push(shortRule());
 children.push(new Paragraph({ spacing: { before: 120, after: 40 }, children: [ new TextRun({ text: 'AAA Insights', font: DISPLAY, bold: true, size: 68, color: INK }) ] }));
-children.push(new Paragraph({ spacing: { after: 300 }, children: [ new TextRun({ text: 'Collect surveys, reviews, ratings, and comments — then let AI turn them into customer, competitive, and relationship insight.', font: DISPLAY, italics: true, size: 26, color: SLATE }) ] }));
+children.push(new Paragraph({ spacing: { after: 300 }, children: [ new TextRun({ text: 'Collect surveys, reviews, ratings, and comments — then let AI turn them into customer, competitive, and relationship insight, and help you act on it.', font: DISPLAY, italics: true, size: 25, color: SLATE }) ] }));
 const meta = [
-  ['Version', 'v5 — Draft (Closed-Loop / Service Recovery pillar added)'],
+  ['Version', 'v6 — Draft (CHALLENGE resolutions folded in — ready for approval)'],
   ['Date', '2026-07-27'],
   ['Prepared by', 'Active AI Advisors'],
   ['Prepared for', 'Paul Jamieson'],
-  ['Methodology', 'Grounded AI™ — Phase 1 (SPECIFY)'],
+  ['Methodology', 'Grounded AI™ — Phase 2 (CHALLENGE → v6)'],
 ];
 meta.forEach(([k, v]) => children.push(new Paragraph({ spacing: { after: 40 }, children: [
   new TextRun({ text: (k + ':').padEnd(14), font: MONO, size: 18, color: SLATE }),
   new TextRun({ text: v, font: MONO, size: 18, color: INK }) ] })));
 children.push(new Paragraph({ spacing: { before: 360 }, border: { top: { style: BorderStyle.SINGLE, size: 8, color: MIST, space: 6 } }, children: [
-  new TextRun({ text: 'Applied AI for operators.', font: BODY, size: 18, color: SLATE }),
-  new TextRun({ text: '   ·   activeaiadvisors.com   ·   paul@activeaiadvisors.com', font: BODY, size: 18, color: SLATE }) ] }));
+  new TextRun({ text: 'Applied AI for operators.   ·   activeaiadvisors.com   ·   paul@activeaiadvisors.com', font: BODY, size: 18, color: SLATE }) ] }));
 children.push(new Paragraph({ children: [new PageBreak()] }));
 
-// ---- v5 changes callout ----
-children.push(eyebrow('What changed in v5'));
+// ---- v6 changes callout ----
+children.push(eyebrow('What changed in v6'));
 children.push(shortRule());
-children.push(calloutBox('Revised 2026-07-27 — Closed-Loop / Service Recovery pillar', [
-  '• Added the shift from measuring sentiment to actively managing it: opt-in respondent contactability, signal-driven triggers, and a first-class RecoveryCase with a status lifecycle.',
-  '• Hand-off to the tools a company already uses (helpdesk / CRM / email) via connectors, plus recovery measurement — did Brand Love / Trust actually rebuild? — and reinforcement plays for satisfied customers.',
-  '• Delivered as posture #2 (orchestrate + measure), architected for #3 (native workflow) — the RecoveryCase and its measurement are owned internally, so #3 is an evolution, not a rewrite.',
-  '• Grounded in the service-recovery paradox: a well-resolved complaint can leave a customer more loyal than if nothing had gone wrong.',
-  '  (v4 resolved all 15 open questions; v3 added Brand Trust; v2 added the unified-customer view, competitors, lawful collection, Brand Love, and the data model.)',
+children.push(calloutBox('Revised 2026-07-27 — CHALLENGE resolutions folded in', [
+  '• Recovery loop is now INTERNAL-only — no customer data pushed to external CRM/helpdesk (D-E). Team is notified; the case is owned and resolved in-app.',
+  '• A consented, first-party RecoveryCase is the one allowed identity-linked record (INV-9 exception, D-A/D-B). Case outreach is first-party only (D-C).',
+  '• Review prompts are audience-neutral to avoid review-gating (D-D). Erasure now covers scraped third-party review authors (D-F).',
+  '• Brand Love / Trust Indices are STATED-only; inferred reads are a labeled companion, and an unreadable comment is "unknown," never "Ambivalence" (D-G, F-12).',
+  '• New security/privacy/integrity requirements: bot defense, admin auth + secrets, PII redaction, conversational safety, age-gate, case dedup/throttle, timezone/UTC, NFR targets (F-8–F-19).',
 ]));
 children.push(new Paragraph({ children: [new PageBreak()] }));
 
@@ -107,7 +88,8 @@ const toc = [
   ['04', 'Inputs'], ['05', 'Outputs'], ['06', 'Requirements (behaviors)'],
   ['07', 'Invariants'], ['08', 'Edge cases'], ['09', 'Exclusions'],
   ['10', 'Data, privacy & security'], ['11', 'Non-functional requirements'],
-  ['12', 'Data model (logical)'], ['13', 'Scope & phased roadmap'], ['14', 'Decisions (resolved)'], ['—', 'Approval'],
+  ['12', 'Data model (logical)'], ['13', 'Scope & phased roadmap'],
+  ['14', 'SPECIFY decisions'], ['15', 'CHALLENGE resolutions'], ['—', 'Approval'],
 ];
 toc.forEach(([n, t]) => children.push(new Paragraph({ spacing: { after: 70 }, children: [
   new TextRun({ text: n + '   ', font: MONO, bold: true, size: 20, color: SIGNAL }),
@@ -116,18 +98,13 @@ toc.forEach(([n, t]) => children.push(new Paragraph({ spacing: { after: 70 }, ch
   new TextRun({ text: '', font: BODY, size: 20, color: SLATE }) ] })));
 children.push(new Paragraph({ children: [new PageBreak()] }));
 
-function section(num, title, leadText) {
-  children.push(eyebrow('Section ' + num));
-  children.push(shortRule());
-  children.push(h1(title));
-  if (leadText) children.push(lead(leadText));
-}
+function section(num, title, leadText) { children.push(eyebrow('Section ' + num)); children.push(shortRule()); children.push(h1(title)); if (leadText) children.push(lead(leadText)); }
 
 // ---- 1 PURPOSE ----
 section('01', 'Purpose', 'What the software is for — and who it serves.');
-body('AAA Insights lets a company collect feedback from its customers and consumers — surveys, reviews, ratings, and open comments — unify it in one place, and analyze it with AI to produce plain-language insight the business can act on. It extends this to a competitive view: the same collection and analysis run against tracked competitors.');
-body([{ t: 'At the heart of the analysis are two complementary relationship indicators: ', }, { t: 'Brand Love', b: true }, { t: ' (the emotional pull — identity, passion, attachment) and ', }, { t: 'Brand Trust', b: true }, { t: ' (confidence that the brand is reliable, honest, and acts in the customer’s interest). Measured together they diagnose what neither does alone — an attached customer who no longer trusts the brand is a very different, and more fragile, situation than one who is both attached and trusting.' }]);
-body([{ t: 'Not "another survey tool." ', b: true }, { t: 'Survey creation is the on-ramp; the value is what happens after feedback arrives — themes and sentiment, conversational probing, brand-love and trust measurement, a unified hub, competitive benchmarking, and insight with recommended actions.' }]);
+body('AAA Insights lets a company collect feedback — surveys, reviews, ratings, and open comments — unify it, and analyze it with AI to produce plain-language insight the business can act on. It extends this to a competitive view (the same analysis run against tracked competitors) and to acting on what it finds — resolving dissatisfied customers and reinforcing loyal ones, and measuring whether the action worked.');
+body([{ t: 'At the heart of the analysis are two complementary relationship indicators: ' }, { t: 'Brand Love', b: true }, { t: ' (the emotional pull) and ' }, { t: 'Brand Trust', b: true }, { t: ' (confidence the brand is reliable, honest, and acts in the customer’s interest). Measured together they diagnose what neither does alone — an attached customer who no longer trusts the brand is a very different, more fragile situation.' }]);
+body([{ t: 'Not "another survey tool." ', b: true }, { t: 'Survey creation is the on-ramp; the value is what happens after — themes and sentiment, conversational probing, brand-love and trust measurement, a unified hub, competitive benchmarking, insight with recommended actions, and a closed loop that helps the company act and measures the recovery.' }]);
 
 // ---- 2 USERS ----
 section('02', 'Target users & buyer', 'Two audiences, one product: credible analysis for the business, effortless response for the customer.');
@@ -135,7 +112,7 @@ body([{ t: 'Primary market: ', b: true }, { t: 'SMB / mid-market companies (~10�
 children.push(table2(['User role', 'What they need from AAA Insights'], [
   ['Owner / founder / GM (buyer)', 'A fast, trustworthy read on what customers think, how the brand compares to rivals, and what to fix first.'],
   ['Marketing / brand lead', 'Themes, sentiment, brand-love, trust, quotes, and competitive position to guide messaging and positioning.'],
-  ['CX / customer-success manager', 'Early warning on dissatisfaction, eroding trust, drivers of churn, and a way to close the loop.'],
+  ['CX / customer-success manager', 'Early warning on dissatisfaction, eroding trust, drivers of churn, and a way to work and close recovery cases.'],
   ['Product manager', 'Prioritized signal on what customers want changed, backed by evidence and volume.'],
   ['Respondent (the customer)', 'A short, respectful, mobile-friendly way to give feedback — including a conversational option that feels heard.'],
 ], [3000, 6360]));
@@ -143,28 +120,28 @@ children.push(table2(['User role', 'What they need from AAA Insights'], [
 // ---- 3 PRINCIPLES ----
 section('03', 'Product principles', 'Eight commitments that shape every design decision.');
 bullet('1', [{ t: 'Insight over dashboards. ', b: true }, { t: 'A plain-language answer to "what should I know and do," not a wall of charts.' }]);
-bullet('2', [{ t: 'Every insight is traceable. ', b: true }, { t: 'No theme, sentiment, brand-love read, trust read, or recommendation appears without a path to its verbatim responses.' }]);
+bullet('2', [{ t: 'Every insight is traceable. ', b: true }, { t: 'No theme, sentiment, brand-love/trust read, or recommendation appears without a path to its verbatim responses.' }]);
 bullet('3', [{ t: 'Respect the respondent. ', b: true }, { t: 'Surveys are short, mobile-first, accessible, and privacy-respecting.' }]);
-bullet('4', [{ t: 'Trustworthy AI. ', b: true }, { t: 'AI output carries its confidence and source data; it never fabricates, and it separates what was said from what was inferred.' }]);
-bullet('5', [{ t: 'Lawful by construction. ', b: true }, { t: 'Externally collected data is publicly available and lawfully obtained, with provenance on every item (see §10).' }]);
-bullet('6', [{ t: 'Measure the relationship, not just the transaction. ', b: true }, { t: 'Love and Trust are distinct signals from satisfaction; the product treats them as first-class and never collapses them into one number.' }]);
+bullet('4', [{ t: 'Trustworthy AI. ', b: true }, { t: 'AI output carries its confidence and source data; it never fabricates, separates said from inferred, and never blends an inference into a stated headline number.' }]);
+bullet('5', [{ t: 'Lawful by construction. ', b: true }, { t: 'Externally collected data is public and lawfully obtained, with provenance; personal data is minimized and consent-gated. Compliance is a design property (§10).' }]);
+bullet('6', [{ t: 'Measure the relationship, not just the transaction. ', b: true }, { t: 'Love and Trust are distinct first-class signals, never collapsed into satisfaction or into each other.' }]);
 bullet('7', [{ t: 'Start simple, grow deliberately. ', b: true }, { t: 'The MVP is a tight, buildable core.' }]);
-bullet('8', [{ t: 'Close the loop; measure the recovery. ', b: true }, { t: '(v5) The product doesn’t stop at insight — it helps a company act on dissatisfaction and reinforce loyalty, and it measures whether the action actually rebuilt love and trust. We own the recovery loop internally and execute through the tools the company already uses.' }]);
+bullet('8', [{ t: 'Close the loop; measure the recovery. ', b: true }, { t: 'The product helps a company act on dissatisfaction and reinforce loyalty, and measures whether the action rebuilt love and trust. The loop is owned and run internally (no customer data pushed to third-party tools in v1).' }]);
 
 // ---- 4 INPUTS ----
 section('04', 'Inputs', 'What the system receives.');
 [
-  ['I-1', 'Survey definition — built by an admin or AI-generated. Question types include single-select, multi-select, rating/scale, open text, the Brand Love scale (Love / Like / Ambivalence / Dislike / Hate), and the Trust battery (a single-item trust rating and/or a short driver battery: reliability, integrity, benevolence, security/privacy).'],
+  ['I-1', 'Survey definition — question types include single/multi-select, rating/scale, open text, the Brand Love scale (Love / Like / Ambivalence / Dislike / Hate), and the Trust battery (single-item and/or driver battery).'],
   ['I-2', 'Survey response — ratings (incl. Brand Love and Trust), multiple-choice, and open-text comments. May be partial.'],
   ['I-3', 'Conversational response — free-text turns in an AI-led adaptive interview, as a transcript.'],
   ['I-4', 'Imported feedback — external reviews/ratings/comments for the company’s own brand via CSV.'],
   ['I-5', 'Respondent metadata — optional, non-identifying attributes (segment, channel, product, region, language).'],
   ['I-6', 'Distribution request — publish a survey via link, email list, or widget.'],
   ['I-7', 'Analysis query — a natural-language question asked of the feedback data.'],
-  ['I-8', 'Competitor configuration — the competitor brands to track: names, aliases, products, public sources.'],
-  ['I-9', 'Externally-collected feedback — reviews/ratings/comments about the own brand and tracked competitors from public web pages, review-site APIs, or a licensed provider (source URL, capture date, brand, rating, text).'],
-  ['I-10', '(v5) Respondent contact & consent — optional, opt-in contact details a respondent provides so the company may follow up (e.g., email). Anonymous-by-default is preserved (INV-5, INV-13).'],
-  ['I-11', '(v5) Recovery rules & routing config — admin-defined triggers (which signals open a case) and routing (which owner/queue or external tool a case is handed to).'],
+  ['I-8', 'Competitor configuration — competitor brands to track: names, aliases, products, public sources.'],
+  ['I-9', 'Externally-collected feedback — reviews/ratings/comments about the own brand and competitors, from public web / review APIs / a licensed provider. Analysis-only; never a basis for individual outreach (X-7).'],
+  ['I-10', '(v6) Respondent contact & consent — optional, opt-in contact a first-party respondent provides, behind an age-appropriate gate. Anonymous-by-default preserved (INV-5, INV-13).'],
+  ['I-11', '(v6) Recovery rules & routing config — admin-defined triggers and INTERNAL routing (owner/queue), with default thresholds and throttling.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 5 OUTPUTS ----
@@ -178,316 +155,282 @@ section('05', 'Outputs', 'What the system produces.');
   ['O-6', 'Answer to an analysis query — grounded strictly in the account’s own data, with citations.'],
   ['O-7', 'Alerts — notifications when a monitored signal crosses a threshold.'],
   ['O-8', 'Respondent-facing survey — the rendered survey or conversational interview.'],
-  ['O-9', 'Competitive benchmark — own brand vs. competitors on ratings, Brand Love, Trust, sentiment, and themes over a chosen period.'],
+  ['O-9', 'Competitive benchmark — own brand vs. competitors on ratings, Brand Love, Trust, sentiment, themes over a period.'],
   ['O-10', 'Per-competitor analysis — for a selected competitor, an aggregate view with traceability.'],
-  ['O-11', 'Brand Love read — the distribution across Love / Like / Ambivalence / Dislike / Hate and a Brand Love Index (share of Love+Like minus share of Dislike+Hate), per company and competitor, over time.'],
-  ['O-12', 'Trust read — a Trust Index (net trust) plus a driver breakdown (reliability, integrity, benevolence, security/privacy), per company and competitor, over time.'],
+  ['O-11', '(v6) Brand Love read — distribution across Love / Like / Ambivalence / Dislike / Hate and a Brand Love Index (%(Love+Like) − %(Dislike+Hate)) computed on STATED reads only. Inferred reads are a separate labeled AI-signal, never blended. Unreadable comments are "unknown," excluded from the Index (not scored as Ambivalence).'],
+  ['O-12', '(v6) Trust read — a Trust Index (net, STATED-only) plus a driver breakdown. Inferred trust is a labeled companion signal, same discipline as Brand Love.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 children.push(subhead('O-13 — Love × Trust segmentation'));
-children.push(body('Respondents and segments are placed in one of four quadrants, each with a recommended action:'));
 children.push(table2(['Quadrant', 'Meaning and recommended action'], [
-  ['Devoted', 'High love / high trust — your advocates. Protect and activate them.'],
-  ['Infatuated (fragile)', 'High love / low trust — passion without a safety net. One stumble triggers churn; shore up reliability and transparency.'],
-  ['Dependable', 'Low love / high trust — loyal by reliability, not emotion. Steady; deepen the relationship.'],
+  ['Devoted', 'High love / high trust — advocates. Protect and activate.'],
+  ['Infatuated (fragile)', 'High love / low trust — passion without a safety net. Shore up reliability and transparency before a stumble triggers churn.'],
+  ['Dependable', 'Low love / high trust — loyal by reliability, not emotion. Deepen the relationship.'],
   ['At-risk', 'Low love / low trust — churn risk and detractors. Intervene or triage.'],
 ], [2400, 6960]));
 [
-  ['O-14', '(v5) Recovery case — a tracked case opened from a dissatisfaction signal: the linked feedback, contact (if consented), owner, status (open → in-progress → resolved), and resolution notes.'],
-  ['O-15', '(v5) Recovery metrics — recovery rate, time-to-resolve, and the change in Brand Love / Trust before vs. after resolution (the service-recovery outcome).'],
-  ['O-16', '(v5) Reinforcement prompts — for satisfied/loved customers, opt-in prompts to review, refer, or advocate.'],
+  ['O-14', '(v5) Recovery case — an internally-managed case opened from a dissatisfaction signal: linked feedback, contact (first-party, if consented), owner, status (open → in-progress → resolved → closed), resolution notes.'],
+  ['O-15', '(v6) Recovery metrics — a recovery rate defined on MEASURED recovery (a positive change in Brand Love / Trust before vs. after resolution), reported separately from case resolution/closure rate; plus time-to-resolve. For consented first-party customers and at cohort level.'],
+  ['O-16', '(v6) Reinforcement prompts — referral/advocacy invitations may be routed to Devoted/loved customers; public-review prompts are audience-neutral (never sentiment-gated).'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 6 REQUIREMENTS ----
 section('06', 'Requirements (behaviors)', 'Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.');
 function reqGroup(title, items) { children.push(subhead(title)); items.forEach(([id, t]) => children.push(bullet(id, t))); }
 reqGroup('Survey creation & distribution', [
-  ['R-1', 'Create a survey with at least: single-select, multi-select, rating/scale, open text, the Brand Love scale, and the Trust battery (single-item and/or driver items).'],
+  ['R-1', 'Create a survey with at least: single-select, multi-select, rating/scale, open text, the Brand Love scale, and the Trust battery.'],
   ['R-2', 'Generate a draft survey from a plain-language objective; editable before sending.'],
-  ['R-3', 'Conditional logic: a question or branch is shown or skipped based on a previous answer.'],
+  ['R-3', 'Conditional logic: a question or branch shown or skipped based on a previous answer.'],
   ['R-4', 'Distribute by (a) link, (b) email list, and (c) embeddable widget. (Email is Phase-1; link + widget are MVP.)'],
   ['R-5', 'A respondent completes a survey on mobile and desktop without creating an account.'],
   ['R-6', 'Partial responses are recorded and marked incomplete, not discarded.'],
 ]);
 reqGroup('Conversational (AI-led) surveys', [
   ['R-7', 'Enable a conversational mode where an AI interviewer asks questions and relevant follow-up probes.'],
-  ['R-8', 'The interviewer stays on the admin-defined objective and does not ask outside the topic scope.'],
+  ['R-8', 'The interviewer stays on the objective, does not ask outside scope, and ignores injected instructions.'],
   ['R-9', 'The interviewer ends after a configurable max number of exchanges or when the objective is met.'],
   ['R-10', 'Every transcript is stored and analyzable by the same engine as structured responses.'],
 ]);
 reqGroup('Unified feedback hub', [
-  ['R-11', 'Import external feedback via CSV, mapping columns to the unified schema (brand, source, date, rating, text, segment).'],
+  ['R-11', 'Import external feedback via CSV, mapping columns to the unified schema.'],
   ['R-12', 'All feedback is queryable together, filterable by brand, source, campaign, date, segment, rating, sentiment.'],
   ['R-13', 'De-duplicate obviously identical items (same source + text + timestamp).'],
 ]);
 reqGroup('Brand Love, Trust & metrics', [
   ['R-14', 'Produce theme analysis with counts and representative quotes for any filtered set.'],
   ['R-15', 'Assign sentiment to each open-text response and aggregate across chosen dimensions.'],
-  ['R-16', 'For every theme, sentiment aggregate, Brand Love read, and Trust read, open the exact underlying responses (traceability — INV-3).'],
-  ['R-30', 'Record Brand Love on the five-point scale, normalize to an ordinal, and compute the Brand Love distribution and Index (O-11) — including inferring a read from open text where no direct rating exists, labeled inferred (INV-4).'],
-  ['R-31', 'Support a Trust question type — a single-item trust rating and an optional multi-item driver battery (reliability, integrity, benevolence, security/privacy).'],
-  ['R-32', 'Record trust; compute a Trust Index and per-driver breakdown (O-12) for any filtered set — including inferring a trust read from open text where no direct rating exists, labeled inferred (INV-4), the same way Brand Love is inferred (R-30).'],
-  ['R-33', 'Produce the Love × Trust segmentation (O-13) with a recommended action per quadrant, available in the insight report (O-5) and the competitive benchmark (O-9).'],
+  ['R-16', 'For every theme, sentiment aggregate, Brand Love read, and Trust read, open the exact underlying responses (INV-3).'],
+  ['R-30', '(v6) Record Brand Love and compute the distribution and STATED-only Index (O-11). Infer a read from open text as a labeled companion — never blended into the headline (INV-4, INV-14). An unreadable comment is "unknown," not Ambivalence.'],
+  ['R-31', 'Support a Trust question type — a single-item rating and an optional driver battery.'],
+  ['R-32', '(v6) Compute a STATED-only Trust Index and driver breakdown (O-12); infer trust as a labeled companion, same discipline as R-30.'],
+  ['R-33', 'Produce the Love × Trust segmentation (O-13) with a recommended action per quadrant.'],
 ]);
 reqGroup('Unified customer & competitive insight', [
-  ['R-26', 'Produce an aggregate, cross-source "unified customer" view WITHOUT building or requiring an identity-linked individual profile (INV-9).'],
+  ['R-26', 'Produce an aggregate, cross-source "unified customer" view WITHOUT a general identity-linked profile (INV-9; RecoveryCase exception aside).'],
   ['R-24', 'Define and manage a set of competitor brands to track (I-8).'],
-  ['R-25', 'Collect publicly available reviews/ratings/comments about the own brand and tracked competitors from configured sources, subject to §10 (DPS-7) and a legal-review gate before live collection is enabled.'],
-  ['R-27', 'Benchmark the company’s brand vs. competitors on ratings, Brand Love, Trust, sentiment, and themes over a chosen period (O-9).'],
+  ['R-25', 'Collect publicly available reviews/comments about the own brand and competitors, subject to §10 (DPS-7) and a legal-review gate.'],
+  ['R-27', 'Benchmark the brand vs. competitors on ratings, Brand Love, Trust, sentiment, themes over a period (O-9).'],
   ['R-28', 'For a selected competitor, produce per-competitor aggregate analysis (O-10) with traceability.'],
-  ['R-29', 'All brand/competitor analysis is filterable by brand, source, date, segment, and sentiment, and every competitor figure links to its source items.'],
+  ['R-29', 'All brand/competitor analysis is filterable and every competitor figure links to its source items.'],
 ]);
-reqGroup('Closed-loop & service recovery  (v5 — posture #2, architected for #3)', [
-  ['R-34', 'Let a respondent opt in to be contacted for follow-up (e.g., leave an email); contact is never required and is stored under consent (INV-5, INV-13, DPS-10).'],
-  ['R-35', 'Configurable triggers — a dissatisfaction signal (Dislike/Hate, low Trust, At-risk quadrant, negative-sentiment spike, rating below a floor) opens a RecoveryCase in near-real-time.'],
-  ['R-36', 'A RecoveryCase carries the linked feedback, contact (if consented), an owner, a status lifecycle (open → in-progress → resolved), and resolution notes. The case and its lifecycle are owned internally — this is what makes native workflow (#3) an evolution, not a rewrite.'],
-  ['R-37', 'Hand off / integrate — dispatch a case or action to an external tool the company already uses (helpdesk, CRM, email) via a connector; status changes round-trip back to the RecoveryCase.'],
-  ['R-38', 'Measure recovery — after resolution, re-measure sentiment / Brand Love / Trust for that customer or segment and compute a recovery rate and time-to-resolve (O-15).'],
-  ['R-39', 'Reinforce the satisfied — for Devoted/loved customers, generate opt-in prompts to review, refer, or advocate (O-16).'],
-  ['R-40', 'Prioritize open dissatisfaction cases by predicted value/risk (Love × Trust quadrant, trust drivers, volume) so the highest-leverage recoveries surface first.'],
+reqGroup('Closed-loop & service recovery  (v6 — internal loop; native workflow is the #3 horizon)', [
+  ['R-34', 'Let a first-party respondent opt in to be contacted (age-gated); contact is never required and is stored under consent (INV-5, INV-13, DPS-10).'],
+  ['R-35', '(v6) Triggers open a RecoveryCase from a dissatisfaction signal in near-real-time (≤ 60 s). ONLY first-party responses open contactable cases; public/competitor reviews open only anonymous internal-triage cases. Cases are de-duplicated/grouped (one incident/customer → one case) and triggers throttled to prevent case storms; sensible defaults ship.'],
+  ['R-36', 'A RecoveryCase carries linked feedback, contact (if consented), an owner, a status lifecycle (open → in-progress → resolved → closed), and resolution notes — owned and resolved INSIDE AAA Insights.'],
+  ['R-37', '(v6 — D-E) Notify the assigned owner/team of new/updated cases (in-app + email to the team). v1 does NOT push customer data into external CRM/helpdesk systems; native agent workflow and external integration are the #3 horizon.'],
+  ['R-38', 'Measure recovery — for a consented first-party customer, re-measure Brand Love / Trust before vs. after resolution (longitudinal, INV-9 exception), and report at cohort level (O-15).'],
+  ['R-39', '(v6 — D-D) Reinforce the satisfied — route referral/advocacy to Devoted/loved customers; public-review prompts are audience-neutral, never sentiment-gated (O-16).'],
+  ['R-40', 'Prioritize open dissatisfaction cases by predicted value/risk (quadrant, trust drivers, volume).'],
+]);
+reqGroup('Security, privacy & integrity  (v6)', [
+  ['R-41', 'Public survey and conversational endpoints defend against bots, spam, ballot-stuffing, and coordinated manipulation (rate limiting, anomaly/duplication detection, one-response-per-link tokens) WITHOUT a CAPTCHA wall (protect NFR-4).'],
+  ['R-42', 'Admins authenticate securely (support SSO and MFA) with managed sessions; authorization enforces the role model.'],
+  ['R-43', 'Credentials for inbound data providers and integration secrets are held in a secrets vault — never in the data model, exports, or logs.'],
+  ['R-44', 'Detect and redact PII in open text and transcripts before analysis/surfacing; PII shown to an admin (E-10) is behind role + audit controls.'],
+  ['R-45', 'The conversational endpoint enforces rate limits, per-link cost ceilings, and output content-safety checks (in addition to scope control, R-8).'],
 ]);
 reqGroup('AI analysis, accounts, roles, export', [
   ['R-17', 'Ask a natural-language question and receive an answer grounded only in the account’s own data, with citations.'],
   ['R-18', 'Generate an insight report: narrative, metrics, top themes, sentiment, Brand Love, Trust and the Love × Trust read, competitive comparison, quotes, ranked actions.'],
-  ['R-19', 'Compute response rate, completion rate, average rating, rating distribution, and NPS/CSAT when questions qualify.'],
-  ['R-20', 'Configure an alert on a signal (negative-sentiment share, average rating, Brand Love Index, Trust Index, new theme) with notification when crossed.'],
-  ['R-21', 'At least two roles: Owner/Admin (account, users, billing) and Member (builds surveys, views analysis).'],
-  ['R-22', 'Export any analysis view and the insight report (CSV for raw data; PDF and/or slides).'],
+  ['R-19', 'Compute response/completion rate, average rating, distribution, and NPS/CSAT when questions qualify.'],
+  ['R-20', 'Configure an alert on a signal (neg-sentiment share, average rating, Brand Love Index, Trust Index, new theme).'],
+  ['R-21', '(v6) At least two roles — Owner/Admin and Member — PLUS a lightweight case-owner designation for RecoveryCase assignment (internal user; external agents out of scope in v1).'],
+  ['R-22', 'Export any analysis view and the insight report (CSV; PDF and/or slides).'],
   ['R-23', 'Delete a survey, campaign, or response, and export or delete all account data.'],
 ]);
 
 // ---- 7 INVARIANTS ----
 section('07', 'Invariants', 'Conditions that must hold in every state of the system.');
 [
-  ['INV-1', 'Every response is attributable to exactly one source AND one brand. No response exists without a known origin.'],
-  ['INV-2', 'Counts are never negative and never exceed responses collected; percentages come from the current filter, each response counted once per dimension.'],
-  ['INV-3', 'Every theme, aggregate, Brand Love read, Trust read, insight, recommendation, and query answer is traceable to its underlying responses. No AI claim without a path to its verbatim data.'],
-  ['INV-4', 'The system never shows a quote or statistic absent from the data, and labels any value it inferred (e.g., Brand Love or Trust from text) as inferred, not stated.'],
+  ['INV-1', 'Every response is attributable to exactly one source AND one brand.'],
+  ['INV-2', 'Counts are never negative and never exceed responses collected; percentages come from the current filter, counted once per dimension.'],
+  ['INV-3', 'Every theme, aggregate, Brand Love/Trust read, insight, recommendation, and query answer is traceable to its underlying responses.'],
+  ['INV-4', '(v6) The system never shows a quote or statistic absent from the data, labels any inferred value as inferred, and NEVER blends an inferred read into a stated headline metric.'],
   ['INV-5', 'A respondent can complete a survey without providing identifying information.'],
   ['INV-6', 'Each account’s data is isolated; AI analysis is grounded only in that account’s data.'],
-  ['INV-7', 'Deleting a response, campaign, or account removes it from all future analysis; deleted data never reappears.'],
-  ['INV-8', 'Respondent PII is stored securely and never written to logs or AI outputs unless the admin opts in.'],
-  ['INV-9', 'The "unified customer" view is always aggregate; no identity-resolved profile of any individual.'],
-  ['INV-10', 'Externally-collected data is only ever publicly available and lawfully obtained; no bypassing authentication, paywalls, or technical controls; provenance kept on every item.'],
-  ['INV-11', 'Personal data in public reviews is minimized, never used to build a profile, and excluded from AI outputs by default.'],
-  ['INV-12', 'Brand Love and Brand Trust are measured and reported as DISTINCT indicators. The system never collapses them into a single score, and never presents Trust as satisfaction (or vice versa).'],
-  ['INV-13', '(v5) Follow-up is consent-gated. The system contacts a respondent only when they have opted in; anonymous-by-default is preserved (INV-5). Recovery-case data and contact details fall under the same PII protections (INV-8, DPS-10), and a respondent can withdraw consent at any time.'],
+  ['INV-7', 'Deleting a response/campaign/account removes it from all future analysis (subject to the DPS-5 retention hold for open cases).'],
+  ['INV-8', 'Respondent PII is stored securely and never in logs or AI outputs unless the admin opts in; PII in open text is detected and redacted before surfacing (R-44).'],
+  ['INV-9', '(v6) The "unified customer" view is always aggregate, and the system builds NO general identity-resolved profile. Sole exception: a RecoveryCase may link a consented, first-party respondent to their own feedback for service recovery — purpose-limited, never a general profile, never for scraped/competitor reviewers (X-7).'],
+  ['INV-10', 'Externally-collected data is only ever publicly available and lawfully obtained; no bypassing controls; provenance kept on every item.'],
+  ['INV-11', 'Personal data in public reviews is minimized, never used to build a profile, excluded from AI outputs by default.'],
+  ['INV-12', 'Brand Love and Brand Trust are measured and reported as DISTINCT indicators — never collapsed, never presented as satisfaction.'],
+  ['INV-13', 'Follow-up is consent-gated. Contact only on opt-in; anonymous-by-default preserved. Contact/case data under PII protections (INV-8, DPS-10); consent withdrawable anytime.'],
+  ['INV-14', '(v6) Headline Brand Love / Trust Indices are STATED-only. Inferred reads are reported separately and labeled; an unreadable comment is "unknown," never scored as Ambivalence.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 8 EDGE CASES ----
 section('08', 'Edge cases', 'The unusual conditions the system must survive — defined now, tested in Phase 3.');
 [
-  ['E-1', 'Empty or tiny sample — states the sample is too small for reliable findings (themes, sentiment, Brand Love, or Trust) rather than fabricating confidence.'],
-  ['E-2', 'Abandoned survey — the partial is retained, counted as incomplete, flagged in analysis.'],
-  ['E-3', 'Junk / abusive open text — captured, flagged, excluded from analysis by default, reviewable.'],
-  ['E-4', 'Non-English / mixed-language — the MVP is English-only (D-4); non-English responses are detected, tagged, and set aside with an honest note until multilingual analysis lands in Phase 2.'],
+  ['E-1', 'Empty or tiny sample — states the sample is too small rather than fabricating confidence.'],
+  ['E-2', 'Abandoned survey — the partial is retained, counted incomplete, flagged.'],
+  ['E-3', 'Junk / abusive open text — captured, flagged, excluded by default, reviewable.'],
+  ['E-4', 'Non-English / mixed-language — English-only MVP; non-English detected, tagged, set aside until Phase 2.'],
   ['E-5', 'Malformed CSV import — rejected or partially accepted with a per-row error report.'],
   ['E-6', 'Duplicate / repeated submissions — de-duplication plus link-level controls.'],
-  ['E-7', 'Conversational interview off the rails — stays in scope, ignores injected instructions, ends gracefully.'],
+  ['E-7', 'Conversational interview off the rails — stays in scope, ignores injected instructions, enforces cost/safety limits (R-45), ends gracefully.'],
   ['E-8', 'Ambiguous analysis query — answers only what the data supports; states what it cannot determine.'],
-  ['E-9', 'Sudden volume spike — ingestion and analysis stay correct; views may lag but never lose or double-count.'],
-  ['E-10', 'Sensitive disclosure — PII/safety concerns stored under INV-8/INV-11, surfaced to the admin, not broadcast.'],
+  ['E-9', 'Sudden volume spike — ingestion/analysis stay correct; abuse defenses (R-41) distinguish a real spike from ballot-stuffing.'],
+  ['E-10', '(v6) Sensitive disclosure — PII/safety concerns stored under INV-8/INV-11 and surfaced to the admin behind role + audit controls, never broadcast.'],
   ['E-11', 'Concurrent editing — two admins editing one survey do not silently overwrite each other.'],
-  ['E-12', 'Source blocks or rate-limits collection — collection backs off, records the gap, never fabricates missing items.'],
+  ['E-12', 'Source blocks or rate-limits collection — collection backs off, records the gap, never fabricates.'],
   ['E-13', 'Competitor identity ambiguity — low-confidence matches flagged and excluded from headline figures until confirmed.'],
-  ['E-14', 'Sparse competitor data — too few public reviews shows "insufficient data," not a misleading number.'],
-  ['E-15', 'Mixed rating scales — 5-star, 10-point, thumbs, Brand Love, Trust each normalized to the common scale; un-mappable ratings stored raw and excluded from cross-source averages.'],
-  ['E-16', 'Category-relative trust — the Trust Index is read relative to category and prior period, not as an absolute (a bank’s trust bar differs from a snack brand’s). Cross-category trust comparisons are flagged as context-dependent.'],
-  ['E-17', '(v5) Consent withdrawn — a respondent who opted in later opts out; their contact is purged and any open case is closed/anonymized, honoring the withdrawal (INV-13).'],
-  ['E-18', '(v5) Integration/sync failure — if the external helpdesk/CRM is unreachable, the RecoveryCase stays authoritative internally, the gap is recorded, and it re-syncs when the tool returns — never silently dropping a case.'],
-  ['E-19', '(v5) Unowned / stale case — a case with no owner, or one past its follow-up window, is surfaced and escalated rather than left to rot.'],
-  ['E-20', '(v5) Recovery sample too small — where too few responses exist to re-measure reliably, recovery is reported as "not yet measurable," not a fabricated improvement (E-1 applies).'],
+  ['E-14', 'Sparse competitor data — too few public reviews shows "insufficient data."'],
+  ['E-15', 'Mixed rating scales — each normalized to the common 1–5; un-mappable ratings stored raw and excluded from cross-source averages.'],
+  ['E-16', 'Category-relative trust — read relative to category and prior period, not as an absolute.'],
+  ['E-17', '(v6) Consent withdrawn — contact purged and the individual case anonymized; already-computed de-identified aggregate recovery metrics are retained (INV-13).'],
+  ['E-18', 'Notification failure — if a notification can’t be delivered, the case stays authoritative internally, the gap is recorded, delivery retries — never silently dropping a case.'],
+  ['E-19', 'Unowned / stale case — a case with no owner, or past its follow-up window, is surfaced and escalated.'],
+  ['E-20', 'Recovery sample too small — reported as "not yet measurable," not a fabricated improvement.'],
+  ['E-21', '(v6) Case storm — a viral bad event floods triggers; cases are grouped/throttled so the team isn’t buried and one customer isn’t contacted repeatedly.'],
+  ['E-22', '(v6) Timezone / period boundaries — timestamps stored UTC; trends and "prior period" use the account’s configured timezone; retention/aging boundaries DST-safe.'],
+  ['E-23', '(v6) Minor detected — if a respondent indicates they’re under the age threshold, contact collection is refused; anonymous response still accepted.'],
+  ['E-24', '(v6) No stated reads in scope — if a filtered set has no stated Love/Trust, the headline Index shows "no stated data" and only the labeled inferred signal is shown.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 9 EXCLUSIONS ----
-section('09', 'Exclusions', 'Explicitly out of scope for v1 — the unwritten assumptions, made written.');
+section('09', 'Exclusions', 'Explicitly out of scope for v1.');
 [
-  ['X-1', 'Not a CRM or customer-record system; does not build identity-resolved individual profiles.'],
-  ['X-2', '(v5, revised) v1 does NOT ship a full native case-management workbench (agent queues, SLAs, macros) — that is posture #3, an explicit later horizon. v1 delivers posture #2: opening and owning a RecoveryCase internally and executing through the company’s existing tools via integrations, plus recovery measurement.'],
-  ['X-3', 'Collection is limited to publicly available content obtained lawfully via APIs, licensed providers, or public web pages under the DPS-7 guardrails. No private/authenticated content, bypassing logins/paywalls/protections, or collecting data a source’s terms prohibit.'],
+  ['X-1', '(v6) Not a CRM or general customer-record system; builds no general identity-resolved profile. The one exception is the consented, first-party RecoveryCase (INV-9).'],
+  ['X-2', '(v6) v1 delivers a lightweight INTERNAL recovery workflow (open, own, track, resolve a case in-app, team notified). v1 does NOT push customer data into external CRM/helpdesk tools, and does NOT ship a native case-management workbench or external agent integrations — those are the posture-#3 horizon.'],
+  ['X-3', 'Collection limited to publicly available content obtained lawfully under DPS-7 guardrails. No private/authenticated content, bypassing controls, or collecting data a source’s terms prohibit.'],
   ['X-4', 'No prediction of future business outcomes (churn, revenue) in v1.'],
   ['X-5', 'No public respondent panel / audience marketplace.'],
   ['X-6', 'Does not replace human research judgment; it is decision support with evidence attached.'],
-  ['X-7', 'Does not attempt to re-identify individuals or merge scraped personal data into any profile.'],
+  ['X-7', 'Does not re-identify individuals, contact scraped reviewers, or merge scraped personal data into any profile.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 10 DATA/PRIVACY ----
 section('10', 'Data, privacy & security', 'The handling bar this product is held to — enforced in build and verification.');
 [
   ['DPS-1', 'The system is a data processor for the account’s feedback; the company is the controller.'],
-  ['DPS-2', 'Respondent PII is minimized, encrypted at rest and in transit, access-controlled by role, and excluded from logs and AI outputs by default.'],
-  ['DPS-3', 'Data-subject requests are supported: export and deletion on request.'],
-  ['DPS-4', 'AI processing is isolated to the account; account data is not used to train shared/base models without opt-in.'],
-  ['DPS-5', 'A configurable retention period is supported for both first-party and collected data.'],
-  ['DPS-6', 'The full security checklist is applied during build and verification. (Security/privacy is also a Trust driver measured in O-12 — how safe customers feel is part of the trust picture.)'],
+  ['DPS-2', 'Respondent PII is minimized, encrypted at rest and in transit, access-controlled by role, excluded from logs and AI outputs by default.'],
+  ['DPS-3', '(v6) Data-subject requests (export/deletion) are supported for own respondents AND for the third-party public-review authors whose data we ingested — erasure by source/author via provenance (D-F).'],
+  ['DPS-4', 'AI processing is isolated to the account; account data is never used to train shared/base models.'],
+  ['DPS-5', '(v6) Per-account configurable retention (24-mo default); open RecoveryCases and the baseline data their recovery_delta depends on are held past retention until the case closes.'],
+  ['DPS-6', 'The full security checklist (input validation, authz/authn, secret handling) is applied during build and verification.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 children.push(subhead('DPS-7 — Web / data-collection compliance'));
 children.push(calloutBox('Lawful and ethical by construction — with a legal-review gate', [
   'Collect only publicly accessible content. Respect robots.txt and reasonable rate limits.',
   'Never bypass authentication, paywalls, or technical protections. Prefer official APIs and licensed providers over page collection.',
-  'Keep provenance (source, URL, capture date) on every item. Minimize and never profile personal data in reviews (INV-11). Honor source-specific terms.',
-  'The specific sources and methods are subject to the client’s legal review and written sign-off BEFORE live collection is enabled — a gate, not a default.',
+  'Keep provenance on every item. Minimize and never profile personal data in reviews (INV-11). Honor source-specific terms.',
+  'Sources and methods are subject to the client’s legal review and written sign-off BEFORE live collection is enabled.',
   'Active AI Advisors is not providing legal advice; the client should confirm the approach with counsel.',
 ]));
-children.push(bullet('DPS-8', [{ t: '(v4) ', i: true }, { t: 'v1 targets ' }, { t: 'GDPR and CCPA', b: true }, { t: ' compliance; SOC 2 is a roadmap item for later enterprise sales.' }]));
-children.push(bullet('DPS-9', [{ t: '(v4) ', i: true }, { t: 'AI model/hosting is ' }, { t: 'provider-abstracted', b: true }, { t: ' — best-available models, US data residency available, no single-vendor lock-in; account data never trains shared models (DPS-4).' }]));
-children.push(bullet('DPS-10', [{ t: '(v5) ', i: true }, { t: 'Contact & consent handling.', b: true }, { t: ' Respondent contact details are collected only on opt-in, minimized, encrypted, access-controlled, used solely for the follow-up the respondent consented to, and deletable on withdrawal (INV-13). Consent scope and lawful basis are tracked per contact (GDPR/CCPA).' }]));
+[
+  ['DPS-8', 'v1 targets GDPR and CCPA; SOC 2 is a roadmap item for enterprise sales.'],
+  ['DPS-9', 'AI model/hosting is provider-abstracted — best-available models, US data residency available, no lock-in; account data never trains shared models.'],
+  ['DPS-10', '(v6) Contact & consent handling. Contact collected only on opt-in (age-gated), minimized, encrypted, access-controlled, used solely for the consented follow-up, deletable on withdrawal (INV-13). v1 shares NO contact/feedback with external tools (D-E). Consent scope and lawful basis tracked per contact.'],
+  ['DPS-11', '(v6) Admin auth & secrets — admin authentication (SSO/MFA), managed sessions, and vaulted secrets for inbound data-provider credentials (R-42, R-43).'],
+].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 11 NFR ----
-section('11', 'Non-functional requirements', 'Speed, reliability, access, and honesty — stated as testable budgets.');
+section('11', 'Non-functional requirements', 'Speed, reliability, access, honesty — testable budgets. (v6: "confirm" targets want your sign-off.)');
 [
   ['NFR-1', 'Performance — a survey page loads under 2 s on mobile; a submission acknowledges under 1 s.'],
-  ['NFR-2', 'Analysis latency — up to the MVP size (~5,000 items, Q-6) returns within a stated budget; larger sets run as background jobs with progress.'],
-  ['NFR-3', 'Availability — the collection endpoint targets a stated uptime; ingestion is durable even if analysis is degraded.'],
+  ['NFR-2', '(v6) Analysis latency — the MVP size (~5,000 items) returns at p95 ≤ 60 s (confirm); larger sets background with progress.'],
+  ['NFR-3', '(v6) Availability — the collection endpoint targets 99.9% uptime (confirm); ingestion durable even if analysis is degraded.'],
   ['NFR-4', 'Accessibility — respondent-facing surveys meet WCAG 2.1 AA.'],
   ['NFR-5', 'Scalability path — grows from SMB volumes toward larger sets without a rewrite.'],
-  ['NFR-6', 'Explainability — every AI output carries the data behind it and a confidence signal, including inferred Brand Love and Trust reads.'],
-  ['NFR-7', 'Collection freshness & politeness — collected data shows a freshness/coverage indicator; collection runs at a polite, configurable rate and records gaps.'],
+  ['NFR-6', 'Explainability — every AI output carries the data behind it and a confidence signal, including inferred (companion) reads.'],
+  ['NFR-7', 'Collection freshness & politeness — a freshness/coverage indicator; polite, configurable rate; records gaps.'],
+  ['NFR-8', '(v6) Trigger latency — a dissatisfaction signal opens a RecoveryCase within ≤ 60 s (confirm).'],
+  ['NFR-9', '(v6) Durability — RPO ≤ 24 h, RTO ≤ 8 h (confirm); timestamps stored UTC, reporting in the account’s configured timezone.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 12 DATA MODEL ----
-section('12', 'Data model (logical)', 'The records the system keeps and how they relate. Physical schema is an Architecture-phase decision; this defines what is stored, not how.');
-body([{ t: 'Every record is scoped to an ', }, { t: 'Account', b: true }, { t: ' (tenant) for isolation (INV-6).' }]);
+section('12', 'Data model (logical)', 'The records the system keeps and how they relate. Physical schema is an Architecture-phase decision.');
+body([{ t: 'Every record is scoped to an ' }, { t: 'Account', b: true }, { t: ' (tenant) for isolation (INV-6).' }]);
 function entity(name, desc, rows) {
-  children.push(new Paragraph({ spacing: { before: 220, after: 40 }, children: [
-    new TextRun({ text: name, font: BODY, bold: true, size: 22, color: INK }),
-    new TextRun({ text: '  — ' + desc, font: BODY, italics: true, size: 20, color: SLATE }) ] }));
+  children.push(new Paragraph({ spacing: { before: 220, after: 40 }, children: [ new TextRun({ text: name, font: BODY, bold: true, size: 22, color: INK }), new TextRun({ text: '  — ' + desc, font: BODY, italics: true, size: 20, color: SLATE }) ] }));
   children.push(table2(['Field', 'Meaning'], rows, [2700, 6660], { monoCol0: true }));
 }
 entity('Brand', 'a company or competitor whose feedback is analyzed', [
-  ['brand_id', 'Unique id'],
-  ['name / aliases', 'Display name and alternates used to match reviews'],
-  ['type', 'own or competitor'],
-  ['products', 'Optional product / line names'],
-  ['tracked', 'Whether active collection is enabled'],
+  ['brand_id', 'Unique id'], ['name / aliases', 'Display name and alternates used to match reviews'],
+  ['type', 'own or competitor'], ['products', 'Optional product / line names'], ['tracked', 'Whether active collection is enabled'],
 ]);
-entity('Source', 'where a piece of feedback came from', [
-  ['source_id', 'Unique id'],
-  ['type', 'survey · conversational · import_csv · web · api · provider'],
-  ['name / url', 'Human name and, for web/API, the location'],
-  ['terms_note', 'Compliance note / permitted-use flag (DPS-7)'],
-]);
+children.push(body([{ t: 'Source', b: true }, { t: ' — where feedback came from: source_id, type (survey · conversational · import_csv · web · api · provider), name/url, terms_note (DPS-7).' }]));
 entity('FeedbackRecord', 'the core record — one rating and/or comment about one brand', [
-  ['record_id', 'Unique id'],
-  ['account_id', 'Owning tenant (INV-6)'],
-  ['brand_id', 'Which brand this is about — own or competitor (INV-1)'],
-  ['source_id', 'Where it came from (INV-1)'],
-  ['captured_at / date', 'When the feedback was given or collected'],
-  ['rating_raw / rating_scale', 'Original rating and its scale (5_star, 10_pt, nps, csat, brand_love, trust, …)'],
-  ['rating_norm', 'Rating normalized to a common 1–5 ordinal (E-15)'],
-  ['brand_love', 'Love / Like / Ambivalence / Dislike / Hate, if applicable — ordinal 5→1'],
-  ['trust  (v3)', 'Trust rating if directly asked — normalized 1–5'],
-  ['trust_drivers  (v3)', 'Optional per-driver scores/tags: reliability, integrity, benevolence, security_privacy'],
-  ['comment_text', 'The open-text comment'],
-  ['language', 'Detected language (E-4)'],
-  ['segment / region / channel', 'Optional non-identifying metadata (I-5)'],
-  ['is_complete', 'Complete vs. partial (R-6)'],
-  ['flags', 'junk · abuse · safety · low_confidence (E-3, E-13)'],
+  ['record_id / account_id', 'Unique id; owning tenant (INV-6)'],
+  ['brand_id / source_id', 'Which brand (own/competitor) and where from (INV-1)'],
+  ['captured_at', 'When given/collected — stored UTC (E-22)'],
+  ['rating_raw / rating_scale', 'Original rating and scale (5_star, 10_pt, nps, csat, brand_love, trust, …)'],
+  ['rating_norm', 'Normalized to a common 1–5 ordinal (E-15)'],
+  ['brand_love', 'Love / Like / Ambivalence / Dislike / Hate (stated, 5→1) OR unknown (v6) — unknown is excluded from the Index, not scored as Ambivalence'],
+  ['trust / trust_drivers', 'Trust rating (1–5) and per-driver scores, if applicable'],
+  ['comment_text', 'The open-text comment (PII redacted — R-44)'],
+  ['language / segment / …', 'Detected language; optional non-identifying metadata'],
+  ['is_complete / flags', 'Complete vs partial; junk·abuse·safety·low_confidence'],
   ['provenance', 'source_url + capture_date, or import_batch (INV-10)'],
 ]);
-entity('Sentiment', 'derived, one per record', [
-  ['record_id', 'The record it describes'],
-  ['polarity / intensity', 'positive / neutral / negative, with strength'],
-  ['model_version / confidence', 'What produced it and how sure (NFR-6)'],
-]);
-entity('Trust  (v3)', 'derived, one per record where trust is present or inferred', [
-  ['record_id', 'The record it describes'],
-  ['trust_score', 'Normalized trust value'],
-  ['drivers', 'reliability / integrity / benevolence / security_privacy sub-scores'],
-  ['model_version / confidence', 'What produced it and how sure (NFR-6)'],
-  ['inferred', 'True if derived from open text rather than a direct rating (INV-4)'],
-]);
-children.push(body([{ t: 'Contact (v5)', b: true }, { t: ' — an opt-in contact for a respondent (INV-13): contact_id, respondent_ref, channel/value (email), consent_scope, consent_at, withdrawn_at; kept separate and under DPS-10.' }]));
-children.push(body([{ t: 'Trigger / Rule (v5)', b: true }, { t: ' — signal → action: rule_id, condition (brand_love ≤ Dislike, trust_index < x, quadrant = At-risk, rating < floor), action (open case, route to connector/owner), enabled.' }]));
-entity('RecoveryCase  (v5)', 'the internally-owned loop record (design-for-#3)', [
-  ['case_id', 'Unique id'],
-  ['account_id', 'Owning tenant (INV-6)'],
-  ['record_ids', 'The feedback that opened / relates to the case'],
-  ['contact_id', 'Linked opt-in contact, if any (INV-13)'],
-  ['owner', 'Assigned owner / queue'],
+children.push(body([{ t: 'Sentiment', b: true }, { t: ' — derived, one per record: polarity, intensity, model_version/confidence.   ' }, { t: 'Trust', b: true }, { t: ' — derived: trust_score, drivers, confidence, inferred (companion signal, not blended — INV-14).' }]));
+children.push(body([{ t: 'Contact (v5)', b: true }, { t: ' — an opt-in, age-gated contact for a FIRST-PARTY respondent (INV-13): contact_id, respondent_ref, channel/value, consent_scope, consent_at, withdrawn_at. Separate, under DPS-10.   ' }, { t: 'Trigger / Rule (v6)', b: true }, { t: ' — rule_id, condition, action (open case, route to internal owner), throttle/grouping_key, enabled.' }]));
+entity('RecoveryCase  (v6)', 'the internally-owned, consented, first-party recovery record (the INV-9 exception)', [
+  ['case_id / account_id', 'Unique id; owning tenant'],
+  ['record_ids', 'The feedback that opened / relates to the case (grouped — E-21)'],
+  ['contact_id', 'Linked opt-in first-party contact, if any; null for anonymous triage cases'],
+  ['case_owner', 'Assigned internal owner (R-21)'],
   ['status', 'open · in_progress · resolved · closed'],
-  ['external_ref', 'The linked item in the company’s helpdesk/CRM, if integrated (R-37)'],
-  ['opened_at / resolved_at', 'Timestamps → time-to-resolve (O-15)'],
-  ['recovery_delta', 'Change in Brand Love / Trust before vs. after resolution (O-15)'],
+  ['kind', 'contactable (first-party) or anonymous_triage (public/competitor-review)'],
+  ['opened_at / resolved_at', 'Timestamps (UTC) → time-to-resolve (O-15)'],
+  ['recovery_delta', 'Measured change in Brand Love / Trust before vs. after resolution (O-15)'],
   ['resolution_notes', 'What was done'],
 ]);
-children.push(body([{ t: 'Connector (v5)', b: true }, { t: ' — an integration to an external tool: connector_id, type (helpdesk / CRM / email), config / credentials-ref (secrets kept out of the model — DPS-6), scope.' }]));
-entity('MetricSnapshot', 'a computed rollup for a brand over a period and filter (O-4, O-9, O-11, O-12, O-15)', [
-  ['brand_id / period', 'Brand and time window'],
-  ['metric', 'avg_rating · nps · csat · brand_love_index · trust_index (v3) · trust_<driver> (v3) · recovery_rate (v5) · avg_time_to_resolve (v5) · neg_sentiment_share · response_rate · completion_rate'],
-  ['value / filter_context', 'The number and the filter it was computed under (INV-2)'],
-]);
-children.push(new Paragraph({ spacing: { before: 200 } }));
-children.push(calloutBox('Love × Trust segment (v3)  &  the "unified customer" view', [
-  'Love × Trust segment — computed from the Brand Love and Trust metrics for a brand/segment; each respondent or segment falls in one quadrant (Devoted / Infatuated / Dependable / At-risk) with counts and shares (O-13).',
-  'Unified customer view — there is deliberately NO individual-Customer entity. It aggregates FeedbackRecords for an own brand across all sources and time, grouped by Segment — a population read, not a person read (R-26, INV-9).',
-  'Closed loop (v5) — the RecoveryCase, its status lifecycle, and its recovery measurement live in AAA Insights’ own data model even when the workflow runs in an external tool; that is what makes native workflow (#3) an additive evolution, not a rewrite.',
+children.push(body([{ t: 'MetricSnapshot', b: true }, { t: ' — a rollup: metric ∈ avg_rating · nps · csat · brand_love_index (stated) · trust_index (stated) · recovery_rate (measured) · case_resolution_rate · avg_time_to_resolve · neg_sentiment_share · response_rate · completion_rate; value + filter_context (INV-2). Theme/ThemeAssignment, Survey/Campaign, Segment, Alert, Account/User/Role (incl. case-owner) round out the model.' }]));
+children.push(calloutBox('Removed in v6, and the closed-loop principle', [
+  'Removed: the Connector entity and RecoveryCase external_ref — v1 has NO outbound integrations (D-E). External connectors return only if posture #3 is pursued.',
+  'The RecoveryCase and its recovery measurement live entirely inside AAA Insights (no external push). This IS the lightweight internal workflow; posture #3 later adds native agent queues/SLAs reusing the same case, triggers, and recovery metrics.',
+  'Unified customer view — no general individual-Customer entity; aggregates FeedbackRecords for an own brand across sources and time, grouped by Segment.',
 ]));
 
 // ---- 13 ROADMAP ----
-section('13', 'Scope & phased roadmap', 'Only Phase 0 is committed by this document. Each later phase re-enters the pipeline before it is built.');
+section('13', 'Scope & phased roadmap', 'Only Phase 0 is committed. Each later phase re-enters the pipeline before it is built.');
 children.push(calloutBox('Phase 0 — MVP (the focused, buildable core)', [
-  '• Survey builder: core types + Brand Love scale + Trust battery + conditional logic (R-1, R-3, R-30, R-31)  •  AI-drafted survey (R-2)',
-  '• Distribution by link + widget (R-4)  •  Mobile, account-free capture incl. partials (R-5, R-6)',
-  '• Conversational AI survey with scope control + turn limits (R-7–R-10)  •  CSV import into the unified hub (R-11, R-13)',
-  '• Unified cross-source analysis + aggregate unified-customer view (R-12, R-26)',
-  '• AI theme + sentiment + Brand Love + Trust with traceability (R-14–R-16, R-30, R-32)',
-  '• Core metrics incl. NPS/CSAT + Brand Love Index + Trust Index (R-19, O-11, O-12)',
-  '• Love × Trust segmentation with recommended actions (R-33, O-13)',
-  '• Insight report with ranked actions (R-18, R-22)  •  Two roles, account isolation, data export/delete (R-21, R-23)',
-  '• Closed-loop (starter): detect + prioritize dissatisfaction, open RecoveryCases, opt-in follow-up contact (R-34–R-36, R-40) — architected for the full loop and #3.',
-]));
-children.push(new Paragraph({ spacing: { after: 60 } }));
-children.push(calloutBox('MVP note on Trust depth', [
-  'The MVP can ship with a single-item trust rating plus inferred trust from open text; the full multi-item driver battery (reliability/integrity/benevolence/security) can be a fast-follow if it risks the MVP timeline. See D-14.',
+  '• Survey builder: core types + Brand Love scale + Trust battery + logic (R-1, R-3, R-30, R-31)  •  AI-drafted survey (R-2)  •  link + widget distribution (R-4)  •  mobile, account-free capture (R-5, R-6)',
+  '• Conversational AI survey with scope, cost & safety controls (R-7–R-10, R-45)  •  CSV import + unified analysis + aggregate unified-customer view (R-11–R-13, R-26)',
+  '• AI theme + sentiment + STATED-only Brand Love + Trust, inferred as labeled companion (R-14–R-16, R-30, R-32, INV-14)  •  core metrics + Love × Trust segmentation (R-19, O-11–O-13)',
+  '• Closed-loop (internal starter): first-party opt-in contact, triggers, RecoveryCase own/track/resolve in-app + team notification, prioritization (R-34–R-37, R-40)',
+  '• Insight report (R-18, R-22)  •  two roles + case-owner, isolation, export/delete (R-21, R-23)',
+  '• Security & privacy baseline: bot/abuse defense, admin auth (SSO/MFA), PII redaction, secrets vault, age-gate (R-41–R-45, DPS-11)',
 ]));
 children.push(new Paragraph({ spacing: { after: 60 } }));
 function phase(title, lines) { children.push(subhead(title)); lines.forEach(l => children.push(bullet('', l))); }
-phase('Phase 1 — Competitive insight & distribution', [
-  'Competitor configuration and benchmarking (own vs competitors) on ratings, Brand Love, Trust, sentiment, themes (R-24, R-27, O-9) — CSV / licensed-provider / API sources first.',
-  'Live web collection (R-25, DPS-7) — enabled only after the client’s legal review and sign-off.',
-  'Per-competitor deep-dive (R-28, O-10).',
-  'Natural-language "ask your data" query (R-17, O-6); email distribution (R-4 email); alerts (R-20); slides export.',
-  'Full closed loop (#2): integrations / hand-off to helpdesk / CRM / email (R-37), recovery measurement (R-38, O-15), and reinforcement plays for satisfied customers (R-39).',
+phase('Phase 1 — Competitive insight, distribution & full loop', [
+  'Competitor config + benchmarking (R-24, R-27, O-9) — CSV / licensed-provider / API first; live web collection (R-25, DPS-7) only after legal sign-off; per-competitor deep-dive (R-28, O-10).',
+  'Natural-language "ask your data" query (R-17, O-6); email distribution + reminders (R-4 email); alerts (R-20); slides export.',
+  'Full internal loop: recovery measurement (R-38, O-15) and reinforcement plays (R-39). No external CRM push (D-E).',
 ]);
 phase('Phase 2 — Connectors, scale & native workflow horizon', [
-  'Additional sanctioned connectors; larger-volume background processing (NFR-5); multi-language expansion (D-4); team collaboration.',
-  'Native closed-loop workbench (posture #3) — agent queues, SLAs, and macros brought in-house, reusing the RecoveryCase, triggers, connectors, consent, and recovery metrics built for #2. Pursued when demand from #2 justifies it (a real decision, made from evidence — it changes the buyer and the pricing).',
+  'Larger-volume background processing (NFR-5); multi-language expansion (D-4); team collaboration.',
+  'Native closed-loop workbench (posture #3) — agent queues, SLAs, macros, and (if demand justifies) sanctioned external integrations — reusing the RecoveryCase, triggers, consent, and recovery metrics.',
 ]);
 phase('Phase 3 — Advanced insight', [
-  'Driver analysis — what most influences Brand Love and Trust; the love-type distinction (passion vs. intimacy/loyalty, per Nobre 2011) and a resilience measure (does sentiment/repurchase hold after a negative event); benchmarking vs prior periods and optional, opt-in, anonymized peer norms; a research assistant that proposes surveys from the gaps it finds.',
+  'Driver analysis; the love-type distinction (passion vs. intimacy/loyalty, per Nobre 2011) and a resilience measure; benchmarking vs prior periods and optional anonymized peer norms; a research assistant that proposes surveys from the gaps it finds.',
 ]);
 
-// ---- 14 DECISIONS ----
-section('14', 'Decisions (resolved in v4)', 'All fifteen prior open questions are now decided (client direction, 2026-07-27). Two items remain pending but non-blocking.');
+// ---- 14 SPECIFY DECISIONS ----
+section('14', 'SPECIFY decisions (resolved in v4)', 'Unchanged — summary; full detail in prior versions.');
+children.push(body('Keep AAA Insights working name (D-1); build survey engine natively (D-2); provider-abstracted hosting, US residency, no lock-in (D-3); English-only MVP (D-4); GDPR+CCPA (D-5); ~5,000-response target (D-6); hybrid tiered + usage pricing (D-7); no design partner yet (D-8, pending); Brand Love grounded in Batra/Ahuvia/Bagozzi 2012, label "Ambivalence" (D-9); competitors generic & configurable (D-10); CSV-first collection, web after legal sign-off (D-11, sign-off owner pending); 1–5 scale + net Love Index (D-12); per-account 24-mo retention (D-13); single-item + inferred Trust in MVP (D-14); four Trust drivers + net Index (D-15); Closed-Loop pillar #2→#3 (D-16).'));
+
+// ---- 15 CHALLENGE RESOLUTIONS ----
+section('15', 'CHALLENGE resolutions (v6)', 'From the Phase-2 review (docs/02_spec_review_report.md). Client decisions:');
 children.push(table2(['#', 'Decision', 'Resolution'], [
-  ['D-1', 'Product name', 'Keep "AAA Insights" as the working title (note overlap with the existing Active Pulse sentiment monitor; revisit branding later).'],
-  ['D-2', 'Build vs. buy survey engine', 'Build survey collection natively — full control of the survey, conversational, and data experience.'],
-  ['D-3', 'AI models / hosting', 'Provider-abstracted: best-available models, US data residency available, no lock-in; account data never trains shared models (DPS-9).'],
-  ['D-4', 'Language coverage', 'English-only MVP; multilingual analysis in Phase 2 (E-4).'],
-  ['D-5', 'Compliance targets', 'GDPR + CCPA for v1; SOC 2 on the roadmap (DPS-8).'],
-  ['D-6', 'MVP volume', '~5,000 responses handled comfortably (NFR-2).'],
-  ['D-7', 'Commercial model', 'Hybrid: tiered subscription + usage (see note below).'],
-  ['D-8', 'First design partner', 'None yet — build a generic MVP; find a partner in parallel (pending).'],
-  ['D-9', 'Brand Love framework & label', 'Grounded in Batra/Ahuvia/Bagozzi (2012). Middle label = "Ambivalence" (changed from "Ambiguity"). Scale: Love / Like / Ambivalence / Dislike / Hate.'],
-  ['D-10', 'Competitors & sources', 'Generic & configurable — each account sets its own competitors and sources; no presets.'],
-  ['D-11', 'Collection method & legal sign-off', 'CSV import first (MVP); APIs/licensed feeds in Phase 1; live web collection only after the client’s legal sign-off (DPS-7). Sign-off owner (pending).'],
-  ['D-12', 'Normalization & Love Index', 'Common 1–5 scale; Brand Love Index = %(Love+Like) − %(Dislike+Hate).'],
-  ['D-13', 'Collected-data retention', 'Per-account configurable, 24-month default (DPS-5).'],
-  ['D-14', 'Trust depth for v1', 'Single-item trust + inferred trust in the MVP; driver battery is a fast-follow.'],
-  ['D-15', 'Trust drivers & Trust Index', 'Drivers: reliability, integrity, benevolence, security/privacy; Trust Index = %positive-trust − %negative-trust.'],
-  ['D-16', 'Closed-loop / service recovery (v5)', 'Adopt the Closed-Loop pillar as posture #2 (orchestrate + measure), architected for #3 (native workflow) as a later horizon. MVP: detect + prioritize detractors + opt-in follow-up; full loop + recovery measurement in Phase 1.'],
-], [900, 2500, 5960]));
-children.push(subhead('Commercial model note (D-7)'));
-children.push(body('A hybrid built for SMB/mid-market — tiered subscription plans (e.g. Starter / Growth / Pro) bundling a monthly response/analysis allowance, with usage-based overage and a competitor-tracking add-on. Fuller pricing is a go-to-market decision to firm up alongside the first design partner; the spec only assumes the account/billing hooks in R-21.'));
-children.push(subhead('Still pending (non-blocking)'));
-children.push(body('A named first design partner (D-8) and the named legal sign-off owner for web collection (D-11). Neither blocks approval or the MVP build; both are needed before their respective Phase-1 features go live.'));
+  ['D-A', 'Identity exception for RecoveryCase', 'Yes — consented, first-party only. The RecoveryCase is the one identity-linked record (INV-9 exception, X-1).'],
+  ['D-B', 'Unit of recovery measurement', 'Longitudinal for consented first-party customers, plus cohort level (R-38, O-15).'],
+  ['D-C', 'Case-opening scope', 'First-party responses only open contactable cases; public/competitor reviews → anonymous internal-triage only (R-35).'],
+  ['D-D', 'Reinforcement & review-gating', 'Audience-neutral public-review prompts; referral/advocacy may be sentiment-routed (R-39, O-16).'],
+  ['D-E', 'External integrations', 'None in v1 — internal-only loop; team notified, no CRM/helpdesk push (R-37, X-2, DPS-10; Connector removed).'],
+  ['D-F', 'Erasure for scraped authors', 'Yes — DSR/erasure extended to third-party review authors (DPS-3).'],
+  ['D-G', 'Index composition', 'Stated-only headline Index; inferred = labeled companion; unreadable → "unknown," never Ambivalence (O-11/O-12, R-30, INV-14, INV-4).'],
+], [780, 2600, 5980]));
+children.push(subhead('Resolved by AAA and folded in (F-8–F-19)'));
+children.push(body('Bot/abuse defense (R-41), conversational safety (R-45), admin auth + secrets (R-42/R-43/DPS-11), PII redaction (R-44/INV-8), "unknown" vs Ambivalence (INV-14/data model), case dedup/throttle (R-35/E-21), recovery_rate = measured (O-15), NFR numbers (NFR-2/3/8/9, proposed), timezone/UTC (E-22/NFR-9), retention hold (DPS-5), case-owner role (R-21), age-gate (R-34/E-23).'));
 
 // ---- APPROVAL ----
 children.push(new Paragraph({ children: [new PageBreak()] }));
 children.push(eyebrow('Approval'));
 children.push(shortRule());
-children.push(h1('The Phase-1 gate'));
-body('v5 adds the Closed-Loop / Service Recovery pillar and is ready for your approval. On approval we proceed to CHALLENGE (Phase 2) — an adversarial review that stress-tests this specification (competitive collection, the data model, the Love/Trust pair, and now the recovery loop and opt-in contact widen the attack surface) — and fold the results into Requirements v6.');
+children.push(h1('The CHALLENGE gate'));
+body('v6 folds in every accepted finding and is ready for your approval. On approval, v6 is the baseline that carries into TEST FIRST (Phase 3) — deriving the test suite from this spec before any implementation. The (confirm) NFR targets (NFR-2/3/8/9) can be confirmed at approval or adjusted.');
 children.push(new Paragraph({ spacing: { before: 260, after: 0 }, children: [
   new TextRun({ text: 'Approved by ', font: BODY, size: 21, color: INK }),
   new TextRun({ text: '______________________________', font: BODY, size: 21, color: SLATE }),
@@ -500,13 +443,10 @@ children.push(new Paragraph({ spacing: { before: 60 }, children: [
 
 const doc = new Document({
   background: { color: PAPER },
-  numbering: { config: [ {
-    reference: 'aaa-bullets',
-    levels: [
-      { level: 0, format: 'bullet', text: '•', alignment: AlignmentType.LEFT, style: { run: { color: SIGNAL, font: BODY }, paragraph: { indent: { left: 360, hanging: 220 } } } },
-      { level: 1, format: 'bullet', text: '–', alignment: AlignmentType.LEFT, style: { run: { color: SLATE, font: BODY }, paragraph: { indent: { left: 720, hanging: 220 } } } },
-    ],
-  } ] },
+  numbering: { config: [ { reference: 'aaa-bullets', levels: [
+    { level: 0, format: 'bullet', text: '•', alignment: AlignmentType.LEFT, style: { run: { color: SIGNAL, font: BODY }, paragraph: { indent: { left: 360, hanging: 220 } } } },
+    { level: 1, format: 'bullet', text: '–', alignment: AlignmentType.LEFT, style: { run: { color: SLATE, font: BODY }, paragraph: { indent: { left: 720, hanging: 220 } } } },
+  ] } ] },
   styles: { default: {
     document: { run: { font: BODY, size: 21, color: INK } },
     heading1: { run: { font: DISPLAY, bold: true, size: 40, color: INK } },
