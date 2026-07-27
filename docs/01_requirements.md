@@ -1,22 +1,30 @@
 # Product Requirements Document — AAA Insights
 
-**Version:** v3  |  **Status:** Draft (Trust extension, awaiting approval)  |  **Date:** 2026-07-14
+**Version:** v5  |  **Status:** Draft (Closed-Loop / Service Recovery pillar added)  |  **Date:** 2026-07-27
 **Owner:** Active AI Advisors  |  **Prepared for:** Paul Jamieson
 **Methodology:** Grounded AI™ — Phase 1 (SPECIFY)
 
-> **Changes in v3 (2026-07-14):** added **Brand Trust** as a first-class indicator that complements
-> Brand Love — a Trust question type, a **Trust Index** with driver breakdown (reliability, integrity,
-> benevolence, security/privacy), inference from open text, and a **Love × Trust** segmentation
-> (Devoted / Infatuated / Dependable / At-risk) with a recommended action per quadrant. Grounded in the
-> research library (Wardani & Gustia 2016: trust bridges satisfaction to attachment; Nobre 2011:
-> passion-love without trust is fragile). Added/changed IDs are marked *(v3)*.
+> **Changes in v5 (2026-07-27):** added the **Closed-Loop / Service Recovery** pillar — the shift from
+> *measuring* sentiment to *actively managing* it: opt-in respondent contactability, signal-driven triggers,
+> a first-class **RecoveryCase** with a status lifecycle, hand-off to the tools a company already uses
+> (helpdesk / CRM / email) via connectors, **recovery measurement** (did love/trust rebuild?), and
+> reinforcement plays for satisfied customers. Delivered as **posture #2 (orchestrate + measure)** but
+> **architected for #3 (native workflow)** — the RecoveryCase and its recovery measurement are owned
+> internally so #3 is an evolution, not a rewrite. Grounded in the service-recovery paradox (a well-resolved
+> complaint can leave a customer *more* loyal).
 >
-> *v2 (2026-07-13) added: aggregate unified-customer view, competitors as first-class brands, lawful
-> web/API/CSV collection under DPS-7, the Brand Love scale, and the data model.*
+> **Changes in v4 (2026-07-27):** folded in the client's decisions on all fifteen open questions (see
+> §14, now *resolved*) — English-only MVP, GDPR + CCPA, ~5,000-response target, native survey build,
+> CSV-first collection, per-account data retention, a hybrid commercial model, and the Brand Love / Trust
+> confirmations. **The Brand Love middle label changed from "Ambiguity" to "Ambivalence"** (the accurate
+> term for mixed feelings). This version is intended for approval to close the SPECIFY gate.
+>
+> *v3 (2026-07-14) added the Brand Trust extension; v2 (2026-07-13) added the unified-customer view,
+> competitors, lawful web/API/CSV collection (DPS-7), the Brand Love scale, and the data model.*
 
-> This is the specification gate. No implementation begins until this document is approved. Sections 1–3
-> frame the product; 4–11 are the testable requirements; 12 is the data model; 13 is the roadmap; 14 is
-> the list of decisions we need from you.
+> This is the specification gate. On approval we proceed to CHALLENGE (Phase 2). Sections 1–3 frame the
+> product; 4–11 are the testable requirements; 12 is the data model; 13 is the roadmap; 14 records the
+> resolved decisions.
 
 ---
 
@@ -63,6 +71,9 @@ have no in-house market-research or CX-analytics team.
 6. **Measure the relationship, not just the transaction.** *(v3)* Love and Trust are distinct signals from
    satisfaction; the product treats them as first-class and never collapses them into a single number.
 7. **Start simple, grow deliberately.** The MVP is a tight, buildable core.
+8. **Close the loop; measure the recovery.** *(v5)* The product doesn't stop at insight — it helps a company
+   act on dissatisfaction and reinforce loyalty, and it measures whether the action actually rebuilt love and
+   trust. We own the recovery loop internally and execute through the tools the company already uses.
 
 ---
 
@@ -70,7 +81,7 @@ have no in-house market-research or CX-analytics team.
 
 - **I-1: Survey definition** — built by an admin or AI-generated from a goal. Question types include
   single-select, multi-select, rating/scale, open text, the **Brand Love scale**
-  (Love / Like / Ambiguity / Dislike / Hate), and *(v3)* the **Trust battery** (a single-item trust rating
+  (Love / Like / Ambivalence / Dislike / Hate), and *(v3)* the **Trust battery** (a single-item trust rating
   and/or a short driver battery: reliability, integrity, benevolence, security/privacy).
 - **I-2: Survey response** — ratings (incl. Brand Love and Trust), multiple-choice, and open-text comments.
   May be partial.
@@ -85,6 +96,10 @@ have no in-house market-research or CX-analytics team.
 - **I-9: Externally-collected feedback** — reviews/ratings/comments about the own brand and tracked
   competitors, from public web pages, review-site APIs, or a licensed provider (source URL, capture date,
   brand, rating, text).
+- **I-10: Respondent contact & consent** *(v5)* — optional, opt-in contact details a respondent provides so
+  the company may follow up (e.g., email). Anonymous-by-default is preserved (INV-5, INV-13).
+- **I-11: Recovery rules & routing config** *(v5)* — admin-defined triggers (which signals open a case) and
+  routing (which owner/queue or external tool a case is handed to).
 
 ## 5. Outputs
 
@@ -102,7 +117,7 @@ have no in-house market-research or CX-analytics team.
 - **O-9: Competitive benchmark** — own brand vs. competitors on ratings, Brand Love, *(v3)* Trust,
   sentiment, and themes over a chosen period.
 - **O-10: Per-competitor analysis** — for a selected competitor, an aggregate view with traceability.
-- **O-11: Brand Love read** — the distribution across Love / Like / Ambiguity / Dislike / Hate and a
+- **O-11: Brand Love read** — the distribution across Love / Like / Ambivalence / Dislike / Hate and a
   **Brand Love Index** (share of Love+Like minus share of Dislike+Hate), for the company and per
   competitor, over time.
 - **O-12: Trust read** *(v3)* — a **Trust Index** (net trust) plus a **driver breakdown** (reliability,
@@ -114,6 +129,12 @@ have no in-house market-research or CX-analytics team.
     and transparency before a stumble triggers churn.
   - **Dependable** (low love / high trust) — loyal by reliability, not emotion; deepen the relationship.
   - **At-risk** (low love / low trust) — churn risk and detractors; intervene or triage.
+- **O-14: Recovery case** *(v5)* — a tracked case opened from a dissatisfaction signal: the linked feedback,
+  contact (if consented), owner, status (open → in-progress → resolved), and resolution notes.
+- **O-15: Recovery metrics** *(v5)* — recovery rate, time-to-resolve, and the change in Brand Love / Trust
+  before vs. after resolution (the service-recovery outcome).
+- **O-16: Reinforcement prompts** *(v5)* — for satisfied/loved customers, opt-in prompts to review, refer,
+  or advocate.
 
 ## 6. Requirements (behaviors)
 
@@ -175,6 +196,24 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
 - **R-29:** All brand/competitor analysis is filterable by brand, source, date, segment, and sentiment, and
   every competitor figure links to its source items.
 
+**Closed-loop & service recovery** *(v5 — posture #2, architected for #3)*
+
+- **R-34:** Let a respondent **opt in to be contacted** for follow-up (e.g., leave an email); contact is
+  never required and is stored under consent (INV-5, INV-13, DPS-10).
+- **R-35:** Configurable **triggers** — a dissatisfaction signal (Dislike/Hate, low Trust, At-risk quadrant,
+  negative-sentiment spike, rating below a floor) **opens a RecoveryCase** in near-real-time.
+- **R-36:** A **RecoveryCase** carries the linked feedback, contact (if consented), an owner, a status
+  lifecycle (open → in-progress → resolved), and resolution notes. The case and its lifecycle are **owned
+  internally** — this is what makes native workflow (#3) an evolution, not a rewrite.
+- **R-37:** **Hand off / integrate** — dispatch a case or action to an external tool the company already
+  uses (helpdesk, CRM, email) via a connector; status changes round-trip back to the RecoveryCase.
+- **R-38:** **Measure recovery** — after resolution, re-measure sentiment / Brand Love / Trust for that
+  customer or segment and compute a **recovery rate** and **time-to-resolve** (O-15).
+- **R-39:** **Reinforce the satisfied** — for Devoted/loved customers, generate opt-in prompts to review,
+  refer, or advocate (O-16).
+- **R-40:** **Prioritize** open dissatisfaction cases by predicted value/risk (Love × Trust quadrant, trust
+  drivers, volume) so the highest-leverage recoveries surface first.
+
 **AI analysis, accounts, roles, export**
 
 - **R-17:** Ask a natural-language question and receive an answer grounded only in the account's own data,
@@ -214,6 +253,9 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   from AI outputs by default.
 - **INV-12:** *(v3)* **Brand Love and Brand Trust are measured and reported as distinct indicators.** The
   system never collapses them into a single score, and never presents Trust as satisfaction (or vice versa).
+- **INV-13:** *(v5)* **Follow-up is consent-gated.** The system contacts a respondent only when they have
+  opted in; anonymous-by-default is preserved (INV-5). Recovery-case data and contact details fall under the
+  same PII protections (INV-8, DPS-10), and a respondent can withdraw consent at any time.
 
 ## 8. Edge cases to handle
 
@@ -221,7 +263,7 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   (themes, sentiment, Brand Love, or Trust) rather than fabricating confidence.
 - **E-2: Abandoned survey** — the partial is retained, counted as incomplete, and flagged in analysis.
 - **E-3: Junk / abusive open text** — captured, flagged, excluded from analysis by default, reviewable.
-- **E-4: Non-English / mixed-language** — language detected and analyzed accordingly (Q-4).
+- **E-4: Non-English / mixed-language** — the MVP is **English-only** (Q-4 resolved); non-English responses are detected, tagged, and set aside (not analyzed) with an honest note, until multilingual analysis lands in Phase 2.
 - **E-5: Malformed CSV import** — rejected or partially accepted with a per-row error report.
 - **E-6: Duplicate / repeated submissions** — de-duplication plus link-level controls.
 - **E-7: Conversational interview off the rails** — stays in scope, ignores injected instructions, ends
@@ -243,11 +285,23 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
 - **E-16:** *(v3)* **Category-relative trust** — the Trust Index is read relative to category and prior
   period, not as an absolute (a bank's trust bar differs from a snack brand's). Cross-category trust
   comparisons are flagged as context-dependent.
+- **E-17:** *(v5)* **Consent withdrawn** — a respondent who opted in later opts out; their contact is purged
+  and any open case is closed/anonymized, honoring the withdrawal (INV-13).
+- **E-18:** *(v5)* **Integration/sync failure** — if the external helpdesk/CRM is unreachable, the
+  RecoveryCase stays authoritative internally, the gap is recorded, and it re-syncs when the tool returns —
+  never silently dropping a case.
+- **E-19:** *(v5)* **Unowned / stale case** — a case with no owner, or one past its follow-up window, is
+  surfaced and escalated rather than left to rot.
+- **E-20:** *(v5)* **Recovery sample too small** — where too few responses exist to re-measure reliably,
+  recovery is reported as "not yet measurable," not a fabricated improvement (E-1 applies).
 
 ## 9. Exclusions (explicitly OUT of scope for v1)
 
 - **X-1:** Not a CRM or customer-record system; does not build identity-resolved individual profiles.
-- **X-2:** No two-way case management / ticketing; closing the loop in v1 is export/notification.
+- **X-2:** *(v5, revised)* v1 does **not** ship a full native case-management workbench (agent queues, SLAs,
+  macros) — that is posture #3, an explicit later horizon. v1 delivers posture #2: opening and owning a
+  RecoveryCase internally and **executing through the company's existing tools** via integrations, plus
+  recovery measurement.
 - **X-3:** Collection is limited to publicly available content obtained lawfully via APIs, licensed
   providers, or public web pages under the DPS-7 guardrails. No private/authenticated content, no bypassing
   logins/paywalls/technical protections, no collecting data a source's terms prohibit.
@@ -264,7 +318,7 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
 - **DPS-3:** Data-subject requests are supported: export and deletion on request.
 - **DPS-4:** AI processing is isolated to the account; account data is not used to train shared/base models
   without opt-in.
-- **DPS-5:** A configurable retention period is supported for both first-party and collected data.
+- **DPS-5:** A **per-account configurable** retention period is supported for both first-party and collected data, with a **24-month default** (Q-13 resolved).
 - **DPS-6:** The full security checklist (input validation, authz/authn, secret handling) is applied during
   build and verification. *(Note: security/privacy is also a Trust driver measured in O-12 — how safe
   customers feel is part of the trust picture.)*
@@ -274,6 +328,11 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   and never profile personal data in reviews (INV-11); honor source terms. **The specific sources and
   methods are subject to the client's legal review and written sign-off before live collection is enabled.**
   *(Active AI Advisors is not providing legal advice; the client should confirm the approach with counsel.)*
+- **DPS-8:** *(v4)* v1 targets **GDPR and CCPA** compliance (Q-5 resolved); SOC 2 is a roadmap item for later enterprise sales.
+- **DPS-9:** *(v4)* AI model/hosting is **provider-abstracted** — best-available models, **US data residency** available, no single-vendor lock-in (Q-3 resolved). Account data is never used to train shared models (DPS-4).
+- **DPS-10:** *(v5)* **Contact & consent handling.** Respondent contact details are collected only on opt-in,
+  minimized, encrypted, access-controlled, used solely for the follow-up the respondent consented to, and
+  deletable on withdrawal (INV-13). Consent scope and lawful basis are tracked per contact (GDPR/CCPA).
 
 ## 11. Non-functional requirements
 
@@ -326,7 +385,7 @@ Architecture-phase decision. Every record is scoped to an **Account** (tenant) f
 | captured_at / date | When the feedback was given or collected |
 | rating_raw / rating_scale | Original rating and its scale (`5_star`, `10_pt`, `nps`, `csat`, `brand_love`, `trust`, …) |
 | rating_norm | Rating normalized to a common 1–5 ordinal (E-15) |
-| brand_love | Love / Like / Ambiguity / Dislike / Hate, if applicable — ordinal 5→1 |
+| brand_love | Love / Like / Ambivalence / Dislike / Hate, if applicable — ordinal 5→1 |
 | trust *(v3)* | Trust rating if directly asked — normalized 1–5 |
 | trust_drivers *(v3)* | Optional per-driver scores/tags: reliability, integrity, benevolence, security_privacy |
 | comment_text | The open-text comment |
@@ -348,6 +407,31 @@ Architecture-phase decision. Every record is scoped to an **Account** (tenant) f
 | model_version / confidence | What produced it and how sure (NFR-6) |
 | inferred | True if derived from open text rather than a direct rating (INV-4) |
 
+**Contact** *(v5)* — an opt-in contact for a respondent (INV-13): `contact_id`, `respondent_ref`,
+`channel`/`value` (e.g., email), `consent_scope`, `consent_at`, `withdrawn_at`. Kept separate and under DPS-10.
+
+**Trigger / Rule** *(v5)* — signal → action: `rule_id`, `condition` (e.g., brand_love ≤ Dislike,
+trust_index < x, quadrant = At-risk, rating < floor), `action` (open case, route to connector/owner),
+`enabled`.
+
+**RecoveryCase** *(v5)* — the internally-owned loop record (design-for-#3).
+
+| Field | Meaning |
+|-------|---------|
+| case_id | Unique id |
+| account_id | Owning tenant (INV-6) |
+| record_ids | The feedback that opened / relates to the case |
+| contact_id | Linked opt-in contact, if any (INV-13) |
+| owner | Assigned owner / queue |
+| status | `open` · `in_progress` · `resolved` · `closed` |
+| external_ref | The linked item in the company's helpdesk/CRM, if integrated (R-37) |
+| opened_at / resolved_at | Timestamps → time-to-resolve (O-15) |
+| recovery_delta | Change in Brand Love / Trust before vs. after resolution (O-15) |
+| resolution_notes | What was done |
+
+**Connector** *(v5)* — an integration to an external tool: `connector_id`, `type` (helpdesk / CRM / email),
+`config` / credentials-ref (secrets kept out of the model — DPS-6), `scope`.
+
 **Theme / ThemeAssignment** — discovered topics and their links to records (with confidence).
 
 **MetricSnapshot** — a computed rollup for a brand over a period and filter (O-4, O-9, O-11, O-12).
@@ -355,7 +439,7 @@ Architecture-phase decision. Every record is scoped to an **Account** (tenant) f
 | Field | Meaning |
 |-------|---------|
 | brand_id / period | Brand and time window |
-| metric | `avg_rating` · `nps` · `csat` · `brand_love_index` · `trust_index` *(v3)* · `trust_<driver>` *(v3)* · `neg_sentiment_share` · `response_rate` · `completion_rate` |
+| metric | `avg_rating` · `nps` · `csat` · `brand_love_index` · `trust_index` *(v3)* · `trust_<driver>` *(v3)* · `recovery_rate` *(v5)* · `avg_time_to_resolve` *(v5)* · `neg_sentiment_share` · `response_rate` · `completion_rate` |
 | value / filter_context | The number and the filter it was computed under (INV-2) |
 
 **Love × Trust segment** *(v3)* — computed from the Brand Love and Trust metrics for a brand/segment; each
@@ -368,6 +452,12 @@ Alert (signal + threshold + brand scope), Account/User/Role.
 **On the "unified customer" view (R-26, INV-9):** there is deliberately no individual-Customer entity
 holding a person's identity across records. The unified view aggregates FeedbackRecords for an `own` brand
 across all sources and time, grouped by Segment — a population read, not a person read.
+
+**On the closed loop (R-34–R-40, #2 → #3):** the RecoveryCase, its status lifecycle, and its recovery
+measurement live in AAA Insights' own data model **even when the human workflow is executed in an external
+tool**. That is precisely what makes native workflow (posture #3) an additive evolution rather than a
+rewrite — #3 replaces the external execution surface with a built-in one, reusing the same case, triggers,
+connectors, consent, and recovery metrics.
 
 ---
 
@@ -389,10 +479,12 @@ Only Phase 0 is committed by this document. Each later phase re-enters the pipel
 - **Love × Trust segmentation** with recommended actions (R-33, O-13).
 - Insight report with ranked actions, exportable (R-18, R-22).
 - Two roles, account isolation, data export/delete (R-21, R-23, INV-6, INV-7).
+- **Closed-loop (starter):** detect + prioritize dissatisfaction, open RecoveryCases, opt-in follow-up
+  contact (R-34–R-36, R-40) — the foundation, architected for the full loop and #3.
 
 > **MVP note on Trust depth:** the MVP can ship with a **single-item trust rating plus inferred trust**
 > from open text; the full multi-item **driver battery** (reliability/integrity/benevolence/security) can
-> be a fast-follow if it risks the MVP timeline. See Q-14.
+> be a fast-follow if it risks the MVP timeline. See D-14.
 
 ### Phase 1 — Competitive insight & distribution
 - Competitor configuration and benchmarking (own vs competitors) on ratings, Brand Love, Trust, sentiment,
@@ -401,10 +493,15 @@ Only Phase 0 is committed by this document. Each later phase re-enters the pipel
 - Per-competitor deep-dive (R-28, O-10).
 - Natural-language "ask your data" query with citations (R-17, O-6).
 - Email distribution + reminders (R-4 email); configurable alerts (R-20); slides export.
+- **Full closed loop (#2):** hand-off / integrations to helpdesk / CRM / email (R-37), recovery measurement
+  (R-38, O-15), and reinforcement plays for satisfied customers (R-39).
 
-### Phase 2 — Connectors & scale
+### Phase 2 — Connectors, scale & native workflow horizon
 - Additional sanctioned connectors; larger-volume background processing (NFR-5); multi-language expansion
-  (Q-4); team collaboration.
+  (D-4); team collaboration.
+- **Native closed-loop workbench (posture #3)** — agent queues, SLAs, and macros brought in-house, reusing
+  the RecoveryCase, triggers, connectors, consent, and recovery metrics built for #2. Pursued when demand
+  from #2 justifies it (a real decision, made from evidence — it changes the buyer and the pricing).
 
 ### Phase 3 — Advanced insight
 - **Driver analysis** — what most influences Brand Love and Trust; **love-type** distinction (passion vs.
@@ -414,39 +511,47 @@ Only Phase 0 is committed by this document. Each later phase re-enters the pipel
 
 ---
 
-## 14. Open questions (client decision needed)
+## 14. Decisions (resolved in v4)
 
-- **Q-1: Product name** — is "AAA Insights" the intended name or a working title?
-- **Q-2: Build vs. buy the survey engine** — build collection natively, or wrap an existing component?
-- **Q-3: AI models / hosting** — any constraints on model provider or data residency?
-- **Q-4: Language coverage for v1** — English-only, or which additional languages at launch?
-- **Q-5: Compliance targets** — which regimes must v1 satisfy (GDPR, CCPA, SOC 2 roadmap)?
-- **Q-6: MVP volume target** — what item volume must the MVP handle comfortably?
-- **Q-7: Commercial model** — per-seat, per-response, per-survey, per-competitor, or tiered?
-- **Q-8: First design partner** — a specific first customer/segment to anchor the MVP?
-- **Q-9: Brand-love framework** — resolved: Brand Love grounded in Batra/Ahuvia/Bagozzi (2012). Confirm
-  "Ambiguity" as the middle label (vs. "Ambivalence"/"Neutral").
-- **Q-10: Competitors & sources** — which competitors to track first, and which review sources matter most?
-- **Q-11: Collection method & legal sign-off** — confirm the API / licensed-provider / public-web mix, and
-  who provides the legal review that gates live web collection (DPS-7).
-- **Q-12: Rating normalization** — confirm the common scale (proposed 1–5) and the Brand Love Index formula
-  (proposed: %(Love+Like) − %(Dislike+Hate)).
-- **Q-13: Collected-data retention** — how long should collected competitor/web data be retained?
-- **Q-14:** *(v3)* **Trust depth for v1** — single-item trust rating plus inference, or the full
-  multi-item driver battery (reliability/integrity/benevolence/security)? *(Recommendation: single-item +
-  inference in the MVP; driver battery as a fast-follow.)*
-- **Q-15:** *(v3)* **Trust driver taxonomy** — confirm reliability / integrity / benevolence /
-  security-privacy as the drivers, and the Trust Index formula (proposed net: %positive-trust −
-  %negative-trust, computed on the normalized scale).
+All fifteen questions from prior versions are now **decided** (client direction, 2026-07-27). Two items
+remain *pending but non-blocking* and are noted at the end.
+
+| # | Decision | Resolution |
+|---|----------|------------|
+| D-1 | Product name | Keep **"AAA Insights"** as the working title. (Revisit branding later — note the overlap with the existing *Active Pulse* sentiment monitor.) |
+| D-2 | Build vs. buy survey engine | **Build survey collection natively** — full control of the survey, conversational, and data experience. |
+| D-3 | AI models / hosting | **Provider-abstracted**: best-available models, **US data residency** available, no lock-in; account data never trains shared models (DPS-9). |
+| D-4 | Language coverage | **English-only** MVP; multilingual analysis in Phase 2 (E-4). |
+| D-5 | Compliance targets | **GDPR + CCPA** for v1; SOC 2 on the roadmap (DPS-8). |
+| D-6 | MVP volume | **~5,000 responses** handled comfortably (NFR-2). |
+| D-7 | Commercial model | **Hybrid: tiered subscription + usage** (see the note below). |
+| D-8 | First design partner | **None yet** — build a generic MVP; find a design partner in parallel *(pending)*. |
+| D-9 | Brand Love framework & label | Grounded in Batra/Ahuvia/Bagozzi (2012). **Middle label = "Ambivalence"** (changed from "Ambiguity"). Scale: **Love / Like / Ambivalence / Dislike / Hate**. |
+| D-10 | Competitors & sources | **Generic & configurable** — each account sets its own competitors and sources; no presets baked in. |
+| D-11 | Collection method & legal sign-off | **CSV import first** (MVP); APIs/licensed feeds in Phase 1; **live web collection only after the client's legal sign-off** (DPS-7). Named sign-off owner *(pending)*. |
+| D-12 | Rating normalization & Love Index | **Common 1–5 scale**; **Brand Love Index = %(Love+Like) − %(Dislike+Hate)**. |
+| D-13 | Collected-data retention | **Per-account configurable, 24-month default** (DPS-5). |
+| D-14 | Trust depth for v1 | **Single-item trust + inferred trust** in the MVP; the multi-item driver battery is a fast-follow. |
+| D-15 | Trust drivers & Trust Index | Drivers: **reliability, integrity, benevolence, security/privacy**; **Trust Index = %positive-trust − %negative-trust** on the normalized scale. |
+| D-16 | Closed-loop / service recovery *(v5)* | **Adopt the Closed-Loop pillar as posture #2 (orchestrate + measure), architected for #3 (native workflow) as a later horizon.** MVP: detect + prioritize detractors + opt-in follow-up; full loop + recovery measurement in Phase 1. |
+
+**Commercial model note (D-7):** a hybrid built for SMB/mid-market — tiered subscription plans (e.g.
+Starter / Growth / Pro) bundling a monthly response/analysis allowance, with usage-based overage and a
+competitor-tracking add-on. Fuller pricing is a go-to-market decision to firm up alongside the first design
+partner; the spec only assumes the account/billing hooks in R-21.
+
+**Still pending (non-blocking):** a named first design partner (D-8) and the named legal sign-off owner for
+web collection (D-11). Neither blocks approval or the MVP build; both are needed before their respective
+Phase-1 features go live.
 
 ---
 
 ## Approval
 
-This is the Phase-1 gate. On your approval, we proceed to **CHALLENGE (Phase 2)** — an adversarial review
-that stress-tests this specification (v3 now carries competitive collection, a data model, and the
-Love/Trust indicator pair, which widen the attack surface) — and fold the results, plus your answers to
-§14, into Requirements v4.
+This is the Phase-1 gate. **v5 adds the Closed-Loop / Service Recovery pillar and is ready for your
+approval.** On approval we proceed to **CHALLENGE (Phase 2)** — an adversarial review that stress-tests this
+specification (competitive collection, the data model, the Love/Trust pair, and now the recovery loop and
+opt-in contact widen the attack surface) — and fold the results into Requirements v6.
 
 Approved by: __________________________    Date: ______________
 
