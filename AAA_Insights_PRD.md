@@ -1,23 +1,26 @@
 # Product Requirements Document — AAA Insights
 
-**Version:** v6  |  **Status:** Draft (CHALLENGE resolutions folded in — ready for approval)  |  **Date:** 2026-07-27
+**Version:** v7  |  **Status:** Draft (Emotion & Experience pillar added — ready for approval)  |  **Date:** 2026-07-30
 **Owner:** Active AI Advisors  |  **Prepared for:** Paul Jamieson
-**Methodology:** Grounded AI™ — Phase 2 (CHALLENGE → v6)
+**Methodology:** Grounded AI™ — Phase 1 (SPECIFY increment → v7)
 
-> **Changes in v6 (2026-07-27):** folded in the Phase-2 CHALLENGE findings (see
-> `docs/02_spec_review_report.md`). Client decisions D-A–D-G resolved (§15). Headlines:
-> the recovery loop is now **internal-only** (no external CRM/helpdesk push — D-E); a **consented,
-> first-party RecoveryCase** is the one allowed identity-linked record (INV-9 exception — D-A/D-B);
-> case outreach is **first-party only** (D-C); review prompts are **audience-neutral** (D-D);
-> the Brand Love / Trust **Indices are stated-only**, with inferred reads shown as a labeled companion
-> and an unreadable comment scored **"unknown," never "Ambivalence"** (D-G, F-12); **erasure** covers
-> scraped third-party review authors (D-F). Plus new security, PII, integrity, and testability
-> requirements (F-8–F-19).
+> **Changes in v7 (2026-07-30):** added an **Emotion & Experience** analysis pillar and an explicit
+> **Strengths & Gripes** (aspect-based pros/cons) output. The product now reads the **emotional texture**
+> of feedback — *what* customers feel (pride, relief, delight vs. frustration, disappointment, anger) — as
+> a per-brand **emotion profile** (O-17), and extracts the specific **pluses and minuses** customers name,
+> grouped by attribute and ranked by their association with Love/Trust (O-18). Both compare **own brand vs.
+> competitors** (O-19). Emotions use a **compact, manager-readable headline set (~7) that rolls up a finer
+> sub-emotion set** on demand (D-17). New requirements R-46–R-50; invariants INV-15/INV-16; edge cases
+> E-25–E-27; Emotion + Aspect records in the data model. Scope: **own-brand emotion + strengths/gripes in
+> the MVP; the competitive comparison rides Phase-1 competitor collection** (D-18). Emotion and aspect
+> reads are **AI-inferred companion signals** — labeled, confidence-scored, and **never blended into the
+> stated Brand Love / Trust headline** (extends INV-4/INV-14).
 >
-> *v5 added the Closed-Loop / Service Recovery pillar; v4 resolved the 15 SPECIFY open questions; v3 added
-> Brand Trust; v2 added the unified-customer view, competitors, lawful collection, Brand Love, data model.*
+> *v6 folded in the Phase-2 CHALLENGE findings (§15); v5 added the Closed-Loop / Service Recovery pillar; v4
+> resolved the 15 SPECIFY open questions; v3 added Brand Trust; v2 added the unified-customer view,
+> competitors, lawful collection, Brand Love, data model.*
 
-> This is the specification gate. On approval, v6 is the baseline that carries into TEST FIRST (Phase 3).
+> This is the specification gate. On approval, v7 is the baseline that carries into TEST FIRST (Phase 3).
 > Sections 1–3 frame the product; 4–11 are the testable requirements; 12 is the data model; 13 is the
 > roadmap; 14 records the SPECIFY decisions; 15 records the CHALLENGE resolutions.
 
@@ -36,6 +39,12 @@ pull — identity, passion, attachment) and **Brand Trust** (confidence the bran
 acts in the customer's interest). Measured together they diagnose what neither does alone — an attached
 customer who no longer trusts the brand is a very different, and more fragile, situation than one who is
 both attached and trusting.
+
+Underneath those indicators, the product reads two things that help a manager *empathize and act*: the
+**emotional texture** of the experience — the specific emotions customers voice about the brand, and how
+they compare to rivals — and the concrete **strengths and gripes** (the pluses and minuses) customers name
+in their own words. These are inferred from open text and stand beside the stated indicators as labeled,
+evidence-backed reads, never blended into a headline number.
 
 The product is not "another survey tool." Survey creation is the on-ramp; the value is what happens after
 feedback arrives — themes and sentiment, conversational probing, brand-love and trust measurement, a
@@ -71,6 +80,9 @@ have no in-house market-research or CX-analytics team.
 8. **Close the loop; measure the recovery.** The product helps a company act on dissatisfaction and
    reinforce loyalty, and measures whether the action rebuilt love and trust. The loop is **owned and run
    internally** (no customer data pushed to third-party tools in v1).
+9. **Read the feeling, name the reasons.** Beyond the scores, surface the *emotions* customers express and
+   the *specific things* they praise or criticize — always as labeled inferences with the verbatims behind
+   them, so a manager can empathize with, and act on, what customers actually feel and say.
 
 ---
 
@@ -139,6 +151,25 @@ have no in-house market-research or CX-analytics team.
 - **O-16: Reinforcement prompts** *(v6 refined)* — **referral/advocacy** invitations may be routed to
   Devoted/loved customers; **public-review prompts are audience-neutral** (offered to all respondents or
   none, never sentiment-gated), to avoid review-gating.
+- **O-17: Emotion profile** *(v7)* — for a brand and filtered set, the **distribution of emotions** expressed
+  in open text and transcripts, using a **compact headline taxonomy (~7 emotions)** — e.g. *pride, delight,
+  relief/reassurance, hope/anticipation* on the positive side; *frustration, disappointment, anger/anxiety*
+  on the negative — each carrying **intensity**, a **confidence** score, and **representative verbatims**
+  (traceability, INV-3), with **trend over time**. Each headline emotion **rolls up a finer sub-emotion set**
+  a user can drill into (D-17). Comments with no readable affect fall in a **"no emotion detected"** bucket,
+  never forced into a neutral emotion (INV-15). An AI-inferred, **labeled companion signal** — never blended
+  into the stated Love/Trust Indices (INV-4, INV-14, INV-16).
+- **O-18: Strengths & Gripes** *(v7)* — the **pluses and minuses** customers name, extracted per **aspect**
+  (e.g. product quality, price/value, support responsiveness, delivery, ease of use): each aspect shown with
+  its **polarity (+/−), volume, representative quotes**, and a **ranking by association with Brand Love /
+  Trust movement** (labeled *association, not causation*). Aspects are **account-configurable**; low-confidence
+  or unsupported aspects are excluded from headline figures (E-26, E-27). Traceable to source responses
+  (INV-3).
+- **O-19: Emotion & Strengths/Gripes — competitive comparison** *(v7; Phase 1)* — the **own brand vs. tracked
+  competitors** on the emotion profile (O-17) and on strengths/gripes (O-18), side by side, over a chosen
+  period — e.g. *"your customers voice pride and relief; Competitor X's voice frustration around billing"*,
+  or *"support is your top strength and Competitor Y's top gripe."* Built only on **lawfully-collected public
+  reviews** (DPS-7), **aggregate only**, never individual (INV-9, INV-11).
 
 ## 6. Requirements (behaviors)
 
@@ -187,6 +218,27 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   from open text as a labeled companion signal, same discipline as R-30.
 - **R-33:** Produce the **Love × Trust segmentation** (O-13) with a recommended action per quadrant,
   available in the insight report (O-5) and the competitive benchmark (O-9).
+
+**Emotion & experience analysis** *(v7)*
+
+- **R-46:** **Detect the emotions** expressed in open text and conversational transcripts and classify each
+  to a **compact headline taxonomy (~7 emotions)** that **rolls up a finer sub-emotion set**. Each read is
+  **labeled inferred**, carries **intensity and confidence**, and produces the per-brand **emotion profile**
+  (O-17) with representative verbatims and trend. A comment with no readable affect is **"no emotion
+  detected,"** never forced into a neutral emotion (INV-15).
+- **R-47:** **Drill down** from any headline emotion to its **granular sub-emotions** and the **underlying
+  verbatims** (traceability, INV-3), so the compact view stays readable while analysts can go deeper (D-17).
+- **R-48:** **Extract aspect-based strengths and gripes** from comments — the specific attributes customers
+  praise or criticize, each with **polarity, volume, and representative quotes** — and **rank them by volume
+  and by association with Brand Love / Trust movement** (labeled *association, not causation*). Aspects are
+  **account-configurable**; produce O-18. Guarded against fabricated aspects (only aspects grounded in
+  verbatims; low-confidence excluded from headline — E-26).
+- **R-49:** *(Phase 1)* **Compare** emotion profiles and strengths/gripes **across own brand and tracked
+  competitors** (O-19), computed on **lawfully-collected public reviews** (DPS-7) at **aggregate** level only
+  (INV-9, INV-11).
+- **R-50:** **Be transparent about the method** — publish the emotion taxonomy and its headline→sub-emotion
+  roll-up mapping, and carry `model_version`/confidence on every emotion and aspect read (leave-no-black-box;
+  NFR-6). Emotion and aspect reads are **companion signals, never blended into a stated headline** (INV-16).
 
 **Unified customer & competitive insight**
 
@@ -287,6 +339,13 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   protections (INV-8, DPS-10); consent is withdrawable at any time.
 - **INV-14:** *(v6)* **Headline Brand Love / Trust Indices are stated-only.** Inferred reads are reported
   separately and labeled; an unreadable comment is **"unknown,"** never scored as Ambivalence.
+- **INV-15:** *(v7)* **Emotion and aspect (strengths/gripes) reads are AI-inferred companion signals** —
+  always labeled inferred, always carrying confidence, and **never blended into the stated Brand Love /
+  Trust headline Indices.** A comment with no readable affect is **"no emotion detected,"** a distinct
+  bucket, never scored as a neutral emotion.
+- **INV-16:** *(v7)* **Emotion is a distinct lens** from Brand Love, Brand Trust, and sentiment — reported
+  alongside them, never collapsed into any one of them. Any "emotion/aspect → Love/Trust" relationship is
+  presented as **association, not causation.**
 
 ## 8. Edge cases to handle
 
@@ -333,6 +392,13 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
   collection is refused; anonymous response is still accepted (F-19).
 - **E-24: No stated reads in scope** *(v6)* — if a filtered set has no stated Love/Trust, the headline Index
   shows "no stated data" and only the labeled inferred signal is shown (INV-14).
+- **E-25: Mixed / conflicting emotions in one comment** *(v7)* — a comment expressing more than one emotion
+  is represented as **multiple emotions with intensities**, not forced to a single label; it contributes to
+  each, counted once per dimension (INV-2).
+- **E-26: Sarcasm / ambiguous affect** *(v7)* — low-confidence emotion or aspect reads are flagged and
+  **excluded from headline figures** until a confidence floor is met; the verbatim stays available for review.
+- **E-27: No emotion / no aspect detectable** *(v7)* — where affect or aspects can't be read, the system
+  shows **"no signal"** rather than fabricating an emotion or a strength/gripe (parallels E-1, E-24).
 
 ## 9. Exclusions (explicitly OUT of scope for v1)
 
@@ -444,6 +510,15 @@ Plain-English logical model; physical schema is an Architecture-phase decision. 
 **Trust** — derived, one per record where trust is present or inferred: `trust_score`, `drivers`,
 `model_version`/`confidence`, `inferred` (companion signal, not blended — INV-14).
 
+**Emotion** *(v7)* — derived, **one or more per record** (a comment may carry several — E-25): `emotion_id`,
+`record_id`, `emotion_headline` (the ~7-set label), `sub_emotion` (finer label — D-17), `intensity`,
+`valence`, `model_version`/`confidence`. Always `inferred = true`; a "no emotion detected" read is stored
+explicitly, never as a neutral emotion (INV-15).
+
+**AspectSentiment** *(v7)* — derived, **zero or more per record**: `aspect_id`, `record_id`, `aspect_label`
+(account-configurable taxonomy), `polarity` (+/−), `intensity`, `model_version`/`confidence`. Links to the
+verbatim for traceability (INV-3); feeds the Strengths & Gripes board (O-18).
+
 **Contact** *(v5)* — an opt-in, age-gated contact for a **first-party** respondent (INV-13): `contact_id`,
 `respondent_ref`, `channel`/`value`, `consent_scope`, `consent_at`, `withdrawn_at`. Separate, under DPS-10.
 
@@ -472,7 +547,7 @@ quadrant = At-risk, rating < floor), `action` (open case, route to internal owne
 | Field | Meaning |
 |-------|---------|
 | brand_id / period | Brand and time window (period boundaries per E-22) |
-| metric | `avg_rating` · `nps` · `csat` · `brand_love_index` (stated) · `trust_index` (stated) · `recovery_rate` (measured) · `case_resolution_rate` · `avg_time_to_resolve` · `neg_sentiment_share` · `response_rate` · `completion_rate` |
+| metric | `avg_rating` · `nps` · `csat` · `brand_love_index` (stated) · `trust_index` (stated) · `recovery_rate` (measured) · `case_resolution_rate` · `avg_time_to_resolve` · `neg_sentiment_share` · `response_rate` · `completion_rate` · `emotion_distribution` (inferred, companion) · `top_strengths` / `top_gripes` (inferred, companion) *(v7)* |
 | value / filter_context | The number and the filter it was computed under (INV-2) |
 
 **Supporting records:** Survey/Campaign, Segment, Alert, Account/User/Role (incl. case-owner).
@@ -503,6 +578,8 @@ Only Phase 0 is committed. Each later phase re-enters the pipeline before it is 
   R-26).
 - AI theme + sentiment + **stated-only Brand Love + Trust**, inferred as labeled companion (R-14–R-16,
   R-30, R-32, INV-14).
+- **Emotion & experience (own brand):** emotion profile with drill-down + Strengths & Gripes board, as
+  labeled companion reads (R-46–R-48, R-50, O-17, O-18, INV-15, INV-16).
 - Core metrics incl. NPS/CSAT + Brand Love / Trust Indices (R-19, O-11, O-12); Love × Trust segmentation
   (R-33, O-13).
 - **Closed-loop (internal starter):** first-party opt-in contact, triggers, RecoveryCase own/track/resolve
@@ -515,6 +592,8 @@ Only Phase 0 is committed. Each later phase re-enters the pipeline before it is 
 ### Phase 1 — Competitive insight, distribution & full loop
 - Competitor configuration + benchmarking (R-24, R-27, O-9) — CSV / licensed-provider / API sources first;
   live web collection (R-25, DPS-7) only after legal sign-off; per-competitor deep-dive (R-28, O-10).
+- **Emotion & Strengths/Gripes competitive comparison** (R-49, O-19) — own brand vs. competitors, on
+  lawfully-collected public reviews, aggregate only.
 - Natural-language "ask your data" query (R-17, O-6); email distribution + reminders (R-4 email); alerts
   (R-20); slides export.
 - **Full internal loop:** recovery measurement (R-38, O-15) and reinforcement plays (R-39). *No external
@@ -543,6 +622,15 @@ after legal sign-off (D-11, sign-off owner pending); **1–5 scale + net Love In
 24-mo retention** (D-13); **single-item + inferred Trust** in MVP (D-14); **four Trust drivers + net Index**
 (D-15); **Closed-Loop pillar** #2→#3 (D-16).
 
+**v7 additions (SPECIFY increment, 2026-07-30):**
+- **D-17 — Emotion taxonomy:** a **compact, manager-readable headline set (~7 emotions)** that **rolls up a
+  finer sub-emotion set** on demand. Grounded in the consumer-emotion literature (Richins' Consumption
+  Emotions Set; Laros & Steenkamp's hierarchy of consumer emotions; Plutchik). Reported as a labeled,
+  confidence-scored companion signal (INV-15/INV-16).
+- **D-18 — Scope of the pillar:** **own-brand emotion + Strengths/Gripes ship in the MVP** (they reuse the
+  analysis engine); the **competitive comparison rides Phase-1 competitor collection** (it needs the lawful
+  collection engine anyway). Emotion & Strengths/Gripes are a **new research theme** for the library.
+
 ## 15. CHALLENGE resolutions (v6)
 
 From the Phase-2 review (`docs/02_spec_review_report.md`). Client decisions:
@@ -566,10 +654,12 @@ timezone/UTC (E-22/NFR-9), retention hold (DPS-5), case-owner role (R-21), age-g
 
 ## Approval
 
-This is the CHALLENGE gate. **v6 folds in every accepted finding and is ready for your approval.** On
-approval, v6 is the baseline that carries into **TEST FIRST (Phase 3)** — deriving the test suite from this
-spec before any implementation. The `(confirm)` NFR targets (NFR-2/3/8/9) can be confirmed at approval or
-adjusted.
+This is the specification gate. **v7 adds the Emotion & Experience pillar on top of the v6 CHALLENGE
+baseline and is ready for your approval.** On approval, v7 is the baseline that carries into **TEST FIRST
+(Phase 3)** — deriving the test suite from this spec before any implementation. The `(confirm)` NFR targets
+(NFR-2/3/8/9) can be confirmed at approval or adjusted. *(The new pillar warrants a light CHALLENGE pass —
+chiefly on inferred-emotion accuracy and the association-vs-causation framing — which its invariants
+INV-15/INV-16 and edge cases E-25–E-27 already pre-empt; we can fold any further findings before Phase 3.)*
 
 Approved by: __________________________    Date: ______________
 
