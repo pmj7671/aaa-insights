@@ -115,10 +115,14 @@ Avoid revolutionary, game-changing, leverage, synergize.
 - **Test-harness reconciliation:** the Phase-3 plan is language-agnostic and unchanged; the pytest stubs get
   **ported to Vitest** (Playwright for e2e/accessibility, k6 for NFRs) at the start of IMPLEMENT — same names,
   IDs, acceptance criteria, only the runner changes.
-- **Next action:** Paul reviews/approves the Architecture → **Phase 4 IMPLEMENT** (scaffold to the stack, port
-  tests to Vitest, build the MVP/Phase-0 slice behavior-by-behavior via the safety loop). Still open (non-
-  blocking): confirm the "(confirm)" NFR targets; optional light CHALLENGE on the emotion pillar; a rough cost
-  model before build.
+- **Cost model delivered 2026-08-04** (`docs/cost_model.md`, v1). Key numbers: marginal AI cost ≈ **$0.004/
+  response** (Haiku 4.5; ~$0.002 optimized w/ caching+batch); fixed infra floor ≈ **$100–200/mo** (mostly Cloud
+  SQL). Scenarios: Pilot 5 accts ≈ $150/mo; Growing 25 ≈ $475/mo; Scaling 100 ≈ $2,000/mo (~$20/acct). Confirms
+  **hybrid tiered+usage pricing (D-7)** — base fee covers the floor, usage covers AI; healthy margins at
+  $99–299/acct/mo. Offered an interactive spreadsheet version as a follow-up.
+- **Next action:** Paul reviews the cost model → confirm the "(confirm)" NFR targets → **Phase 4 IMPLEMENT**
+  (scaffold to the stack, port tests to Vitest, build the MVP/Phase-0 slice via the safety loop). Optional:
+  light CHALLENGE on the emotion pillar; interactive cost spreadsheet.
 
 ### Scoping decisions locked (all of §14 resolved in v4)
 - Scope: **MVP + phased roadmap.** MVP = own-customer analysis + Brand Love + Trust + aggregate
@@ -193,6 +197,23 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-04 (Research library +2)** — Added two Brand Love papers: **Fetscherin (2014, JCM)** — brand love
+  as a one-directional *parasocial* bond; love precedes loyalty, drives purchase intention + WOM (supports
+  O-11 as leading indicator, R-39 advocacy). **Maheshwari, Lodorfos & Jacobsen (2014, IJBA)** — affective
+  experience drives loyalty, *continuance/lock-in does not* (supports emotion pillar O-17/R-46, Strengths &
+  Gripes O-18, INV-12). Annotated under Brand Love theme. Third upload (Ghani & Tuhin 2016) was a **duplicate**
+  of an existing library item — not re-filed. Fixed a stale "Ambiguity"→"Ambivalence" reference in the README.
+- **2026-08-04 (Business model & pricing)** — `docs/business_model.md` v0.1 — **living** commercial artifact,
+  separate from the product spec. Model: **B2B SaaS hybrid tiered+usage** (grounds D-7). Four tiers (Starter
+  $149 / Growth $399 / Pro $899 / Enterprise custom), generous included response allowances + ~$30–40/1,000
+  overage, ~85–90% gross margin. Positioning: "an AI research analyst for companies without a research team,"
+  priced vs. analyst/agency/enterprise-CX. **Linkage rule:** pricing strategy stays out of the spec; when a
+  pricing decision needs a product capability (metering, tier limits, feature gating, billing) it becomes an
+  R- in the spec. Numbers are hypotheses pending WTP validation with design partners (D-8).
+- **2026-08-04 (Cost model)** — `docs/cost_model.md` v1. Marginal AI ≈ $0.004/response (Haiku 4.5), fixed floor
+  ≈ $100–200/mo (Cloud SQL-led). Three scenarios (Pilot/Growing/Scaling). Grounds hybrid tiered+usage pricing
+  (D-7); margins healthy at $99–299/acct/mo. Prices web-sourced (Claude/BenchLM, Cloud Run, Cloud SQL), current
+  2026-08-04, flagged as drifting. Rough (±50%) pre-build estimate.
 - **2026-07-30 (Architecture / Tech Design)** — `docs/architecture_overview.md` v1. Stack: GCP (Cloud Run,
   Cloud SQL Postgres+pgvector, Tasks/PubSub, Storage, Identity Platform, DLP, Secret Manager, Cloud Armor),
   TypeScript end-to-end (Next.js/Node/Prisma), Claude via Vertex AI behind an LLM gateway + Vertex embeddings,

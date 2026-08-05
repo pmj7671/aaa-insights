@@ -21,6 +21,8 @@ understanding customers, brands, and markets.
 | Brand Love & emotional attachment | Nobre (2011), *Should Consumers Be in Love With Brands?* | Journal (JTM) | Passion‑love is more fragile than intimacy/loyalty‑love under disruption. |
 | Brand Love & emotional attachment | Ghani & Tuhin (2016), *Consumer Brand Relationships* | Journal review (IRMM) | Maps the whole CBR field; validates the negative end (hate/avoidance). |
 | Brand Love & emotional attachment | Wardani & Gustia (2016), *Brand Experience/Satisfaction/Trust → Attachment* | Journal (SEM) | Evidence that satisfaction ≠ attachment; trust is the bridge. |
+| Brand Love & emotional attachment | Fetscherin (2014), *What type of relationship do we have with loved brands?* | Journal (JCM) | Brand love is a one-directional (parasocial) bond; love precedes loyalty and drives WOM. |
+| Brand Love & emotional attachment | Maheshwari, Lodorfos & Jacobsen (2014), *Determinants of Brand Loyalty* | Journal (IJBA) | Emotional (affective) experience drives loyalty; lock-in (continuance) does not. |
 | Brand Trust | Chaudhuri & Holbrook (2001); Mayer et al. (1995); Delgado-Ballester; Morgan & Hunt (1994) | References (to source) | Ground the v3 Trust extension: trust drivers and trust → loyalty. |
 | Loyalty & customer expectations | BCG (2024), *Loyalty Programs Are Growing…* | Industry study | Differentiation now lives in understanding what customers value. |
 | Search, discovery & marketing trends (GEO) | YouTube/Google (2026), *3 Marketing Opportunities* | Practitioner (Google) | Creators, commerce & AI reshape discovery and word of mouth. |
@@ -44,8 +46,8 @@ than any single "love" measure. Distinguishes love‑as‑emotion (episodic) fro
 
 **Product implications.** Answers PRD **Q9** — ground our Brand Love read here. The seven elements become
 the **signals the AI looks for in open text** to infer a Brand Love read (INV‑4 labels inferred values).
-The authors' "sort‑of‑loved" fuzzy middle **justifies the "Ambiguity"** level in
-**Love / Like / Ambiguity / Dislike / Hate**. Because brand love predicts loyalty/WOM/resistance, the
+The authors' "sort‑of‑loved" fuzzy middle **justifies the "Ambivalence"** level in
+**Love / Like / Ambivalence / Dislike / Hate**. Because brand love predicts loyalty/WOM/resistance, the
 Brand Love Index (O‑11) is a leading indicator worth benchmarking (O‑9).
 
 ### Ahuvia, A. (2023). *Brand Love's Greatest Hits.* Psychology Today (Aaron Ahuvia, PhD), updated Jul 6, 2023.
@@ -100,6 +102,41 @@ short, **satisfaction alone doesn't create attachment — trust is the bridge.**
 customers who aren't attached (a churn risk hiding behind good CSAT). Reinforces measuring Brand Love and
 **trust** as signals *distinct from* satisfaction, and supports surfacing trust drivers, not just
 satisfaction scores.
+
+### Fetscherin, M. (2014). *What type of relationship do we have with loved brands?* Journal of Consumer Marketing, 31(6/7), 430–440.
+`Fetscherin_2014_Relationship-With-Loved-Brands_JCM.pdf`
+
+Tests **two relationship theories** behind brand love — **interpersonal vs. parasocial** — in a 2×2 design
+across US and Japanese samples (EFA/CFA/multi-group SEM). Finding: modeling brand love as a **parasocial**
+relationship (a **one-directional** bond, like the fan→celebrity or viewer→character relationship) performs
+as well as or **better than** the interpersonal-love framing, with **stronger links to purchase intention and
+word of mouth** in both samples. Also restates the field's intensity ladder — **satisfaction → trust →
+loyalty**, with **brand love preceding loyalty** (Carroll & Ahuvia 2006) — and that love drives purchase
+intention and WOM.
+
+**Product implications.** Frames *how* we should read love from feedback: it's a **one-directional bond the
+customer expresses toward the brand** — exactly what open text captures — so we're right to infer a Brand Love
+read from what customers say (INV-4 labels it inferred). Because love is validated as a **leading indicator of
+purchase intention and WOM/advocacy**, it strengthens the case for the Brand Love Index (O-11) as predictive
+and for routing **advocacy/referral plays to loved customers** (R-39, O-16). The satisfaction → trust →
+loyalty ladder reinforces keeping **Love and Trust distinct and deeper than satisfaction** (INV-12).
+
+### Maheshwari, V., Lodorfos, G., & Jacobsen, S. (2014). *Determinants of Brand Loyalty: A Study of the Experience-Commitment-Loyalty Constructs.* International Journal of Business Administration, 5(6), 13–23.
+`Maheshwari-Lodorfos-Jacobsen_2014_Determinants-of-Brand-Loyalty_IJBA.pdf`
+
+Investigates **brand experience** (Brakus et al. 2009's four dimensions — sensory, affective, behavioral,
+intellectual) and **brand commitment** (split into **affective** vs. **continuance**) as drivers of loyalty
+in the automotive sector. Key finding: **continuance commitment — staying because of switching cost or lack
+of alternatives — has no considerable impact on genuine loyalty**; the loyalty that matters is **affective/
+emotional**, carried by brand experience and affective commitment. Price and available alternatives don't
+sustain the relationship on their own.
+
+**Product implications.** Distinguishes **real attachment from lock-in** — a customer who stays only out of
+inertia is a churn risk hiding behind a "loyal" label, echoing the **Love × Trust** at-risk/dependable
+quadrants (O-13). The affective dimension of experience is exactly what the **Emotion pillar** reads (O-17,
+R-46), and the four experience dimensions are a useful lens for the aspects behind **Strengths & Gripes**
+(O-18, R-48). Overall it reinforces measuring **emotion and attachment, not inertia or satisfaction**, as the
+signals that predict durable loyalty (INV-12).
 
 ---
 
