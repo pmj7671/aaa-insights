@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 3 (2026-08-11):** analysis core + segmentation + survey metrics + survey-definition domain; **40 tests green**, gate GREEN |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 4 (2026-08-11):** analysis core, segmentation, survey metrics, survey-definition, sentiment + emotion aggregation (AI seams defined); **50 tests green**, gate GREEN |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,15 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-11 (Phase 4 — increment 4, AI seam)** — Built `src/domain/sentiment.ts` (Sentiment type,
+  **SentimentClassifier** interface = the LLM seam, confidence-floor aggregation — E-26) and
+  `src/domain/emotion.ts` (compact ~7 **headline emotion taxonomy** + sub-emotion rollup D-17,
+  **EmotionClassifier** seam, `emotionProfile` with no-signal bucket, mixed-emotion counting, low-confidence
+  exclusion, always-inferred companion). Closed **E-25, E-26, E-27, INV-15, INV-16**. **50 tests green**
+  (+10), tsc clean, gate GREEN. **R-15 (sentiment assign) and R-46 (emotion detect) stay pending** — their
+  aggregation cores + interfaces are built; the live model wires in when the LLM gateway is implemented.
+  **20 requirement IDs now closed.** Natural pause point: next up is either wiring the LLM gateway (real
+  classifiers) or the persistence/API layer — both step beyond pure domain logic into infrastructure.
 - **2026-08-11 (Phase 4 — increment 3)** — Built `src/domain/survey.ts`: question types incl. Brand Love
   scale + Trust battery (**R-1**), conditional show/skip logic (**R-3**), Trust question type single-item +
   optional four-driver battery (**R-31**), plus structural survey validation. Closed R-1, R-3, R-31. **40

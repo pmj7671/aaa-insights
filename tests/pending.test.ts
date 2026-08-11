@@ -115,8 +115,6 @@ describe('Invariants (pending)', () => {
     ['INV-10', 'external data lawful and public, provenance kept'],
     ['INV-11', 'public-review PII minimised, never profiled'],
     ['INV-13', 'follow-up consent-gated and withdrawable'],
-    ['INV-15', 'emotion/aspect reads labeled inferred, never blended'],
-    ['INV-16', 'emotion a distinct lens; association not causation'],
   ]);
 });
 
@@ -143,9 +141,6 @@ describe('Edge cases (pending)', () => {
     ['E-21', 'case storm grouped/throttled'],
     ['E-22', 'timezone/period boundaries UTC + account timezone'],
     ['E-23', 'minor detected: contact refused, anonymous response allowed'],
-    ['E-25', 'mixed emotions represented as multiple, counted once per dimension'],
-    ['E-26', 'sarcasm/low-confidence excluded from headline until floor met'],
-    ['E-27', 'no emotion/aspect signal: shows no signal, not fabricated'],
   ]);
 });
 
