@@ -33,8 +33,8 @@ been made yet; when it is, these tests translate one-to-one to that stack's runn
 `testing`, etc.). The *plan below is the contract*; the harness is how we make it executable.
 
 **Current state (Phase 4 underway):** the suite is now **Vitest** (ported from the pytest reference to match
-the TypeScript stack). Increment 1 has built the analysis core — R-13, R-30, R-32, INV-2, INV-4, INV-14,
-E-6, E-15, E-24 are **green** (`tests/domain/*`); every other behavior is a Vitest `todo` in
+the TypeScript stack). Built so far (increments 1–2) and **green** (`tests/domain/*`): R-13, R-19, R-30, R-32, R-33,
+INV-2, INV-4, INV-12, INV-14, E-6, E-15, E-24. Every other behavior is a Vitest `todo` in
 `tests/pending.test.ts`, carrying its requirement ID, and turns green as it's built.
 
 ---

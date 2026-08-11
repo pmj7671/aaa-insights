@@ -51,7 +51,6 @@ describe('Brand Love, Trust & metrics (pending)', () => {
     ['R-15', 'sentiment assigned per open-text response and aggregated'],
     ['R-16', 'every read opens its underlying responses (traceability)'],
     ['R-31', 'Trust question type — single item + optional driver battery'],
-    ['R-33', 'Love × Trust segmentation with an action per quadrant'],
   ]);
 });
 
@@ -100,7 +99,6 @@ describe('AI analysis, accounts, roles, export (pending)', () => {
   todos([
     ['R-17', 'NL query grounded only in the account data, with citations'],
     ['R-18', 'insight report with narrative, metrics, quotes, ranked actions'],
-    ['R-19', 'core metrics — response/completion rate, NPS/CSAT'],
     ['R-20', 'alert fires when a monitored signal crosses a threshold'],
     ['R-21', 'roles: Owner/Admin, Member, plus case-owner'],
     ['R-22', 'export any view and the insight report (CSV/PDF/slides)'],
@@ -119,7 +117,6 @@ describe('Invariants (pending)', () => {
     ['INV-9', 'no general identity profile; RecoveryCase is the sole exception'],
     ['INV-10', 'external data lawful and public, provenance kept'],
     ['INV-11', 'public-review PII minimised, never profiled'],
-    ['INV-12', 'Love and Trust distinct, never collapsed into satisfaction'],
     ['INV-13', 'follow-up consent-gated and withdrawable'],
     ['INV-15', 'emotion/aspect reads labeled inferred, never blended'],
     ['INV-16', 'emotion a distinct lens; association not causation'],
