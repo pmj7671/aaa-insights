@@ -18,9 +18,7 @@ const todos = (items: Pending) => {
 
 describe('Survey creation & distribution (pending)', () => {
   todos([
-    ['R-1', 'create a survey with all required question types'],
     ['R-2', 'AI-draft a survey from a plain-language objective'],
-    ['R-3', 'conditional logic shows/skips on a previous answer'],
     ['R-4', 'distribute by link and embeddable widget (email Phase-1)'],
     ['R-5', 'respondent completes on mobile/desktop without an account'],
     ['R-6', 'partial responses saved and marked incomplete'],
@@ -50,7 +48,6 @@ describe('Brand Love, Trust & metrics (pending)', () => {
     ['R-14', 'theme analysis with counts and representative quotes'],
     ['R-15', 'sentiment assigned per open-text response and aggregated'],
     ['R-16', 'every read opens its underlying responses (traceability)'],
-    ['R-31', 'Trust question type — single item + optional driver battery'],
   ]);
 });
 

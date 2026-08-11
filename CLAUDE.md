@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 2 (2026-08-11):** analysis core + Love×Trust segmentation + survey metrics; **32 tests green**, gate GREEN |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 3 (2026-08-11):** analysis core + segmentation + survey metrics + survey-definition domain; **40 tests green**, gate GREEN |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,13 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-11 (Phase 4 — increment 3)** — Built `src/domain/survey.ts`: question types incl. Brand Love
+  scale + Trust battery (**R-1**), conditional show/skip logic (**R-3**), Trust question type single-item +
+  optional four-driver battery (**R-31**), plus structural survey validation. Closed R-1, R-3, R-31. **40
+  tests green** (+8), tsc clean, gate GREEN. Requirements closed so far: R-1, R-3, R-13, R-19, R-30, R-31,
+  R-32, R-33, INV-2, INV-4, INV-12, INV-14, E-6, E-15, E-24 (15 IDs). Remaining pure-domain candidates thin
+  out here — next steps involve the AI seam (sentiment R-15, emotion R-46 behind a classifier interface) or
+  persistence/API behaviors.
 - **2026-08-11 (Phase 4 — increment 2)** — Built `src/domain/segmentation.ts` (**R-33/O-13**: four Love×Trust
   quadrants + action each; **INV-12** — the two axes stay distinct) and `src/domain/surveyMetrics.ts`
   (**R-19/O-4**: response/completion rate, NPS, CSAT) with inline INV-2 guards. Closed R-33, R-19, INV-12 in
