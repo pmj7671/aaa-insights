@@ -1,0 +1,17 @@
+{
+  "name": "aaa-insights",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AAA Insights — customer, competitive & relationship insight. Phase 4 (IMPLEMENT), built to Requirements v7.1.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

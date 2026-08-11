@@ -17,6 +17,8 @@ pg-*.jpg
 *.log
 dist/
 build/
+coverage/
+*.tsbuildinfo
 
 # OS / editor
 .DS_Store

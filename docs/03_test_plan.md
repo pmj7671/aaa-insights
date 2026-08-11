@@ -32,9 +32,10 @@ the plan is runnable and reviewable today. **This is not the product's technolog
 been made yet; when it is, these tests translate one-to-one to that stack's runner (Jest/Vitest, JUnit, Go
 `testing`, etc.). The *plan below is the contract*; the harness is how we make it executable.
 
-**Current state:** the tests exist and are collected, but are **skipped/pending until IMPLEMENT (Phase 4)** —
-there is no code to run against yet. That is the expected "red before green" of TEST FIRST: the suite is the
-target the build aims at. As each behavior is built, its test is switched on and turned green.
+**Current state (Phase 4 underway):** the suite is now **Vitest** (ported from the pytest reference to match
+the TypeScript stack). Increment 1 has built the analysis core — R-13, R-30, R-32, INV-2, INV-4, INV-14,
+E-6, E-15, E-24 are **green** (`tests/domain/*`); every other behavior is a Vitest `todo` in
+`tests/pending.test.ts`, carrying its requirement ID, and turns green as it's built.
 
 ---
 

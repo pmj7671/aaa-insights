@@ -47,8 +47,8 @@ Avoid revolutionary, game-changing, leverage, synergize.
 |---|-------|----------|--------|
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
-| 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — 130 tests, 14 files; **gate GREEN** (93 R-/INV-/E- IDs all traced). Skipped/pending until IMPLEMENT |
-| 4 | IMPLEMENT | `src/` (passing tests) | ⏳ Not started |
+| 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — increment 1 (2026-08-11):** TS/Vitest scaffold + analysis-core slice green (22 tests), gate GREEN |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,14 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-11 (Phase 4 — IMPLEMENT increment 1)** — Scaffolded the build: **TypeScript + Vitest** (`package.json`,
+  `tsconfig.json`, `vitest.config.ts`). Ported the pytest reference suite to **Vitest** (retired the `.py`
+  stubs); `tests/pending.test.ts` holds every not-yet-built behavior as a `todo` (one per requirement ID).
+  Built the **analysis-core slice** (`src/domain/`): Brand Love stated-only Index + unknown handling
+  (R-30/INV-4/INV-14/E-24/F-12), Trust Index (R-32), rating normalisation (E-15), metric-count guards (INV-2),
+  dedup (R-13/E-6) — with inline runtime invariant assertions. **22 tests green, tsc clean, gate GREEN.** Next
+  increment: theme/sentiment structures or the survey-definition domain. Build happens in the cloud workspace,
+  synced to C:\Dev. **Runner is now `npm test` (Vitest), not pytest.**
 - **2026-08-11 (v7.1 — NFR targets confirmed)** — Closed F-15: NFR-2 p95 ≤ 60 s, NFR-3 99.9% uptime, NFR-8
   trigger ≤ 60 s, NFR-9 tightened to RPO ≤ 1 h / RTO ≤ 8 h (from 24 h). Removed all `(confirm)` markers across
   spec / test plan / tests; regenerated branded docx/pdf (22 pp, gate GREEN). Vendored AAA logo → `assets/` and
