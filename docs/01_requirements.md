@@ -1,8 +1,13 @@
 # Product Requirements Document — AAA Insights
 
-**Version:** v7  |  **Status:** Draft (Emotion & Experience pillar added — ready for approval)  |  **Date:** 2026-07-30
+**Version:** v7.1  |  **Status:** Approved — NFR targets confirmed  |  **Date:** 2026-08-11
 **Owner:** Active AI Advisors  |  **Prepared for:** Paul Jamieson
 **Methodology:** Grounded AI™ — Phase 1 (SPECIFY increment → v7)
+
+> **Changes in v7.1 (2026-08-11):** confirmed the four placeholder NFR targets (F-15). NFR-2 analysis
+> **p95 ≤ 60 s**, NFR-3 **99.9% uptime**, NFR-8 trigger **≤ 60 s**, and NFR-9 **tightened to RPO ≤ 1 h /
+> RTO ≤ 8 h** (from the 24 h placeholder — losing up to a day of feedback was too loose; point-in-time
+> recovery on managed Postgres makes ~1 h cheap). No scope change; the `(confirm)` markers are removed.
 
 > **Changes in v7 (2026-07-30):** added an **Emotion & Experience** analysis pillar and an explicit
 > **Strengths & Gripes** (aspect-based pros/cons) output. The product now reads the **emotional texture**
@@ -451,12 +456,12 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
 
 ## 11. Non-functional requirements
 
-*(v6: concrete targets below are proposed; those marked "confirm" want your sign-off — F-15.)*
+*(v7.1: the previously-placeholder targets NFR-2/3/8/9 are now confirmed — F-15 closed.)*
 
 - **NFR-1 (Performance):** A survey page loads under 2 s on mobile; a submission acknowledges under 1 s.
 - **NFR-2 (Analysis latency):** Theme/sentiment/index analysis of the MVP size (~5,000 items) returns at
-  **p95 ≤ 60 s** *(confirm)*; larger sets run as background jobs with progress shown.
-- **NFR-3 (Availability):** The collection endpoint targets **99.9% uptime** *(confirm)*; ingestion is
+  **p95 ≤ 60 s** *(confirmed v7.1)*; larger sets run as background jobs with progress shown.
+- **NFR-3 (Availability):** The collection endpoint targets **99.9% uptime** *(confirmed v7.1)*; ingestion is
   durable even if analysis is degraded.
 - **NFR-4 (Accessibility):** Respondent-facing surveys meet WCAG 2.1 AA.
 - **NFR-5 (Scalability path):** Grows from SMB volumes toward larger sets without a rewrite.
@@ -465,9 +470,9 @@ Each is a single, testable behavior. IDs are cited by the Phase-3 test suite.
 - **NFR-7 (Collection freshness & politeness):** Collected data shows a freshness/coverage indicator;
   collection runs at a polite, configurable rate and records gaps.
 - **NFR-8 (Trigger latency):** *(v6)* A dissatisfaction signal opens a RecoveryCase within **≤ 60 s**
-  *(confirm)*.
-- **NFR-9 (Durability):** *(v6)* Durable storage with **RPO ≤ 24 h, RTO ≤ 8 h** *(confirm)*; all timestamps
-  stored UTC, reporting in the account's configured timezone.
+  *(confirmed v7.1)*.
+- **NFR-9 (Durability):** *(v7.1)* Durable storage with **RPO ≤ 1 h, RTO ≤ 8 h** (point-in-time recovery); all
+  timestamps stored UTC, reporting in the account's configured timezone.
 
 ---
 
@@ -654,12 +659,11 @@ timezone/UTC (E-22/NFR-9), retention hold (DPS-5), case-owner role (R-21), age-g
 
 ## Approval
 
-This is the specification gate. **v7 adds the Emotion & Experience pillar on top of the v6 CHALLENGE
-baseline and is ready for your approval.** On approval, v7 is the baseline that carries into **TEST FIRST
-(Phase 3)** — deriving the test suite from this spec before any implementation. The `(confirm)` NFR targets
-(NFR-2/3/8/9) can be confirmed at approval or adjusted. *(The new pillar warrants a light CHALLENGE pass —
-chiefly on inferred-emotion accuracy and the association-vs-causation framing — which its invariants
-INV-15/INV-16 and edge cases E-25–E-27 already pre-empt; we can fold any further findings before Phase 3.)*
+This is the specification gate. **v7 added the Emotion & Experience pillar on the v6 CHALLENGE baseline and
+was approved; v7.1 confirms the four NFR targets (NFR-2/3/8/9).** This approved spec is the baseline that
+carries into **TEST FIRST (Phase 3)** and **IMPLEMENT (Phase 4)**. *(The emotion pillar still warrants an
+optional light CHALLENGE pass — chiefly on inferred-emotion accuracy and the association-vs-causation
+framing — which invariants INV-15/INV-16 and edge cases E-25–E-27 already pre-empt.)*
 
 Approved by: __________________________    Date: ______________
 

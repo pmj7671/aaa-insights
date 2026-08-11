@@ -8,7 +8,7 @@ const {
 const INK = '1A1D21', PAPER = 'F4F1EA', SIGNAL = 'D9763A', SLATE = '6B6F76', MIST = 'E5E2DA';
 const DISPLAY = 'Fraunces', BODY = 'Inter', MONO = 'JetBrains Mono';
 const CONTENT_W = 9360;
-const logo = fs.readFileSync('/root/.claude/skills/aaa-brand-guidelines/AAA_Mark_640.png');
+const logo = fs.readFileSync(require('path').join(__dirname, 'assets', 'AAA_Mark_640.png'));
 const NONE = { style: BorderStyle.NONE, size: 0, color: 'auto' };
 
 function eyebrow(text) { return new Paragraph({ spacing: { before: 360, after: 80 }, children: [new TextRun({ text: text.toUpperCase(), font: BODY, bold: true, size: 17, color: SLATE, characterSpacing: 40 })] }); }
@@ -55,11 +55,11 @@ children.push(shortRule());
 children.push(new Paragraph({ spacing: { before: 120, after: 40 }, children: [ new TextRun({ text: 'AAA Insights', font: DISPLAY, bold: true, size: 68, color: INK }) ] }));
 children.push(new Paragraph({ spacing: { after: 300 }, children: [ new TextRun({ text: 'Collect surveys, reviews, ratings, and comments — then let AI turn them into customer, competitive, and relationship insight, and help you act on it.', font: DISPLAY, italics: true, size: 25, color: SLATE }) ] }));
 const meta = [
-  ['Version', 'v7 — Draft (Emotion & Experience pillar added — ready for approval)'],
-  ['Date', '2026-07-30'],
+  ['Version', 'v7.1 — Approved (Emotion & Experience pillar; NFR targets confirmed)'],
+  ['Date', '2026-08-11'],
   ['Prepared by', 'Active AI Advisors'],
   ['Prepared for', 'Paul Jamieson'],
-  ['Methodology', 'Grounded AI™ — Phase 1 (SPECIFY increment → v7)'],
+  ['Methodology', 'Grounded AI™ — Phase 1 (SPECIFY → v7.1)'],
 ];
 meta.forEach(([k, v]) => children.push(new Paragraph({ spacing: { after: 40 }, children: [
   new TextRun({ text: (k + ':').padEnd(14), font: MONO, size: 18, color: SLATE }),
@@ -69,9 +69,10 @@ children.push(new Paragraph({ spacing: { before: 360 }, border: { top: { style: 
 children.push(new Paragraph({ children: [new PageBreak()] }));
 
 // ---- v7 changes callout ----
-children.push(eyebrow('What changed in v7'));
+children.push(eyebrow('What changed in v7 / v7.1'));
 children.push(shortRule());
-children.push(calloutBox('Revised 2026-07-30 — Emotion & Experience pillar added', [
+children.push(calloutBox('Emotion & Experience pillar (v7) · NFR targets confirmed (v7.1, 2026-08-11)', [
+  '• v7.1: confirmed the four NFR targets — analysis p95 ≤ 60 s, 99.9% uptime, trigger ≤ 60 s, and durability tightened to RPO ≤ 1 h / RTO ≤ 8 h (from a 24 h placeholder).',
   '• New: an Emotion profile (O-17) — the specific emotions customers voice about the brand (pride, relief, delight vs. frustration, disappointment, anger), with intensity, confidence, verbatims, and trend.',
   '• New: a Strengths & Gripes board (O-18) — the pluses and minuses customers name, per aspect, ranked by their association with Brand Love / Trust (association, not causation).',
   '• Both compare own brand vs. competitors (O-19). Emotions use a compact headline set (~7) that rolls up a finer sub-emotion set on demand (D-17).',
@@ -341,17 +342,17 @@ children.push(calloutBox('Lawful and ethical by construction — with a legal-re
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 11 NFR ----
-section('11', 'Non-functional requirements', 'Speed, reliability, access, honesty — testable budgets. (v6: "confirm" targets want your sign-off.)');
+section('11', 'Non-functional requirements', 'Speed, reliability, access, honesty — testable budgets. (v7.1: NFR-2/3/8/9 targets confirmed.)');
 [
   ['NFR-1', 'Performance — a survey page loads under 2 s on mobile; a submission acknowledges under 1 s.'],
-  ['NFR-2', '(v6) Analysis latency — the MVP size (~5,000 items) returns at p95 ≤ 60 s (confirm); larger sets background with progress.'],
-  ['NFR-3', '(v6) Availability — the collection endpoint targets 99.9% uptime (confirm); ingestion durable even if analysis is degraded.'],
+  ['NFR-2', '(v7.1) Analysis latency — the MVP size (~5,000 items) returns at p95 ≤ 60 s (confirmed); larger sets background with progress.'],
+  ['NFR-3', '(v7.1) Availability — the collection endpoint targets 99.9% uptime (confirmed); ingestion durable even if analysis is degraded.'],
   ['NFR-4', 'Accessibility — respondent-facing surveys meet WCAG 2.1 AA.'],
   ['NFR-5', 'Scalability path — grows from SMB volumes toward larger sets without a rewrite.'],
   ['NFR-6', 'Explainability — every AI output carries the data behind it and a confidence signal, including inferred (companion) reads.'],
   ['NFR-7', 'Collection freshness & politeness — a freshness/coverage indicator; polite, configurable rate; records gaps.'],
-  ['NFR-8', '(v6) Trigger latency — a dissatisfaction signal opens a RecoveryCase within ≤ 60 s (confirm).'],
-  ['NFR-9', '(v6) Durability — RPO ≤ 24 h, RTO ≤ 8 h (confirm); timestamps stored UTC, reporting in the account’s configured timezone.'],
+  ['NFR-8', '(v7.1) Trigger latency — a dissatisfaction signal opens a RecoveryCase within ≤ 60 s (confirmed).'],
+  ['NFR-9', '(v7.1) Durability — RPO ≤ 1 h, RTO ≤ 8 h (point-in-time recovery); timestamps stored UTC, reporting in the account’s configured timezone.'],
 ].forEach(([id, t]) => children.push(bullet(id, t)));
 
 // ---- 12 DATA MODEL ----
@@ -453,7 +454,7 @@ children.push(new Paragraph({ children: [new PageBreak()] }));
 children.push(eyebrow('Approval'));
 children.push(shortRule());
 children.push(h1('The specification gate'));
-children.push(body('v7 adds the Emotion & Experience pillar on top of the v6 CHALLENGE baseline and is ready for your approval. On approval, v7 is the baseline that carries into TEST FIRST (Phase 3) — deriving the test suite from this spec before any implementation. The (confirm) NFR targets (NFR-2/3/8/9) can be confirmed at approval or adjusted.'));
+children.push(body('v7 added the Emotion & Experience pillar on the v6 CHALLENGE baseline and was approved; v7.1 confirms the four NFR targets (NFR-2/3/8/9). This approved spec is the baseline that carries into TEST FIRST (Phase 3) and IMPLEMENT (Phase 4).'));
 children.push(body([{ t: 'Note: ', b: true }, { t: 'the new pillar warrants a light CHALLENGE pass — chiefly on inferred-emotion accuracy and the association-vs-causation framing — which its invariants INV-15/INV-16 and edge cases E-25–E-27 already pre-empt; we can fold any further findings before Phase 3.' }]));
 children.push(new Paragraph({ spacing: { before: 260, after: 0 }, children: [
   new TextRun({ text: 'Approved by ', font: BODY, size: 21, color: INK }),

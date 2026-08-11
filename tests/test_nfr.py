@@ -2,8 +2,7 @@
 
 TEST FIRST (Phase 3). Derived from Requirements v7 and docs/03_test_plan.md.
 Skipped until IMPLEMENT (Phase 4). These need a performance/load/accessibility harness and are
-confirmed in VERIFY (Phase 5). The "(confirm)" targets await Paul's sign-off; the tests will
-assert whatever number is agreed.
+confirmed in VERIFY (Phase 5). NFR-2/3/8/9 targets were confirmed in v7.1 and are asserted below.
 """
 import pytest
 
@@ -15,12 +14,12 @@ def test_survey_page_load_budget():
 
 
 def test_analysis_latency_budget():
-    """NFR-2: Analysis of ~5,000 items returns at p95 <= 60 s (confirm); larger sets run as
+    """NFR-2: Analysis of ~5,000 items returns at p95 <= 60 s; larger sets run as
     background jobs with progress."""
 
 
 def test_collection_uptime_budget():
-    """NFR-3: The collection endpoint meets its uptime target (confirm 99.9%); ingestion stays
+    """NFR-3: The collection endpoint meets 99.9% uptime; ingestion stays
     durable if analysis degrades."""
 
 
@@ -43,8 +42,8 @@ def test_collection_freshness_and_politeness():
 
 
 def test_trigger_latency_budget():
-    """NFR-8, R-35: A dissatisfaction signal opens a RecoveryCase within <= 60 s (confirm)."""
+    """NFR-8, R-35: A dissatisfaction signal opens a RecoveryCase within <= 60 s."""
 
 
 def test_durability_rpo_rto():
-    """NFR-9: Storage is durable to RPO <= 24 h, RTO <= 8 h (confirm); timestamps stored UTC."""
+    """NFR-9: Storage is durable to RPO <= 1 h, RTO <= 8 h (point-in-time recovery); timestamps stored UTC."""

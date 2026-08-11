@@ -45,7 +45,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 
 | # | Phase | Artifact | Status |
 |---|-------|----------|--------|
-| 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7**) | ✅ **v7 APPROVED 2026-07-30** (Paul: "proceed to TEST FIRST") — Emotion & Experience pillar; baseline for Phase 3 |
+| 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — 130 tests, 14 files; **gate GREEN** (93 R-/INV-/E- IDs all traced). Skipped/pending until IMPLEMENT |
 | 4 | IMPLEMENT | `src/` (passing tests) | ⏳ Not started |
@@ -120,9 +120,14 @@ Avoid revolutionary, game-changing, leverage, synergize.
   SQL). Scenarios: Pilot 5 accts ≈ $150/mo; Growing 25 ≈ $475/mo; Scaling 100 ≈ $2,000/mo (~$20/acct). Confirms
   **hybrid tiered+usage pricing (D-7)** — base fee covers the floor, usage covers AI; healthy margins at
   $99–299/acct/mo. Offered an interactive spreadsheet version as a follow-up.
-- **Next action:** Paul reviews the cost model → confirm the "(confirm)" NFR targets → **Phase 4 IMPLEMENT**
-  (scaffold to the stack, port tests to Vitest, build the MVP/Phase-0 slice via the safety loop). Optional:
-  light CHALLENGE on the emotion pillar; interactive cost spreadsheet.
+- **NFR targets confirmed 2026-08-11 (spec → v7.1):** NFR-2 analysis **p95 ≤ 60 s**, NFR-3 **99.9% uptime**,
+  NFR-8 trigger **≤ 60 s**, NFR-9 **tightened to RPO ≤ 1 h / RTO ≤ 8 h** (from 24 h placeholder). Written into
+  spec, generator, test plan, and `tests/test_nfr.py`; branded doc regenerated (22 pp); gate GREEN. *(Also:
+  vendored the AAA logo into `assets/` and pointed `build_docx.js` at it — the skill paths moved to
+  `skills/synced/`, which broke the old hardcoded logo path; now self-contained.)*
+- **Next action:** **Phase 4 IMPLEMENT** — scaffold to the GCP/TypeScript stack, port tests to Vitest, build
+  the MVP/Phase-0 slice via the safety loop. Optional: light CHALLENGE on the emotion pillar; interactive cost
+  spreadsheet. No open "(confirm)" items remain.
 
 ### Scoping decisions locked (all of §14 resolved in v4)
 - Scope: **MVP + phased roadmap.** MVP = own-customer analysis + Brand Love + Trust + aggregate
@@ -197,6 +202,10 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-11 (v7.1 — NFR targets confirmed)** — Closed F-15: NFR-2 p95 ≤ 60 s, NFR-3 99.9% uptime, NFR-8
+  trigger ≤ 60 s, NFR-9 tightened to RPO ≤ 1 h / RTO ≤ 8 h (from 24 h). Removed all `(confirm)` markers across
+  spec / test plan / tests; regenerated branded docx/pdf (22 pp, gate GREEN). Vendored AAA logo → `assets/` and
+  fixed `build_docx.js` logo path (skills relocated to `skills/synced/`).
 - **2026-08-04 (Research library +2)** — Added two Brand Love papers: **Fetscherin (2014, JCM)** — brand love
   as a one-directional *parasocial* bond; love precedes loyalty, drives purchase intention + WOM (supports
   O-11 as leading indicator, R-39 advocacy). **Maheshwari, Lodorfos & Jacobsen (2014, IJBA)** — affective

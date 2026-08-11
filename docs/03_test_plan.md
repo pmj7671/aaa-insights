@@ -217,19 +217,19 @@ target the build aims at. As each behavior is built, its test is switched on and
 ## 13. Non-functional budgets
 
 *(These need a performance/load/accessibility harness, not a plain unit test; several are confirmed in VERIFY.
-The "confirm" targets await Paul's sign-off — see the note below.)*
+The NFR-2/3/8/9 targets were confirmed in v7.1.)*
 
 | Test | Verifies (plain English) | Type | Traces to |
 |------|--------------------------|------|-----------|
 | test_survey_page_load_budget | A survey page loads under 2 s on mobile; a submission acknowledges under 1 s | nfr | NFR-1 |
-| test_analysis_latency_budget | Analysis of ~5,000 items returns at p95 ≤ 60 s *(confirm)*; larger sets run as background jobs with progress | nfr | NFR-2 |
-| test_collection_uptime_budget | The collection endpoint meets its uptime target *(confirm 99.9%)*; ingestion stays durable if analysis degrades | nfr | NFR-3 |
+| test_analysis_latency_budget | Analysis of ~5,000 items returns at p95 ≤ 60 s; larger sets run as background jobs with progress | nfr | NFR-2 |
+| test_collection_uptime_budget | The collection endpoint meets 99.9% uptime; ingestion stays durable if analysis degrades | nfr | NFR-3 |
 | test_accessibility_wcag_aa | Respondent-facing surveys meet WCAG 2.1 AA | nfr | NFR-4 |
 | test_scales_without_rewrite | The system grows from SMB volumes toward larger sets without a rewrite | nfr | NFR-5 |
 | test_ai_outputs_carry_confidence_and_source | Every AI output carries its source data and a confidence signal, including inferred companion reads | nfr | NFR-6, INV-3 |
 | test_collection_freshness_and_politeness | Collected data shows a freshness/coverage indicator; collection runs at a polite, configurable rate and records gaps | nfr | NFR-7 |
-| test_trigger_latency_budget | A dissatisfaction signal opens a RecoveryCase within ≤ 60 s *(confirm)* | nfr | NFR-8, R-35 |
-| test_durability_rpo_rto | Storage is durable to RPO ≤ 24 h, RTO ≤ 8 h *(confirm)*; timestamps stored UTC | nfr | NFR-9 |
+| test_trigger_latency_budget | A dissatisfaction signal opens a RecoveryCase within ≤ 60 s | nfr | NFR-8, R-35 |
+| test_durability_rpo_rto | Storage is durable to RPO ≤ 1 h, RTO ≤ 8 h (point-in-time recovery); timestamps stored UTC | nfr | NFR-9 |
 
 ## 14. Exclusions (negative tests — the product must NOT do these)
 
@@ -277,9 +277,8 @@ accessibility harness and are confirmed in **VERIFY (Phase 5)**; several DPS ite
 compliance controls confirmed by review rather than a single automated assertion. These are listed so nothing
 is silently uncovered.
 
-**Open confirmations (carried from v7):** the "(confirm)" NFR targets — NFR-2 (analysis p95), NFR-3 (uptime),
-NFR-8 (trigger latency), NFR-9 (RPO/RTO) — are placeholders until Paul sets the business bar; the tests are
-written and will assert whatever number is agreed.
+**NFR targets confirmed (v7.1):** NFR-2 analysis **p95 ≤ 60 s**, NFR-3 **99.9% uptime**, NFR-8 trigger
+**≤ 60 s**, NFR-9 **RPO ≤ 1 h / RTO ≤ 8 h**. The NFR tests assert these numbers.
 
 ---
 
