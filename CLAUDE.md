@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 4 (2026-08-11):** analysis core, segmentation, survey metrics, survey-definition, sentiment + emotion aggregation (AI seams defined); **50 tests green**, gate GREEN |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 5 (2026-08-11):** + closed-loop/recovery domain; **59 tests green**, gate GREEN. 25 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,14 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-11 (Phase 4 — increment 5, recovery domain)** — Built `src/domain/recovery.ts`: dissatisfaction
+  trigger evaluation (**R-35**), RecoveryCase lifecycle transitions (**R-36**), the contactable-vs-anonymous
+  case-kind boundary (D-C/INV-9 — only consented first-party is contactable; public/competitor → anonymous
+  triage), case grouping/throttle (**E-21**), prioritisation (**R-40**), stale-case escalation (**E-19**).
+  Closed R-35, R-36, R-40, E-19, E-21. **59 tests green** (+9), tsc clean, gate GREEN — **25 requirement IDs
+  closed.** (One test-bug caught + fixed via the safety loop: a grouping-test signal lacked a dissatisfaction
+  indicator so no case opened — corrected.) Remaining work leans on infra/AI: LLM gateway (live classifiers),
+  persistence/API, CSV import, competitive collection.
 - **2026-08-11 (Phase 4 — increment 4, AI seam)** — Built `src/domain/sentiment.ts` (Sentiment type,
   **SentimentClassifier** interface = the LLM seam, confidence-floor aggregation — E-26) and
   `src/domain/emotion.ts` (compact ~7 **headline emotion taxonomy** + sub-emotion rollup D-17,
