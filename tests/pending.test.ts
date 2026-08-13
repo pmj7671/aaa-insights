@@ -37,7 +37,6 @@ describe('Conversational surveys (pending)', () => {
 
 describe('Unified feedback hub (pending)', () => {
   todos([
-    ['R-11', 'CSV import maps columns to the unified schema'],
     ['R-12', 'all feedback queryable and filterable'],
     ['R-26', 'aggregate unified-customer view without an identity profile'],
   ]);
@@ -102,7 +101,6 @@ describe('AI analysis, accounts, roles, export (pending)', () => {
 
 describe('Invariants (pending)', () => {
   todos([
-    ['INV-1', 'every response attributable to one source and one brand'],
     ['INV-3', 'all AI claims traceable to verbatims'],
     ['INV-5', 'survey completable without identifying information'],
     ['INV-6', 'account data isolated; analysis grounded only in that account'],
@@ -121,7 +119,6 @@ describe('Edge cases (pending)', () => {
     ['E-2', 'abandoned survey retained, flagged incomplete'],
     ['E-3', 'junk/abusive text flagged and excluded by default'],
     ['E-4', 'non-English detected, tagged, set aside'],
-    ['E-5', 'malformed CSV: per-row error report'],
     ['E-7', 'conversation off the rails recovers and ends gracefully'],
     ['E-8', 'ambiguous query answers only what the data supports'],
     ['E-9', 'volume spike stays correct; abuse defenses distinguish stuffing'],
