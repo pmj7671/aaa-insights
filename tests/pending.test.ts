@@ -41,15 +41,8 @@ describe('Unified feedback hub (pending)', () => {
   ]);
 });
 
-describe('Brand Love, Trust & metrics (pending)', () => {
-  todos([
-    ['R-15', 'sentiment assigned per open-text response and aggregated'],
-  ]);
-});
-
 describe('Emotion & experience — v7 (pending)', () => {
   todos([
-    ['R-46', 'detect emotions to the compact headline taxonomy + profile'],
     ['R-47', 'drill down from a headline emotion to sub-emotions + verbatims'],
     ['R-48', 'aspect-based Strengths & Gripes ranked by association'],
     ['R-49', 'competitive emotion & strengths/gripes comparison (Phase 1)'],
