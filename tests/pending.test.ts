@@ -45,7 +45,6 @@ describe('Unified feedback hub (pending)', () => {
 describe('Brand Love, Trust & metrics (pending)', () => {
   todos([
     ['R-15', 'sentiment assigned per open-text response and aggregated'],
-    ['R-16', 'every read opens its underlying responses (traceability)'],
   ]);
 });
 
@@ -99,7 +98,6 @@ describe('AI analysis, accounts, roles, export (pending)', () => {
 
 describe('Invariants (pending)', () => {
   todos([
-    ['INV-3', 'all AI claims traceable to verbatims'],
     ['INV-5', 'survey completable without identifying information'],
     ['INV-6', 'account data isolated; analysis grounded only in that account'],
     ['INV-7', 'deleted data never reappears (subject to DPS-5 hold)'],

@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 7 (2026-08-13):** + theme analysis + alerts; **75 tests green**, gate GREEN. 30 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 8 (2026-08-13):** + traceability spine; **81 tests green**, gate GREEN. 32 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,12 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-13 (Phase 4 — increment 8, traceability spine)** — Built `src/domain/traceability.ts`: generic
+  `buildTraceIndex` (group recordIds by any key — Love label, Trust bucket, sentiment polarity, theme — with
+  dedup), `openTrace` (open a read to its exact underlying responses), `isTraceable`/`assertTraceable` guards.
+  Closes **R-16** and **INV-3** (the "every claim opens its verbatims" guarantee). **81 tests green** (+6),
+  tsc clean, gate GREEN — **32 requirement IDs closed.** Next: LLM-gateway seam (real classifiers) or
+  persistence/API.
 - **2026-08-13 (Phase 4 — increment 7, themes + alerts)** — Built `src/domain/themes.ts` (**R-14/O-2**:
   aggregate theme assignments → counts, share, de-duplicated representative quotes, and **recordIds for
   traceability** — the INV-3/R-16 spine; ThemeExtractor seam) and `src/domain/alerts.ts` (**R-20/O-7**:
