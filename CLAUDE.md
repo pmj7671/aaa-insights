@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 6 (2026-08-13):** + CSV import / FeedbackRecord; **67 tests green**, gate GREEN. 28 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 7 (2026-08-13):** + theme analysis + alerts; **75 tests green**, gate GREEN. 30 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,12 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-13 (Phase 4 — increment 7, themes + alerts)** — Built `src/domain/themes.ts` (**R-14/O-2**:
+  aggregate theme assignments → counts, share, de-duplicated representative quotes, and **recordIds for
+  traceability** — the INV-3/R-16 spine; ThemeExtractor seam) and `src/domain/alerts.ts` (**R-20/O-7**:
+  threshold crossing above/below, disabled/null-safe, batch evaluation). Closed R-14, R-20. **75 tests green**
+  (+8), tsc clean, gate GREEN — **30 requirement IDs closed.** Next pure-ish: retrofit traceability across
+  aggregates to close R-16/INV-3, or begin the LLM-gateway seam.
 - **2026-08-13 (Phase 4 — increment 6, CSV import)** — Built `src/domain/feedbackRecord.ts` (unified record +
   **INV-1** attribution: exactly one brand + one source) and `src/domain/csvImport.ts` (RFC-4180 CSV parser,
   column mapping to the unified schema — **R-11**, per-row error report with partial acceptance — **E-5**;

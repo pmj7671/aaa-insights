@@ -44,7 +44,6 @@ describe('Unified feedback hub (pending)', () => {
 
 describe('Brand Love, Trust & metrics (pending)', () => {
   todos([
-    ['R-14', 'theme analysis with counts and representative quotes'],
     ['R-15', 'sentiment assigned per open-text response and aggregated'],
     ['R-16', 'every read opens its underlying responses (traceability)'],
   ]);
@@ -92,7 +91,6 @@ describe('AI analysis, accounts, roles, export (pending)', () => {
   todos([
     ['R-17', 'NL query grounded only in the account data, with citations'],
     ['R-18', 'insight report with narrative, metrics, quotes, ranked actions'],
-    ['R-20', 'alert fires when a monitored signal crosses a threshold'],
     ['R-21', 'roles: Owner/Admin, Member, plus case-owner'],
     ['R-22', 'export any view and the insight report (CSV/PDF/slides)'],
     ['R-23', 'delete and export all account data'],
