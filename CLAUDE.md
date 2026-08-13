@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 11 (2026-08-13):** + baseline classifiers + text analysis (sentiment/emotion end-to-end); **101 tests green**, gate GREEN. 41 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 12 (2026-08-13):** + Strengths & Gripes + competitive benchmark; **108 tests green**, gate GREEN. 43 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,14 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-13 (Phase 4 — increment 12, Strengths & Gripes + benchmark)** — Built `src/domain/aspects.ts`
+  (**R-48/O-18**: aspect strengths/gripes tally, net, volume, traceable recordIds, association-not-causation
+  label; AspectExtractor seam), `baselineAspects.ts` (lexicon extractor, configurable taxonomy), and
+  `benchmark.ts` (**R-27/O-9**: own-vs-competitor across Love/Trust/rating/neg-sentiment with deltas; **E-14**
+  null rather than a fabricated number). Closed R-27, R-48. **108 tests green** (+7), tsc clean, gate GREEN —
+  **43 requirement IDs closed.** Remaining: per-competitor deep-dive (R-28/R-29), lawful collection (R-25),
+  insight report/query/export/roles (R-17/18/22/23/26/21), infra (persistence/API, admin auth R-42, secrets
+  R-43, PII redaction R-44), plus small edges.
 - **2026-08-13 (Phase 4 — increment 11, classifiers on the seams)** — Built `src/domain/baselineSentiment.ts`
   and `baselineEmotion.ts` (deterministic lexicon classifiers implementing the SentimentClassifier /
   EmotionClassifier seams — real impls, production swaps Claude via the gateway) and `src/domain/analyzeText.ts`

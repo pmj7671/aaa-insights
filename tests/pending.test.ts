@@ -44,7 +44,6 @@ describe('Unified feedback hub (pending)', () => {
 describe('Emotion & experience — v7 (pending)', () => {
   todos([
     ['R-47', 'drill down from a headline emotion to sub-emotions + verbatims'],
-    ['R-48', 'aspect-based Strengths & Gripes ranked by association'],
     ['R-49', 'competitive emotion & strengths/gripes comparison (Phase 1)'],
     ['R-50', 'publish taxonomy; carry confidence; never blend into headline'],
   ]);
@@ -54,7 +53,6 @@ describe('Unified customer & competitive insight (pending)', () => {
   todos([
     ['R-24', 'define and manage competitor brands'],
     ['R-25', 'collect public reviews under DPS-7 + legal gate'],
-    ['R-27', 'benchmark own vs competitors over a period'],
     ['R-28', 'per-competitor aggregate analysis with traceability'],
     ['R-29', 'competitor figures filterable and link to sources'],
   ]);
