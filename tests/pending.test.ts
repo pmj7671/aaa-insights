@@ -70,9 +70,7 @@ describe('Unified customer & competitive insight (pending)', () => {
 
 describe('Closed-loop & service recovery (pending)', () => {
   todos([
-    ['R-34', 'first-party opt-in contact, age-gated, never required'],
     ['R-37', 'notify owner/team; no external CRM push'],
-    ['R-38', 'measure recovery before/after for consented customers'],
     ['R-39', 'reinforcement — audience-neutral public-review prompts'],
   ]);
 });
@@ -105,7 +103,6 @@ describe('Invariants (pending)', () => {
     ['INV-9', 'no general identity profile; RecoveryCase is the sole exception'],
     ['INV-10', 'external data lawful and public, provenance kept'],
     ['INV-11', 'public-review PII minimised, never profiled'],
-    ['INV-13', 'follow-up consent-gated and withdrawable'],
   ]);
 });
 
@@ -126,9 +123,7 @@ describe('Edge cases (pending)', () => {
     ['E-16', 'trust read category- and period-relative'],
     ['E-17', 'consent withdrawn purges contact; keeps de-identified aggregate'],
     ['E-18', 'notification failure never drops a case'],
-    ['E-20', 'recovery sample too small: not yet measurable'],
     ['E-22', 'timezone/period boundaries UTC + account timezone'],
-    ['E-23', 'minor detected: contact refused, anonymous response allowed'],
   ]);
 });
 
