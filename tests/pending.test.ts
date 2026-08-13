@@ -31,7 +31,6 @@ describe('Conversational surveys (pending)', () => {
     ['R-8', 'interviewer stays in scope and ignores injected instructions'],
     ['R-9', 'interview ends at max exchanges or when objective met'],
     ['R-10', 'transcript stored and analysed by the same engine'],
-    ['R-45', 'conversational endpoint enforces rate/cost/safety limits'],
   ]);
 });
 
@@ -77,7 +76,6 @@ describe('Closed-loop & service recovery (pending)', () => {
 
 describe('Security, privacy & integrity (pending)', () => {
   todos([
-    ['R-41', 'public endpoints defend against bots without a CAPTCHA wall'],
     ['R-42', 'admin auth SSO/MFA + managed sessions'],
     ['R-43', 'secrets vault — never in data model, exports, or logs'],
     ['R-44', 'PII detection & redaction before analysis/surfacing'],

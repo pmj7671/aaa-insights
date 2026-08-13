@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 9 (2026-08-13):** + consent/contact + recovery measurement; **89 tests green**, gate GREEN. 37 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 10 (2026-08-13):** + LLM gateway + abuse defense; **97 tests green**, gate GREEN. 39 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,14 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-13 (Phase 4 — increment 10, LLM gateway + abuse defense)** — Built `src/domain/abuseDefense.ts`
+  (token-bucket rate limiter, one-response-per-link tokens, duplication signatures — **R-41**, no CAPTCHA) and
+  `src/domain/llmGateway.ts` (**LLMProvider seam** for Claude-via-Vertex, per-link token-budget cost ceiling,
+  output SafetyChecker, bounded ConversationSession — **R-45**). Deterministic stub provider in tests. Closed
+  R-41, R-45. **97 tests green** (+8), tsc clean, gate GREEN — **39 requirement IDs closed.** The gateway is
+  the seam the sentiment/emotion/theme classifiers plug into; wiring a real (or baseline) classifier next
+  closes R-15/R-46 end-to-end. Remaining: classifiers on the gateway, persistence/API, admin auth (R-42),
+  secrets vault (R-43), PII redaction (R-44), competitive collection, plus small pure edges.
 - **2026-08-13 (Phase 4 — increment 9, consent + recovery measurement)** — Built `src/domain/contact.ts`
   (**R-34** opt-in contact, **E-23** age gate refusal, **INV-13** consent-gated + withdrawable; first-party
   only) and `src/domain/recoveryMeasure.ts` (**R-38/O-15** before/after delta + cohort recovery_rate, **E-20**
