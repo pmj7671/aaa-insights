@@ -68,8 +68,6 @@ describe('Closed-loop & service recovery (pending)', () => {
 describe('Security, privacy & integrity (pending)', () => {
   todos([
     ['R-42', 'admin auth SSO/MFA + managed sessions'],
-    ['R-43', 'secrets vault — never in data model, exports, or logs'],
-    ['R-44', 'PII detection & redaction before analysis/surfacing'],
   ]);
 });
 
@@ -88,7 +86,6 @@ describe('Invariants (pending)', () => {
     ['INV-5', 'survey completable without identifying information'],
     ['INV-6', 'account data isolated; analysis grounded only in that account'],
     ['INV-7', 'deleted data never reappears (subject to DPS-5 hold)'],
-    ['INV-8', 'PII never in logs/outputs unless admin opts in; redacted'],
     ['INV-9', 'no general identity profile; RecoveryCase is the sole exception'],
     ['INV-10', 'external data lawful and public, provenance kept'],
     ['INV-11', 'public-review PII minimised, never profiled'],

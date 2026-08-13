@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 12 (2026-08-13):** + Strengths & Gripes + competitive benchmark; **108 tests green**, gate GREEN. 43 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 13 (2026-08-13):** + PII redaction + secrets vault; **114 tests green**, gate GREEN. 46 requirement IDs closed |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,15 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-13 (Phase 4 — increment 13, PII redaction + secrets)** — Built `src/domain/pii.ts` (detect +
+  redact email/phone/SSN/credit-card/IP before analysis or surfacing — **R-44/INV-8**) and
+  `src/domain/secrets.ts` (opaque **SecretRef** by name, **SecretVault** seam = Secret Manager in prod,
+  `redactSecrets` scrub for logs/exports — **R-43/DPS-11**). Closed R-43, R-44, INV-8. **114 tests green**
+  (+6), tsc clean, gate GREEN — **46 requirement IDs closed** (~half the spec). Remaining is the infra tier:
+  persistence/API, admin auth (R-42), lawful collection (R-25), per-competitor (R-28/29), unified-customer
+  view (R-26), insight report/query/export/roles (R-17/18/22/23/21), plus small edges (E-1/3/4/8/10/11/12/
+  13/16/17/18/22), NFR/DPS operational items, exclusions (negative tests). These need DB/HTTP scaffolding
+  or are VERIFY-phase.
 - **2026-08-13 (Phase 4 — increment 12, Strengths & Gripes + benchmark)** — Built `src/domain/aspects.ts`
   (**R-48/O-18**: aspect strengths/gripes tally, net, volume, traceable recordIds, association-not-causation
   label; AspectExtractor seam), `baselineAspects.ts` (lexicon extractor, configurable taxonomy), and
