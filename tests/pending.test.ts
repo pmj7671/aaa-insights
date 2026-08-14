@@ -82,22 +82,17 @@ describe('Invariants (pending)', () => {
 
 describe('Edge cases (pending)', () => {
   todos([
-    ['E-1', 'tiny sample states low confidence'],
     ['E-2', 'abandoned survey retained, flagged incomplete'],
-    ['E-3', 'junk/abusive text flagged and excluded by default'],
-    ['E-4', 'non-English detected, tagged, set aside'],
     ['E-7', 'conversation off the rails recovers and ends gracefully'],
     ['E-8', 'ambiguous query answers only what the data supports'],
     ['E-9', 'volume spike stays correct; abuse defenses distinguish stuffing'],
     ['E-10', 'sensitive disclosure surfaced behind role/audit'],
-    ['E-11', 'concurrent edits do not silently overwrite'],
     ['E-12', 'source block backs off and records the gap'],
     ['E-13', 'competitor ambiguity excluded from headline until confirmed'],
     ['E-14', 'sparse competitor data shows insufficient data'],
     ['E-16', 'trust read category- and period-relative'],
     ['E-17', 'consent withdrawn purges contact; keeps de-identified aggregate'],
     ['E-18', 'notification failure never drops a case'],
-    ['E-22', 'timezone/period boundaries UTC + account timezone'],
   ]);
 });
 

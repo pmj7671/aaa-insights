@@ -36,7 +36,7 @@ been made yet; when it is, these tests translate one-to-one to that stack's runn
 the TypeScript stack). Built so far (increments 1–7) and **green** (`tests/domain/*`): R-1, R-3, R-11, R-13,
 R-12, R-14, R-15, R-16, R-18, R-19, R-20, R-21, R-22, R-26, R-27, R-28, R-29, R-30, R-31, R-32, R-33, R-34, R-35, R-36, R-38, R-40, R-41, R-45, R-46,
 R-48, INV-1,
-INV-2, INV-3, INV-4, INV-8, INV-12, INV-13, INV-14, INV-15, INV-16, R-43, R-44, E-5, E-6, E-15, E-19, E-20, E-21, E-23, E-24,
+INV-2, INV-3, INV-4, INV-8, INV-12, INV-13, INV-14, INV-15, INV-16, R-43, R-44, E-1, E-3, E-4, E-5, E-6, E-11, E-15, E-19, E-20, E-21, E-22, E-23, E-24,
 E-25, E-26, E-27. *(Sentiment R-15 and emotion R-46 run on a deterministic baseline classifier; the Claude
 classifier plugs into the same seam via the LLM gateway.)* Sentiment (R-15) and emotion (R-46) have their aggregation cores +
 classifier seams built; live detection wires in with the LLM gateway. Every other behavior is a Vitest `todo` in
