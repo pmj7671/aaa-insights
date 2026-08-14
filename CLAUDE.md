@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 13 (2026-08-13):** + PII redaction + secrets vault; **114 tests green**, gate GREEN. 46 requirement IDs closed |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 14 (2026-08-14):** + feedback-hub query surface; **120 tests green**, gate GREEN. **50 requirement IDs closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,13 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 14, hub query surface)** — Built `src/domain/feedbackQuery.ts`:
+  `applyFilter` over FeedbackRecords by brand/source/date/segment/rating (**R-12**), `unifiedCustomerView`
+  aggregate-by-segment counts with **no identity profile** (**R-26/INV-9**), `perCompetitorAnalysis` aggregate
+  + traceable recordIds, filterable (**R-28/R-29/INV-3**). Closed R-12, R-26, R-28, R-29. **120 tests green**
+  (+6), tsc clean, gate GREEN — **50 requirement IDs closed** (milestone). Remaining: infra (persistence/API,
+  admin auth R-42, lawful collection R-25, competitor config R-24), reporting/query/export/roles
+  (R-17/18/22/23/21), small edges, exclusions (negative tests), NFR/DPS operational (VERIFY-phase).
 - **2026-08-13 (Phase 4 — increment 13, PII redaction + secrets)** — Built `src/domain/pii.ts` (detect +
   redact email/phone/SSN/credit-card/IP before analysis or surfacing — **R-44/INV-8**) and
   `src/domain/secrets.ts` (opaque **SecretRef** by name, **SecretVault** seam = Secret Manager in prod,

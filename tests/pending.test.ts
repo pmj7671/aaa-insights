@@ -34,13 +34,6 @@ describe('Conversational surveys (pending)', () => {
   ]);
 });
 
-describe('Unified feedback hub (pending)', () => {
-  todos([
-    ['R-12', 'all feedback queryable and filterable'],
-    ['R-26', 'aggregate unified-customer view without an identity profile'],
-  ]);
-});
-
 describe('Emotion & experience — v7 (pending)', () => {
   todos([
     ['R-47', 'drill down from a headline emotion to sub-emotions + verbatims'],
@@ -53,8 +46,6 @@ describe('Unified customer & competitive insight (pending)', () => {
   todos([
     ['R-24', 'define and manage competitor brands'],
     ['R-25', 'collect public reviews under DPS-7 + legal gate'],
-    ['R-28', 'per-competitor aggregate analysis with traceability'],
-    ['R-29', 'competitor figures filterable and link to sources'],
   ]);
 });
 
