@@ -59,6 +59,36 @@ CREATE INDEX IF NOT EXISTS idx_cases_account        ON recovery_cases (account_i
 -- Fast "open cases" scan for the DPS-5 retention hold and dashboards.
 CREATE INDEX IF NOT EXISTS idx_cases_account_open   ON recovery_cases (account_id) WHERE status <> 'closed';
 
+-- First-party follow-up contacts — consent-scoped, internal only (DPS-10). ---------
+CREATE TABLE IF NOT EXISTS contacts (
+  account_id    text        NOT NULL,
+  contact_id    text        NOT NULL,
+  respondent_ref text       NOT NULL,
+  channel       text        NOT NULL,               -- email | sms | phone
+  value         text        NOT NULL,
+  consent_scope text        NOT NULL,               -- purpose consented to (DPS-10)
+  consent_at    timestamptz NOT NULL,               -- stored UTC (E-22)
+  withdrawn_at  timestamptz,                          -- set on consent withdrawal (E-17)
+  origin        text        NOT NULL DEFAULT 'first_party',
+  PRIMARY KEY (account_id, contact_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_contacts_account ON contacts (account_id);
+
+-- Tracked competitor configuration (R-24). -----------------------------------------
+CREATE TABLE IF NOT EXISTS competitors (
+  account_id  text    NOT NULL,
+  brand_id    text    NOT NULL,
+  name        text    NOT NULL,
+  aliases     text[]  NOT NULL DEFAULT '{}',
+  products    text[]  NOT NULL DEFAULT '{}',
+  tracked     boolean NOT NULL DEFAULT true,
+  PRIMARY KEY (account_id, brand_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_competitors_account         ON competitors (account_id);
+CREATE INDEX IF NOT EXISTS idx_competitors_account_tracked ON competitors (account_id) WHERE tracked;
+
 -- Tombstones — deleted ids that must never reappear (INV-7). -----------------------
 CREATE TABLE IF NOT EXISTS tombstones (
   account_id   text        NOT NULL,

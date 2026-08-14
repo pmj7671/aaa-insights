@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 21 (2026-08-14):** domain feature-complete; persistence layer now covers FeedbackRecord + RecoveryCase (ports, in-memory + Postgres/pgvector adapters, schema) each proven by a shared contract; **181 tests green** (+ Postgres integration, gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 22 (2026-08-14):** domain feature-complete; **persistence layer complete for all four aggregates** (FeedbackRecord, RecoveryCase, Contact, Competitor) — ports, in-memory + Postgres/pgvector adapters, schema, each proven by a shared contract (44 persistence tests vs live Postgres); **190 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,18 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 22, persistence — Contact + Competitor; repository layer complete)** —
+  Added `ContactRepository` and `CompetitorRepository` to `ports.ts` (both account-scoped, INV-6), their
+  in-memory and Postgres/pgvector adapters, and `contacts` + `competitors` schema tables (competitors gets a
+  partial index on tracked rows). Consent withdrawal (E-17) is modelled as a `save` with `withdrawn_at` set;
+  `listTracked` mirrors the domain's tracked-only competitor view (R-24). Each is proven by a shared contract
+  run against both adapters — verified against live Postgres here: **44 persistence tests pass across all four
+  aggregates × both adapters.** This **completes the storage layer for every domain aggregate**
+  (FeedbackRecord, RecoveryCase, Contact, Competitor). **190 tests green** (+9 in-memory contract; Postgres
+  integration gated on `AAA_TEST_DATABASE_URL`), tsc clean, gate GREEN. No new requirement IDs (reinforces
+  INV-6, plus the E-17/R-24 storage-side views). Still **65 requirement IDs + all 7 exclusions.** Next: the
+  HTTP API surface over these repositories, then live provider/collection wiring and admin auth (R-42); then
+  Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 21, persistence — RecoveryCase aggregate)** — Extended the storage layer
   to the closed-loop core using the same port+contract pattern. `ports.ts` gains `RecoveryCaseRepository`
   (account supplied explicitly since the domain case is account-agnostic; `listOpen` backs the DPS-5 hold and

@@ -16,6 +16,8 @@
  */
 import type { FeedbackRecord } from '../domain/feedbackRecord.js';
 import type { RecoveryCase } from '../domain/recovery.js';
+import type { Contact } from '../domain/contact.js';
+import type { Competitor } from '../domain/competitors.js';
 
 export interface FeedbackRepository {
   /**
@@ -63,4 +65,30 @@ export interface RecoveryCaseRepository {
 
   /** Delete one case within an account (INV-6). Idempotent. */
   delete(accountId: string, caseId: string): Promise<void>;
+}
+
+/**
+ * Storage for first-party follow-up Contacts. Account-scoped (INV-6). Consent scope
+ * and withdrawal are stored as-is; withdrawing consent (E-17) is a `save` of the same
+ * contact with `withdrawnAt` set — the store does not interpret consent, it records it.
+ */
+export interface ContactRepository {
+  save(accountId: string, contact: Contact): Promise<void>;
+  get(accountId: string, contactId: string): Promise<Contact | null>;
+  list(accountId: string): Promise<Contact[]>;
+  /** Delete a contact within an account (INV-6). Idempotent — e.g. E-17 consent purge. */
+  delete(accountId: string, contactId: string): Promise<void>;
+}
+
+/**
+ * Storage for tracked Competitor configuration. Account-scoped (INV-6). Keyed by the
+ * competitor's brandId. `listTracked` mirrors the domain's tracked-only view (R-24).
+ */
+export interface CompetitorRepository {
+  save(accountId: string, competitor: Competitor): Promise<void>;
+  get(accountId: string, brandId: string): Promise<Competitor | null>;
+  list(accountId: string): Promise<Competitor[]>;
+  /** Only competitors marked tracked (R-24). */
+  listTracked(accountId: string): Promise<Competitor[]>;
+  delete(accountId: string, brandId: string): Promise<void>;
 }
