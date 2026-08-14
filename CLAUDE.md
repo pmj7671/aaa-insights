@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 23 (2026-08-14):** domain + persistence complete; **HTTP API vertical slice** live (transport-agnostic router + handlers: health, feedback ingest/list, grounded query) over the repositories, tenant isolation enforced at the transport edge; **199 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 24 (2026-08-14):** domain + persistence complete; **HTTP API widened** across all four aggregates (feedback, cases, contacts, competitors) + grounded query, tenant isolation at the transport edge; **207 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,18 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 24, HTTP API — widened across aggregates)** — Extended the Application
+  API over the remaining repositories, which wire in as OPTIONAL deps so each block's routes register only
+  when the repo is present (`createApp({feedback})` still works; unwired routes 404). Added: recovery cases —
+  read-only over the API (`GET .../cases`, `.../cases/open` for the DPS-5 view, `.../cases/:caseId`) since
+  cases are opened by the recovery engine, not posted in; contacts — `GET` list/one plus `DELETE` (the E-17
+  consent-purge / DSR path; creation stays in the consented domain flow); competitors — full config CRUD
+  (`GET` list, `.../tracked` for R-24, `.../:brandId`, `PUT` upsert, `DELETE`) since the account owns that
+  config. Literal paths register before `:param` routes so `open`/`tracked` match; the id on a write comes
+  from the URL, not the body. **207 tests green** (+8 in-process API tests), tsc clean, gate GREEN. No new
+  requirement IDs (infra; reinforces INV-6 and exposes the R-24/DPS-5/E-17 views over HTTP). Still **65
+  requirement IDs + all 7 exclusions.** Next: report + CSV-export endpoints (read projections over the domain
+  assembly functions), then live provider/collection wiring and admin auth (R-42); then Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 23, HTTP API — first vertical slice)** — Stood up the Application API
   (the "single front door" from the architecture doc) as a transport-agnostic layer so it stays fully
   unit-testable with no network and no web-framework dependency: `src/api/http.ts` (small request/response
