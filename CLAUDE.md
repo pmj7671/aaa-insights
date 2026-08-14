@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 17 (2026-08-14):** + collection gate + competitors + all exclusions; **154 tests green**, gate GREEN. **60 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 18 (2026-08-14):** + account export/delete + DSR erasure + DPS-5 hold; **161 tests green**, gate GREEN. **62 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,17 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 18, account export/delete + DSR + retention hold)** — Built
+  `src/domain/accountData.ts` (**R-23/INV-7/DPS-3/DPS-5**): an `AccountData` bundle with `exportAccountData`
+  (portable, provenance-preserving snapshot of all account data), `deleteResponse` / `deleteBySource`
+  (single response or a whole survey/campaign — unlinks from RecoveryCases and drops emptied cases, INV-7
+  propagation), a tombstone ledger so deleted data never reappears even via re-import (INV-7),
+  `eraseByProvenance` (data-subject erasure for own respondents and ingested third-party review authors
+  alike, DPS-3), and `deleteAllAccountData` (full purge that HOLDS open cases + their baseline records past
+  deletion until each case closes, DPS-5). Closed R-23, INV-7, DPS-3. **161 tests green** (+7), tsc clean,
+  gate GREEN — **62 requirement IDs + all 7 exclusions closed.** Remaining domain items: R-17 (grounded NL
+  query), admin auth (R-42); then remaining edges (mostly infra-tied or VERIFY), the DPS/NFR operational
+  items, the infrastructure tier (persistence, HTTP API, lawful-collection wiring), and Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 17, lawful collection + competitors + exclusions)** — Built
   `src/domain/collectionPolicy.ts` (**R-25/DPS-7/X-3/INV-10**: `collectionDecision(source)` gate — web
   sources require public + no-auth + no-paywall + robots-allowed + terms-allow + legal sign-off; licensed

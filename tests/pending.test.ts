@@ -58,7 +58,6 @@ describe('Security, privacy & integrity (pending)', () => {
 describe('AI analysis, accounts, roles, export (pending)', () => {
   todos([
     ['R-17', 'NL query grounded only in the account data, with citations'],
-    ['R-23', 'delete and export all account data'],
   ]);
 });
 
@@ -66,7 +65,6 @@ describe('Invariants (pending)', () => {
   todos([
     ['INV-5', 'survey completable without identifying information'],
     ['INV-6', 'account data isolated; analysis grounded only in that account'],
-    ['INV-7', 'deleted data never reappears (subject to DPS-5 hold)'],
     ['INV-9', 'no general identity profile; RecoveryCase is the sole exception'],
     ['INV-10', 'external data lawful and public, provenance kept'],
     ['INV-11', 'public-review PII minimised, never profiled'],
@@ -93,7 +91,6 @@ describe('Data/privacy, non-functional & exclusions (pending)', () => {
   todos([
     ['DPS-1', 'processor/controller roles'],
     ['DPS-2', 'PII encrypted, access-controlled'],
-    ['DPS-3', 'DSR export/delete for own + scraped third-party authors'],
     ['DPS-4', 'account data never trains shared models'],
     ['DPS-5', 'retention with open-case hold'],
     ['DPS-6', 'security checklist applied'],
