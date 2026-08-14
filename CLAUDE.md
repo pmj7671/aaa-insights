@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 18 (2026-08-14):** + account export/delete + DSR erasure + DPS-5 hold; **161 tests green**, gate GREEN. **62 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 19 (2026-08-14):** + grounded NL "ask your data" query + account isolation; **168 tests green**, gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,18 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 19, grounded NL "ask your data" query)** — Built `src/domain/nlQuery.ts`
+  (**R-17/INV-6/E-8/NFR-6**): `retrieveEvidence` scopes retrieval to ONE account (INV-6 isolation by
+  construction — a query naming another tenant still only sees its own records) and `answerQuery` returns a
+  grounded answer with per-record citations + snippets and a confidence signal (NFR-6); when the account's
+  data can't answer, `supported: false` with a caveat (E-8), and thin single-response evidence lowers
+  confidence and flags the limit. Prose generation plugs in behind a `GroundedAnswerer` seam (Claude via the
+  LLM gateway in production; deterministic baseline for tests) that only ever receives account-scoped
+  evidence, and a runtime invariant asserts no citation leaks across the tenant boundary. Closed R-17, INV-6,
+  E-8. **168 tests green** (+7), tsc clean, gate GREEN — **65 requirement IDs + all 7 exclusions closed.**
+  The feature/domain layer is now essentially complete; the only remaining feature item is admin auth (R-42,
+  infra-tied). Remaining: the DPS/NFR operational items, the infrastructure tier (persistence, HTTP API,
+  lawful-collection wiring, admin auth), and Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 18, account export/delete + DSR + retention hold)** — Built
   `src/domain/accountData.ts` (**R-23/INV-7/DPS-3/DPS-5**): an `AccountData` bundle with `exportAccountData`
   (portable, provenance-preserving snapshot of all account data), `deleteResponse` / `deleteBySource`

@@ -55,12 +55,6 @@ describe('Security, privacy & integrity (pending)', () => {
   ]);
 });
 
-describe('AI analysis, accounts, roles, export (pending)', () => {
-  todos([
-    ['R-17', 'NL query grounded only in the account data, with citations'],
-  ]);
-});
-
 describe('Invariants (pending)', () => {
   todos([
     ['INV-5', 'survey completable without identifying information'],
