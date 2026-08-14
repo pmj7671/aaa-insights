@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 22 (2026-08-14):** domain feature-complete; **persistence layer complete for all four aggregates** (FeedbackRecord, RecoveryCase, Contact, Competitor) — ports, in-memory + Postgres/pgvector adapters, schema, each proven by a shared contract (44 persistence tests vs live Postgres); **190 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 23 (2026-08-14):** domain + persistence complete; **HTTP API vertical slice** live (transport-agnostic router + handlers: health, feedback ingest/list, grounded query) over the repositories, tenant isolation enforced at the transport edge; **199 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,20 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 23, HTTP API — first vertical slice)** — Stood up the Application API
+  (the "single front door" from the architecture doc) as a transport-agnostic layer so it stays fully
+  unit-testable with no network and no web-framework dependency: `src/api/http.ts` (small request/response
+  shapes + helpers), `src/api/router.ts` (tiny dependency-free path-param router, 404/405 aware), and
+  `src/api/app.ts` (`createApp(deps)` → `handle(req)`). First endpoints: `GET /health`,
+  `POST/GET /accounts/:accountId/feedback` (validated ingest via `validateFeedbackRecord`, and listing), and
+  `POST /accounts/:accountId/query` (grounded NL query, R-17). Tenant isolation is enforced at the transport
+  edge — the account comes from the URL and a write is stamped with it, so a body claiming another account is
+  ignored (INV-6); a previously-deleted id returns 409 (INV-7). The transport (Next.js route handlers /
+  Cloud Run) mounts this `handle` later without touching the tested core. **199 tests green** (+9 in-process
+  API tests), tsc clean, gate GREEN. No new requirement IDs (infra; reinforces INV-6/INV-7 at the API edge
+  and exposes R-17). Still **65 requirement IDs + all 7 exclusions.** Next: widen the API (cases, contacts,
+  competitors, export, insight report), then live provider/collection wiring and admin auth (R-42); then
+  Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 22, persistence — Contact + Competitor; repository layer complete)** —
   Added `ContactRepository` and `CompetitorRepository` to `ports.ts` (both account-scoped, INV-6), their
   in-memory and Postgres/pgvector adapters, and `contacts` + `competitors` schema tables (competitors gets a

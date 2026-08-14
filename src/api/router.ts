@@ -1,0 +1,56 @@
+/**
+ * A tiny, dependency-free router. Matches an incoming (method, path) against
+ * registered patterns like `/accounts/:accountId/feedback`, extracting path params.
+ * Deliberately minimal — just enough to route the Application API's endpoints and stay
+ * trivially testable.
+ */
+import type { Handler, HttpRequest, HttpResponse } from './http.js';
+import { json, notFound } from './http.js';
+
+interface Route {
+  method: string;
+  segments: string[]; // pattern segments; ':name' captures
+  handler: Handler;
+}
+
+const split = (path: string): string[] => path.split('/').filter((s) => s.length > 0);
+
+export class Router {
+  private readonly routes: Route[] = [];
+
+  add(method: string, pattern: string, handler: Handler): this {
+    this.routes.push({ method: method.toUpperCase(), segments: split(pattern), handler });
+    return this;
+  }
+
+  /** Match and dispatch. 404 for no path match; 405 when only the method differs. */
+  async handle(req: { method: string; path: string; body?: unknown }): Promise<HttpResponse> {
+    const reqSegs = split(req.path);
+    let pathMatchedButMethod = false;
+
+    for (const route of this.routes) {
+      const params = tryMatch(route.segments, reqSegs);
+      if (params === null) continue;
+      if (route.method !== req.method.toUpperCase()) {
+        pathMatchedButMethod = true;
+        continue;
+      }
+      const full: HttpRequest = { method: req.method, path: req.path, params, body: req.body };
+      return route.handler(full);
+    }
+    return pathMatchedButMethod ? json(405, { error: 'method not allowed' }) : notFound();
+  }
+}
+
+/** Returns captured params if the pattern matches, else null. */
+function tryMatch(pattern: string[], actual: string[]): Record<string, string> | null {
+  if (pattern.length !== actual.length) return null;
+  const params: Record<string, string> = {};
+  for (let i = 0; i < pattern.length; i++) {
+    const p = pattern[i] as string;
+    const a = actual[i] as string;
+    if (p.startsWith(':')) params[p.slice(1)] = decodeURIComponent(a);
+    else if (p !== a) return null;
+  }
+  return params;
+}
