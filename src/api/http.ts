@@ -10,6 +10,8 @@ export interface HttpRequest {
   path: string;
   /** Path params captured by the router (e.g. { accountId } ). */
   params: Record<string, string>;
+  /** Query-string params (e.g. { brand } ), parsed by the router. */
+  query: Record<string, string>;
   /** Parsed JSON body, if any. */
   body?: unknown;
 }
@@ -17,12 +19,20 @@ export interface HttpRequest {
 export interface HttpResponse {
   status: number;
   body: unknown;
+  /** Response headers; defaults to application/json when omitted. */
+  headers?: Record<string, string>;
 }
 
 export type Handler = (req: HttpRequest) => Promise<HttpResponse>;
 
 export const json = (status: number, body: unknown): HttpResponse => ({ status, body });
 export const ok = (body: unknown): HttpResponse => json(200, body);
+/** A non-JSON text response (e.g. a CSV export). Body is the raw string. */
+export const text = (status: number, body: string, contentType = 'text/plain'): HttpResponse => ({
+  status,
+  body,
+  headers: { 'content-type': contentType },
+});
 export const created = (body: unknown): HttpResponse => json(201, body);
 export const badRequest = (message: string, extra: Record<string, unknown> = {}): HttpResponse =>
   json(400, { error: message, ...extra });

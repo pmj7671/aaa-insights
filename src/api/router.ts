@@ -25,7 +25,10 @@ export class Router {
 
   /** Match and dispatch. 404 for no path match; 405 when only the method differs. */
   async handle(req: { method: string; path: string; body?: unknown }): Promise<HttpResponse> {
-    const reqSegs = split(req.path);
+    const qIdx = req.path.indexOf('?');
+    const rawPath = qIdx >= 0 ? req.path.slice(0, qIdx) : req.path;
+    const query = qIdx >= 0 ? parseQuery(req.path.slice(qIdx + 1)) : {};
+    const reqSegs = split(rawPath);
     let pathMatchedButMethod = false;
 
     for (const route of this.routes) {
@@ -35,11 +38,23 @@ export class Router {
         pathMatchedButMethod = true;
         continue;
       }
-      const full: HttpRequest = { method: req.method, path: req.path, params, body: req.body };
+      const full: HttpRequest = { method: req.method, path: req.path, params, query, body: req.body };
       return route.handler(full);
     }
     return pathMatchedButMethod ? json(405, { error: 'method not allowed' }) : notFound();
   }
+}
+
+function parseQuery(qs: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const pair of qs.split('&')) {
+    if (!pair) continue;
+    const eq = pair.indexOf('=');
+    const key = eq >= 0 ? pair.slice(0, eq) : pair;
+    const val = eq >= 0 ? pair.slice(eq + 1) : '';
+    out[decodeURIComponent(key)] = decodeURIComponent(val.replace(/\+/g, ' '));
+  }
+  return out;
 }
 
 /** Returns captured params if the pattern matches, else null. */

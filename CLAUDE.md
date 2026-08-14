@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 24 (2026-08-14):** domain + persistence complete; **HTTP API widened** across all four aggregates (feedback, cases, contacts, competitors) + grounded query, tenant isolation at the transport edge; **207 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 25 (2026-08-14):** domain + persistence complete; **HTTP API read surface complete** — all four aggregates + grounded query + insight report (R-18) + CSV export (R-22); tenant isolation at the edge; **215 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,19 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 25, HTTP API — report + CSV export read projections)** — Added
+  `src/domain/reportService.ts` (`buildInsightReport(records, opts)`) — the bridge from raw FeedbackRecords to
+  `assembleInsightReport`, deriving the stated-only Brand Love and Trust indices (inferred reads never
+  blended; out-of-range trust guarded to "no data" rather than a thrown invariant; optional own-brand
+  filter). Enhanced the HTTP layer minimally and generally: the router now parses the query string into
+  `req.query`, and `http.ts` gains a `text()` helper + `headers` on the response for non-JSON output. New
+  endpoints: `GET /accounts/:accountId/report` (brand label + optional `ownBrandId` via query — R-18) and
+  `GET /accounts/:accountId/export` (text/csv of the account's responses via `toCsv`, comma/quote-safe —
+  R-22). This **completes the API's read surface** over everything built. **215 tests green** (+8: report
+  service unit + report/export API), tsc clean, gate GREEN. No new requirement IDs (exposes R-18/R-22 over
+  HTTP; both already closed at the domain layer). Still **65 requirement IDs + all 7 exclusions.** Next: live
+  provider/collection wiring (behind the client legal-signoff gate) and admin auth (R-42); then Phase 5
+  VERIFY.
 - **2026-08-14 (Phase 4 — increment 24, HTTP API — widened across aggregates)** — Extended the Application
   API over the remaining repositories, which wire in as OPTIONAL deps so each block's routes register only
   when the repo is present (`createApp({feedback})` still works; unwired routes 404). Added: recovery cases —

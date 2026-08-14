@@ -18,6 +18,8 @@ import { validateFeedbackRecord } from '../domain/feedbackRecord.js';
 import type { BrandLoveRead } from '../domain/types.js';
 import type { Competitor } from '../domain/competitors.js';
 import { answerQuery, baselineAnswerer, type GroundedAnswerer } from '../domain/nlQuery.js';
+import { buildInsightReport } from '../domain/reportService.js';
+import { toCsv } from '../domain/exportCsv.js';
 import type {
   FeedbackRepository,
   RecoveryCaseRepository,
@@ -26,7 +28,12 @@ import type {
 } from '../persistence/ports.js';
 import { Router } from './router.js';
 import type { HttpResponse } from './http.js';
-import { ok, created, badRequest, conflict, notFound, json } from './http.js';
+import { ok, created, badRequest, conflict, notFound, text, json } from './http.js';
+
+const EXPORT_COLUMNS = [
+  'recordId', 'brandId', 'sourceId', 'sourceType', 'capturedAt',
+  'ratingNorm', 'brandLove', 'trust', 'segment', 'commentText',
+] as const;
 
 export interface AppDeps {
   feedback: FeedbackRepository;
@@ -121,6 +128,29 @@ export function createApp(deps: AppDeps): App {
     const records = await deps.feedback.list(accountId); // INV-6: only this account's data
     const answer = answerQuery(records, accountId, query, deps.answerer ?? baselineAnswerer);
     return ok(answer);
+  });
+
+  // Insight report (R-18) — a read projection over the account's records. Brand label
+  // and optional own-brand filter come from the query string.
+  router.add('GET', '/accounts/:accountId/report', async (req) => {
+    const accountId = req.params.accountId ?? '';
+    const records = await deps.feedback.list(accountId);
+    const brandName = req.query.brand ?? 'Your brand';
+    const ownBrandId = req.query.ownBrandId;
+    const report = buildInsightReport(records, ownBrandId ? { brandName, ownBrandId } : { brandName });
+    return ok(report);
+  });
+
+  // CSV export of the account's responses (R-22). Returns text/csv, not JSON.
+  router.add('GET', '/accounts/:accountId/export', async (req) => {
+    const accountId = req.params.accountId ?? '';
+    const records = await deps.feedback.list(accountId);
+    const rows = records.map((r) => ({
+      recordId: r.recordId, brandId: r.brandId, sourceId: r.sourceId, sourceType: r.sourceType,
+      capturedAt: r.capturedAt, ratingNorm: r.ratingNorm ?? '', brandLove: r.brandLove ?? '',
+      trust: r.trust ?? '', segment: r.segment ?? '', commentText: r.commentText ?? '',
+    }));
+    return text(200, toCsv(rows, EXPORT_COLUMNS), 'text/csv');
   });
 
   // Recovery cases — read-only over the API (cases are opened by the recovery engine,
