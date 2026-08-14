@@ -65,9 +65,6 @@ describe('Security, privacy & integrity (pending)', () => {
 describe('AI analysis, accounts, roles, export (pending)', () => {
   todos([
     ['R-17', 'NL query grounded only in the account data, with citations'],
-    ['R-18', 'insight report with narrative, metrics, quotes, ranked actions'],
-    ['R-21', 'roles: Owner/Admin, Member, plus case-owner'],
-    ['R-22', 'export any view and the insight report (CSV/PDF/slides)'],
     ['R-23', 'delete and export all account data'],
   ]);
 });

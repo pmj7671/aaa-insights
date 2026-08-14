@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 14 (2026-08-14):** + feedback-hub query surface; **120 tests green**, gate GREEN. **50 requirement IDs closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 15 (2026-08-14):** + roles + insight report + CSV export; **131 tests green**, gate GREEN. **53 requirement IDs closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,14 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 15, roles + report + export)** — Built `src/domain/roles.ts` (**R-21**:
+  Owner/Admin + Member permission matrix + composable case-owner designation), `src/domain/insightReport.ts`
+  (**R-18/O-5**: assemble headline/metrics/themes + rank actions from signals; honest "no stated data"
+  headline), `src/domain/exportCsv.ts` (**R-22**: RFC-4180 CSV of any view). Closed R-18, R-21, R-22. **131
+  tests green** (+11), tsc clean, gate GREEN — **53 requirement IDs closed.** Remaining: R-17 (NL query),
+  R-23 (delete/export account), R-24/R-25 (competitor config/lawful collection), small edges
+  (E-1/3/4/8/10/11/12/16/17/18/22), exclusions X-1–X-7 (negative tests), infra (persistence/API, admin auth
+  R-42), NFR/DPS operational (VERIFY-phase).
 - **2026-08-14 (Phase 4 — increment 14, hub query surface)** — Built `src/domain/feedbackQuery.ts`:
   `applyFilter` over FeedbackRecords by brand/source/date/segment/rating (**R-12**), `unifiedCustomerView`
   aggregate-by-segment counts with **no identity profile** (**R-26/INV-9**), `perCompetitorAnalysis` aggregate
