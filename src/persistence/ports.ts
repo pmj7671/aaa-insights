@@ -15,6 +15,7 @@
  * All operations are async so the same port serves an in-memory Map and a real database.
  */
 import type { FeedbackRecord } from '../domain/feedbackRecord.js';
+import type { RecoveryCase } from '../domain/recovery.js';
 
 export interface FeedbackRepository {
   /**
@@ -40,4 +41,26 @@ export interface FeedbackRepository {
 
   /** Whether an id has been tombstoned within an account (INV-7). */
   isTombstoned(accountId: string, recordId: string): Promise<boolean>;
+}
+
+/**
+ * Storage for RecoveryCases. The domain `RecoveryCase` is account-agnostic, so the
+ * owning tenant is supplied explicitly here and every read/delete is scoped by it
+ * (INV-6). `listOpen` backs the DPS-5 retention hold and the closed-loop dashboards.
+ */
+export interface RecoveryCaseRepository {
+  /** Upsert a case for an account. */
+  save(accountId: string, recoveryCase: RecoveryCase): Promise<void>;
+
+  /** Fetch one case within an account, or null (INV-6). */
+  get(accountId: string, caseId: string): Promise<RecoveryCase | null>;
+
+  /** All cases for one account (INV-6). */
+  list(accountId: string): Promise<RecoveryCase[]>;
+
+  /** Only the still-open cases (status !== 'closed') for one account (DPS-5). */
+  listOpen(accountId: string): Promise<RecoveryCase[]>;
+
+  /** Delete one case within an account (INV-6). Idempotent. */
+  delete(accountId: string, caseId: string): Promise<void>;
 }

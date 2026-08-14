@@ -38,6 +38,27 @@ CREATE INDEX IF NOT EXISTS idx_feedback_account_brand  ON feedback_records (acco
 CREATE INDEX IF NOT EXISTS idx_feedback_account_source ON feedback_records (account_id, source_id);
 CREATE INDEX IF NOT EXISTS idx_feedback_provenance     ON feedback_records (account_id, provenance);
 
+-- Internal closed-loop RecoveryCases (no external CRM push — X-2). ------------------
+-- The domain case is account-agnostic; account_id here scopes it to a tenant (INV-6).
+CREATE TABLE IF NOT EXISTS recovery_cases (
+  account_id   text        NOT NULL,
+  id           text        NOT NULL,
+  record_ids   text[]      NOT NULL DEFAULT '{}',
+  kind         text        NOT NULL,               -- 'contactable' | 'anonymous_triage'
+  status       text        NOT NULL,               -- open | in_progress | resolved | closed
+  grouping_key text        NOT NULL,
+  opened_at    timestamptz NOT NULL,               -- stored UTC (E-22)
+  customer_ref text,
+  owner_id     text,
+  quadrant     text,
+  trust        double precision,
+  PRIMARY KEY (account_id, id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_cases_account        ON recovery_cases (account_id);
+-- Fast "open cases" scan for the DPS-5 retention hold and dashboards.
+CREATE INDEX IF NOT EXISTS idx_cases_account_open   ON recovery_cases (account_id) WHERE status <> 'closed';
+
 -- Tombstones — deleted ids that must never reappear (INV-7). -----------------------
 CREATE TABLE IF NOT EXISTS tombstones (
   account_id   text        NOT NULL,
