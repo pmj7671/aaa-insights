@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 16 (2026-08-14):** + edge-case cluster; **140 tests green**, gate GREEN. **58 requirement IDs closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 17 (2026-08-14):** + collection gate + competitors + all exclusions; **154 tests green**, gate GREEN. **60 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,18 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 17, lawful collection + competitors + exclusions)** — Built
+  `src/domain/collectionPolicy.ts` (**R-25/DPS-7/X-3/INV-10**: `collectionDecision(source)` gate — web
+  sources require public + no-auth + no-paywall + robots-allowed + terms-allow + legal sign-off; licensed
+  provider/API/CSV allowed when terms permit), `src/domain/competitors.ts` (**R-24**: competitor config —
+  add/remove de-duped by brandId, list tracked, match brand by name/alias) and `src/domain/boundaries.ts`
+  (**X-1…X-7**: explicit out-of-scope guard functions — no general identity profile, no external-tool push,
+  no future-outcome prediction, no respondent panel, decision-support-only, no re-identification of scraped
+  reviewers). Closed R-24, R-25 and X-1–X-7. **154 tests green** (+14), tsc clean, gate GREEN — **60
+  requirement IDs + all 7 exclusions closed.** Remaining: R-17 (NL query), R-23 (delete/export account),
+  admin auth (R-42), remaining edges (E-2/7/8/9/10/12/13/14/16/17/18 — mostly infra-tied or VERIFY), the
+  DPS/NFR operational items, then the infrastructure tier (persistence, HTTP API, lawful-collection wiring)
+  and Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 16, edge-case cluster)** — Built `src/domain/dataQuality.ts` (**E-1**
   sample adequacy, **E-3** junk/abuse flags, **E-4** non-English detection → set aside), `concurrency.ts`
   (**E-11** optimistic version/conflict — no silent overwrite) and `periods.ts` (**E-22** UTC day bounds in

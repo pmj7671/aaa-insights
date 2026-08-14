@@ -42,13 +42,6 @@ describe('Emotion & experience — v7 (pending)', () => {
   ]);
 });
 
-describe('Unified customer & competitive insight (pending)', () => {
-  todos([
-    ['R-24', 'define and manage competitor brands'],
-    ['R-25', 'collect public reviews under DPS-7 + legal gate'],
-  ]);
-});
-
 describe('Closed-loop & service recovery (pending)', () => {
   todos([
     ['R-37', 'notify owner/team; no external CRM push'],
@@ -118,12 +111,5 @@ describe('Data/privacy, non-functional & exclusions (pending)', () => {
     ['NFR-7', 'collection freshness & politeness'],
     ['NFR-8', 'trigger opens a case within <= 60s'],
     ['NFR-9', 'durability RPO <= 1h, RTO <= 8h'],
-    ['X-1', 'not a CRM / general profile (RecoveryCase aside)'],
-    ['X-2', 'no external push or native workbench in v1'],
-    ['X-3', 'no private/paywalled collection'],
-    ['X-4', 'no future-outcome prediction'],
-    ['X-5', 'no respondent panel / marketplace'],
-    ['X-6', 'decision support, not a replacement for judgment'],
-    ['X-7', 'no re-identifying or contacting scraped reviewers'],
   ]);
 });
