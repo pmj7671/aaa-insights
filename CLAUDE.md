@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 19 (2026-08-14):** + grounded NL "ask your data" query + account isolation; **168 tests green**, gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 20 (2026-08-14):** domain feature-complete; + persistence layer (repository ports, in-memory + Postgres/pgvector adapters, schema) proven by a shared contract; **175 tests green** (+ Postgres integration, gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,23 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 20, persistence layer — start of the infra tier)** — First infrastructure
+  slice: added a storage boundary under the (unchanged) domain. `src/persistence/ports.ts` defines the
+  `FeedbackRepository` port with tenant isolation baked into its shape (every read/delete takes `accountId`,
+  INV-6) and tombstone semantics (`delete` tombstones; `save` refuses a tombstoned id, INV-7).
+  `memoryFeedbackRepository.ts` (in-memory, for tests/offline) and `pgFeedbackRepository.ts` (Postgres 16 +
+  pgvector — race-free tombstone-guarded upsert, per-statement account filter, transactional delete) both
+  implement it; `schema.sql` is the DDL (tenant columns, provenance for DSR, UTC timestamps, a nullable
+  `vector(1536)` column for future semantic retrieval of R-17). A **shared conformance contract**
+  (`tests/persistence/feedbackRepositoryContract.ts`) runs against BOTH adapters so they behave identically;
+  the Postgres run is an integration test gated on `AAA_TEST_DATABASE_URL` and skips cleanly on CI without a
+  database. Added `pg` (dep) + `@types/pg` (dev). **175 tests green** (+7 in-memory contract; +7 more when
+  Postgres is configured), tsc clean, gate GREEN. No NEW requirement IDs (this reinforces INV-6/INV-7 at the
+  storage boundary and lays the groundwork for DPS-2 encryption-at-rest and NFR-3/NFR-9 durability, which
+  close with infra config). Still **65 requirement IDs + all 7 exclusions.** Local dev: `initdb` a cluster,
+  `CREATE EXTENSION vector`, set `AAA_TEST_DATABASE_URL=postgresql://<user>@/<db>?host=/tmp&port=5433`.
+  Next infra slices: repositories for cases/contacts/competitors, then the HTTP API surface, live
+  provider/collection wiring, and admin auth (R-42); then Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 19, grounded NL "ask your data" query)** — Built `src/domain/nlQuery.ts`
   (**R-17/INV-6/E-8/NFR-6**): `retrieveEvidence` scopes retrieval to ONE account (INV-6 isolation by
   construction — a query naming another tenant still only sees its own records) and `answerQuery` returns a
