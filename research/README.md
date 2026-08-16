@@ -17,6 +17,7 @@ understanding customers, brands, and markets.
 | Theme | Source | Type | Why it matters |
 |-------|--------|------|----------------|
 | Brand Love & emotional attachment | Batra, Ahuvia & Bagozzi (2012), *Brand Love* | Journal (JM) | The foundational, validated model — grounds our Brand Love scale. |
+| Brand Love & emotional attachment | Thomson, MacInnis & Park (2005), *The Ties That Bind* | Journal (JCP) | The validated emotional-attachment scale; attachment is distinct from satisfaction and predicts loyalty + price premium. |
 | Brand Love & emotional attachment | Ahuvia (2023), *Brand Love's Greatest Hits* | Practitioner summary | A citation‑ranked map of the literature — our reading list. |
 | Brand Love & emotional attachment | Nobre (2011), *Should Consumers Be in Love With Brands?* | Journal (JTM) | Passion‑love is more fragile than intimacy/loyalty‑love under disruption. |
 | Brand Love & emotional attachment | Ghani & Tuhin (2016), *Consumer Brand Relationships* | Journal review (IRMM) | Maps the whole CBR field; validates the negative end (hate/avoidance). |
@@ -49,6 +50,36 @@ the **signals the AI looks for in open text** to infer a Brand Love read (INV‑
 The authors' "sort‑of‑loved" fuzzy middle **justifies the "Ambivalence"** level in
 **Love / Like / Ambivalence / Dislike / Hate**. Because brand love predicts loyalty/WOM/resistance, the
 Brand Love Index (O‑11) is a leading indicator worth benchmarking (O‑9).
+
+### Thomson, M., MacInnis, D. J., & Park, C. W. (2005). *The Ties That Bind: Measuring the Strength of Consumers' Emotional Attachments to Brands.* Journal of Consumer Psychology, 15(1), 77–91.
+`Thomson-MacInnis-Park_2005_Emotional-Attachment-Ties-That-Bind.pdf`
+
+The primary source that put a validated *measure* under emotional attachment (EA), across five studies. EA
+is a **10-item scale** resolving into **three first-order factors under a single second-order attachment
+construct**: **Affection** (affectionate, friendly, loved, peaceful), **Passion** (passionate, delighted,
+captivated), and **Connection** (connected, bonded, attached). Two results matter most. **Discriminant
+validity:** EA is empirically distinct from brand-attitude favorability, satisfaction, and involvement — a
+customer can be satisfied yet not attached. **Predictive validity:** EA predicts **brand loyalty** and
+**willingness to pay a price premium**, and stays significant *after* controlling for attitude,
+satisfaction, and involvement — it is the **only** significant predictor of price-premium willingness. Two
+side-findings: satisfaction and loyalty load together, but **dissatisfaction forms its own separate
+factor** (the negative arm is not just low satisfaction); and attachment runs **stronger for
+symbolic/hedonic/high-involvement brands** (BMW, Body Shop, Prada) than functional ones (AT&T, Ziploc).
+
+**Product implications.** Hard, foundational evidence for the two bets the product is built on. (1) *Love
+and Trust are distinct from — and deeper than — satisfaction* (**INV-12**): EA's discriminant validity from
+satisfaction/attitude/involvement is exactly this, from a second independent source alongside Wardani &
+Gustia. (2) *The Brand Love Index is a leading, predictive indicator* (**O-11**, benchmarked **O-9**):
+EA→loyalty and EA→price-premium give the Index a dollars-and-loyalty outcome to point at. Concretely it
+supports several **candidate deltas** (flagged for approval, not yet in the spec): the validated
+**Affection / Passion / Connection** sub-structure as a companion attachment read — dovetailing with Nobre's
+finding that passion-heavy love is more fragile, so *love type* is a resilience signal (relates to the
+Emotion pillar **R-46/O-17** and the taxonomy **R-50**); an optional **validated EA battery** as a survey
+template (**R-2** could offer peer-reviewed scales); a **price-premium / pricing-power** read as a
+business-value outcome in the insight report (**R-18/R-19**); and **category-relative** attachment
+benchmarking, extending the trust rule **E-16** (attachment is category-dependent). The separate
+dissatisfaction factor reinforces the distinct **Dislike / Hate** arm and the recovery engine treating
+dissatisfaction as its own state, not merely "low CSAT."
 
 ### Ahuvia, A. (2023). *Brand Love's Greatest Hits.* Psychology Today (Aaron Ahuvia, PhD), updated Jul 6, 2023.
 `Ahuvia_2023_Brand-Loves-Greatest-Hits_PsychologyToday.pdf`
@@ -224,7 +255,6 @@ best‑grounded voice is what wins in AI‑mediated discovery.
 - **Carroll & Ahuvia (2006)** — the first brand‑love scale (primary source).
 - **Fournier (1998)** — consumer–brand relationships (the relationship metaphor; primary).
 - **Fetscherin & Heinrich** — brand hate / the negative relationship quadrants (primary).
-- **Thomson, MacInnis & Park (2005)** — emotional attachment to brands.
 - **Reichheld / NPS literature** — loyalty measurement, and its critiques.
 - **Open‑text sentiment & theme‑extraction methods** — for the analysis engine.
 - **Survey methodology & question design** — bias, scale construction, sampling.
