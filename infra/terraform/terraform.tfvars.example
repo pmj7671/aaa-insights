@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars and adjust if needed. The defaults already target the
+# aaa-insights project in us-central1, so for the standard setup you can skip this file.
+
+# project_id = "aaa-insights"
+# region     = "us-central1"
+# db_tier    = "db-f1-micro"
