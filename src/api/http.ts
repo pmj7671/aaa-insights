@@ -12,9 +12,14 @@ export interface HttpRequest {
   params: Record<string, string>;
   /** Query-string params (e.g. { brand } ), parsed by the router. */
   query: Record<string, string>;
+  /** Request headers, lower-cased keys (e.g. { authorization } ). */
+  headers: Record<string, string>;
   /** Parsed JSON body, if any. */
   body?: unknown;
 }
+
+export const unauthorized = (message = 'authentication required'): HttpResponse => json(401, { error: message });
+export const forbidden = (message = 'forbidden'): HttpResponse => json(403, { error: message });
 
 export interface HttpResponse {
   status: number;

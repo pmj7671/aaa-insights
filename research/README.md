@@ -251,6 +251,14 @@ best‑grounded voice is what wins in AI‑mediated discovery.
 
 ---
 
+## Candidate spec deltas (parked — for a future SPECIFY/CHALLENGE pass)
+Research-driven ideas captured but **not yet in the spec or the build**. Revisit deliberately, not mid-implementation.
+
+- **Attachment sub-structure — Affection / Passion / Connection** as an optional companion read (love *type* → resilience signal; passion-heavy love is more fragile, per Nobre). Relates to R-46/O-17, R-50. — *Thomson, MacInnis & Park (2005).*
+- **Validated EA battery** as an optional survey template (deploy the peer-reviewed 10-item scale). Relates to R-2. — *Thomson et al. (2005).*
+- **Price-premium / pricing-power read** as a business-value outcome in the insight report. Relates to R-18/R-19. — *Thomson et al. (2005); Ahuvia (2023).*
+- **Category-relative attachment benchmarking** (attachment is category-dependent), extending the trust rule E-16. — *Thomson et al. (2005).*
+
 ## To add next (the backlog — more research coming)
 - **Carroll & Ahuvia (2006)** — the first brand‑love scale (primary source).
 - **Fournier (1998)** — consumer–brand relationships (the relationship metaphor; primary).

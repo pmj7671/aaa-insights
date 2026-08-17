@@ -24,10 +24,16 @@ export class Router {
   }
 
   /** Match and dispatch. 404 for no path match; 405 when only the method differs. */
-  async handle(req: { method: string; path: string; body?: unknown }): Promise<HttpResponse> {
+  async handle(req: {
+    method: string;
+    path: string;
+    body?: unknown;
+    headers?: Record<string, string>;
+  }): Promise<HttpResponse> {
     const qIdx = req.path.indexOf('?');
     const rawPath = qIdx >= 0 ? req.path.slice(0, qIdx) : req.path;
     const query = qIdx >= 0 ? parseQuery(req.path.slice(qIdx + 1)) : {};
+    const headers = lowerKeys(req.headers ?? {});
     const reqSegs = split(rawPath);
     let pathMatchedButMethod = false;
 
@@ -38,11 +44,17 @@ export class Router {
         pathMatchedButMethod = true;
         continue;
       }
-      const full: HttpRequest = { method: req.method, path: req.path, params, query, body: req.body };
+      const full: HttpRequest = { method: req.method, path: req.path, params, query, headers, body: req.body };
       return route.handler(full);
     }
     return pathMatchedButMethod ? json(405, { error: 'method not allowed' }) : notFound();
   }
+}
+
+function lowerKeys(h: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(h)) out[k.toLowerCase()] = v;
+  return out;
 }
 
 function parseQuery(qs: string): Record<string, string> {

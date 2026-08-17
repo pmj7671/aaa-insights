@@ -49,12 +49,6 @@ describe('Closed-loop & service recovery (pending)', () => {
   ]);
 });
 
-describe('Security, privacy & integrity (pending)', () => {
-  todos([
-    ['R-42', 'admin auth SSO/MFA + managed sessions'],
-  ]);
-});
-
 describe('Invariants (pending)', () => {
   todos([
     ['INV-5', 'survey completable without identifying information'],
@@ -92,7 +86,6 @@ describe('Data/privacy, non-functional & exclusions (pending)', () => {
     ['DPS-8', 'GDPR + CCPA targets'],
     ['DPS-9', 'provider-abstracted hosting, US residency'],
     ['DPS-10', 'contact consent scoped internal, no external sharing'],
-    ['DPS-11', 'admin auth + vaulted secrets'],
     ['NFR-1', 'survey page < 2s mobile; submit ack < 1s'],
     ['NFR-2', 'analysis p95 <= 60s; larger sets background'],
     ['NFR-3', '99.9% uptime; durable ingestion'],

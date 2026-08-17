@@ -48,7 +48,7 @@ Avoid revolutionary, game-changing, leverage, synergize.
 | 1 | SPECIFY | `docs/01_requirements.md` (PRD / Requirements **v7.1**) | ✅ **v7 APPROVED 2026-07-30**; **v7.1 (2026-08-11) NFR targets confirmed** — Emotion & Experience pillar; approved baseline |
 | 2 | CHALLENGE | `docs/02_spec_review_report.md` | ✅ Review report + all 19 findings resolved 2026-07-27 (D-A–D-G decided; F-8–F-19 folded → v6). *v7 pillar wants a light CHALLENGE pass, pre-empted by INV-15/16 + E-25–27* |
 | 3 | TEST FIRST | `docs/03_test_plan.md` + `tests/` | ✅ Delivered 2026-07-30 — contract for "done"; ported to **Vitest** in Phase 4 (same IDs) |
-| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 25 (2026-08-14):** domain + persistence complete; **HTTP API read surface complete** — all four aggregates + grounded query + insight report (R-18) + CSV export (R-22); tenant isolation at the edge; **215 tests green** (Postgres integration gated), gate GREEN. **65 requirement IDs + X-1–X-7 closed** |
+| 4 | IMPLEMENT | `src/` (passing tests) | 🟡 **In progress — through increment 26 (2026-08-14):** domain + persistence + API complete; **admin auth seam (R-42)** — SSO/MFA + managed sessions, admin API routes guarded by role + MFA + tenant scope (respondent submission stays public, INV-5); **235 tests green** (Postgres integration gated), gate GREEN. **67 requirement IDs + X-1–X-7 closed** — every feature-level requirement now built |
 | 5 | VERIFY | `docs/05_verification_report.md` | ⏳ Not started |
 | 6 | DOCUMENT | Delivery Package | ⏳ Not started |
 | 7 | DEPLOY | `docs/deployment_runbook.md` | ⏳ Not started |
@@ -202,6 +202,21 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-14 (Phase 4 — increment 26, admin auth seam — R-42 + DPS-11)** — Built `src/domain/auth.ts`: an
+  `IdentityProvider` seam (verifies an SSO assertion → `AdminIdentity`; deterministic stub for tests, Identity
+  Platform in production — the product never sees a password), a `SessionManager` (issue/validate/revoke +
+  `revokeUser`, expiry via injected `nowMs` so it's deterministic), `authorize` (role rank + mandatory MFA),
+  and a `login` flow that requires a satisfied MFA challenge before minting a managed session. Wired into the
+  API: `/auth/login`, `/auth/logout`, `/auth/session`, and a `guarded` wrapper that protects admin routes —
+  Member (view analysis, R-21) for reads/query/report/export, Admin for config writes — enforcing role + MFA +
+  tenant scope (session.accountId must equal the URL account, INV-6). Respondent feedback submission and
+  `/health` stay public (INV-5). Auth wires in as OPTIONAL deps with an injected clock, so the existing suite
+  (auth-off) is unchanged. Added request `headers` + query-string parsing already in place; `http.ts` gains
+  `unauthorized`/`forbidden`. Closed **R-42** and **DPS-11** (admin auth + vaulted secrets — secrets vault was
+  R-43). **235 tests green** (+20: 11 auth domain + 9 auth API), tsc clean, gate GREEN — **67 requirement IDs
+  + all 7 exclusions.** This closes the **last feature-level requirement**; what remains is live provider/
+  collection wiring (Vertex + lawful collection, gated on GCP + client legal sign-off) and the operational
+  NFR/DPS items that close with infra config, then Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 25, HTTP API — report + CSV export read projections)** — Added
   `src/domain/reportService.ts` (`buildInsightReport(records, opts)`) — the bridge from raw FeedbackRecords to
   `assembleInsightReport`, deriving the stated-only Brand Love and Trust indices (inferred reads never
