@@ -202,6 +202,23 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-17 (Phase 4 — infrastructure tier: GCP walking skeleton STANDING)** — First live cloud footprint
+  provisioned via Terraform (`infra/terraform/`) and verified end-to-end. Project **`aaa-insights`** (org
+  `activeaiadvisors.com`, billing "My Billing Account", funded by the Google Developer Program Premium credit
+  ~$415 through Mar 2027), region **us-central1** (US residency, DPS-9). Applied (20 resources): **Cloud SQL
+  Postgres 16** (`aaa-insights-pg`, db-f1-micro, zonal, 10 GB; pgvector enabled by the app's schema.sql),
+  database `aaa_insights` + user `aaa_app` (generated password), **Secret Manager** (`aaa-db-password`,
+  `aaa-database-url`) with per-secret reader grants, service account `aaa-insights-run` (+ cloudsql.client),
+  **Artifact Registry** repo `aaa-insights`, and a **Cloud Run** service `aaa-insights-api` running the
+  Google `hello` placeholder. Verified: authenticated `curl` returned the Cloud Run "It's running!" page.
+  Notable: the org's **Domain Restricted Sharing** policy blocks `allUsers`, so the public-invoker binding was
+  removed — the service is private and reached with an identity token (the real API carries its own auth,
+  R-42; public respondent endpoints, INV-5, get a deliberate exception later). Terraform runs in **Cloud
+  Shell** (its machine resets between sessions → reinstall terraform, or use the persistent ~/bin setup);
+  state is local + gitignored (holds the DB password — never commit it). **Next infra step:** build the real
+  API container — add an HTTP server entrypoint bridging `createApp().handle()` to `$PORT`, a Dockerfile,
+  build+push to Artifact Registry, then point Cloud Run at it and wire the Cloud SQL volume + DATABASE_URL
+  secret. Then Vertex (Claude), Identity Platform (real SSO/MFA), DLP, Cloud Armor; then Phase 5 VERIFY.
 - **2026-08-14 (Phase 4 — increment 26, admin auth seam — R-42 + DPS-11)** — Built `src/domain/auth.ts`: an
   `IdentityProvider` seam (verifies an SSO assertion → `AdminIdentity`; deterministic stub for tests, Identity
   Platform in production — the product never sees a password), a `SessionManager` (issue/validate/revoke +

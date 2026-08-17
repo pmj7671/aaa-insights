@@ -1,0 +1,16 @@
+# Terraform — never commit state (contains the DB password and other secrets) or the
+# local provider cache. The lock file IS committed (pins provider versions).
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Real variable files may hold secrets; keep only the example.
+*.tfvars
+!terraform.tfvars.example
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
