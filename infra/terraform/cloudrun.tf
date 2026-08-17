@@ -27,12 +27,18 @@ resource "google_cloud_run_v2_service" "api" {
   depends_on = [google_project_service.apis]
 }
 
-# Public access for the placeholder so the URL is reachable in a browser. When the
-# real API deploys, tighten this (admin routes are already auth-guarded in-app, R-42).
-resource "google_cloud_run_v2_service_iam_member" "public_invoker" {
-  project  = var.project_id
-  location = google_cloud_run_v2_service.api.location
-  name     = google_cloud_run_v2_service.api.name
-  role     = "roles/run.invoker"
-  member   = "allUsers"
-}
+# NOTE: public (allUsers) invocation is blocked by the organization's Domain Restricted
+# Sharing policy (iam.allowedPolicyMemberDomains) — a deliberate security guardrail on
+# activeaiadvisors.com. We honor it: the service is private, verified with an
+# authenticated request (`curl -H "Authorization: Bearer $(gcloud auth print-identity-token)"`).
+# The real API carries its own auth (R-42); if public respondent endpoints are ever
+# needed (INV-5), we'll expose those deliberately (e.g. via a fronting load balancer or
+# a scoped org-policy exception) rather than opening the whole service to allUsers.
+#
+# resource "google_cloud_run_v2_service_iam_member" "public_invoker" {
+#   project  = var.project_id
+#   location = google_cloud_run_v2_service.api.location
+#   name     = google_cloud_run_v2_service.api.name
+#   role     = "roles/run.invoker"
+#   member   = "allUsers"
+# }
