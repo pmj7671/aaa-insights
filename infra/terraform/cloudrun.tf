@@ -20,11 +20,44 @@ resource "google_cloud_run_v2_service" "api" {
     }
 
     containers {
-      image = "us-docker.pkg.dev/cloudrun/container/hello"
+      image = var.api_image
+
+      ports {
+        container_port = 8080
+      }
+
+      # DATABASE_URL comes from Secret Manager, never plaintext config (R-43/DPS-11).
+      env {
+        name = "AAA_DATABASE_URL"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.database_url.secret_id
+            version = "latest"
+          }
+        }
+      }
+
+      # The Cloud SQL connector socket is mounted here; the DATABASE_URL points at it.
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+    }
+
+    # Attach the Cloud SQL instance via the managed connector (no VPC needed).
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+        instances = [google_sql_database_instance.pg.connection_name]
+      }
     }
   }
 
-  depends_on = [google_project_service.apis]
+  depends_on = [
+    google_project_service.apis,
+    google_secret_manager_secret_version.database_url,
+    google_secret_manager_secret_iam_member.database_url_reader,
+  ]
 }
 
 # NOTE: public (allUsers) invocation is blocked by the organization's Domain Restricted

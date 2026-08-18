@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.gitignore
+coverage
+tests
+**/*.test.ts
+infra
+research
+docs
+*.md
+.terraform
+*.tfstate
+*.tfstate.*
+.vitest

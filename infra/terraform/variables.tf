@@ -30,3 +30,9 @@ variable "db_user" {
   type        = string
   default     = "aaa_app"
 }
+
+variable "api_image" {
+  description = "Container image for the Cloud Run API. Defaults to the placeholder; the deploy step passes the built image from Artifact Registry."
+  type        = string
+  default     = "us-docker.pkg.dev/cloudrun/container/hello"
+}
