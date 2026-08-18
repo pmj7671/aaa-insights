@@ -42,6 +42,19 @@ resource "google_cloud_run_v2_service" "api" {
         name       = "cloudsql"
         mount_path = "/cloudsql"
       }
+
+      # Startup probe on '/' (liveness — deliberately NOT the DB-checking /readyz, so a
+      # database blip never causes Cloud Run to kill healthy instances). Our server
+      # binds even if the DB is briefly unreachable, so '/' answers quickly.
+      startup_probe {
+        http_get {
+          path = "/"
+        }
+        initial_delay_seconds = 0
+        timeout_seconds       = 3
+        period_seconds        = 10
+        failure_threshold     = 6
+      }
     }
 
     # Attach the Cloud SQL instance via the managed connector (no VPC needed).

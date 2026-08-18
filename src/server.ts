@@ -64,8 +64,10 @@ async function main(): Promise<void> {
         const method = req.method ?? 'GET';
         const path = req.url ?? '/';
 
-        // Liveness — no DB dependency.
-        if (method === 'GET' && (path === '/' || path === '/healthz')) {
+        // Liveness — no DB dependency. Served at '/' (Google's front end special-cases
+        // the literal path '/healthz' and answers it before it reaches us, so we don't
+        // use that name; '/', the app's '/health', and '/readyz' all work normally).
+        if (method === 'GET' && path === '/') {
           res.writeHead(200, { 'content-type': 'application/json' });
           res.end(JSON.stringify({ service: 'aaa-insights-api', status: 'ok', schemaReady }));
           return;

@@ -202,6 +202,24 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-18 (Phase 4 — infrastructure tier: APP LIVE on Cloud Run, database-backed)** — The real API is
+  deployed and serving. Added `src/server.ts` (Node HTTP server bridging `createApp().handle()` to `$PORT`,
+  wiring the Pg repositories, `applySchema` on boot → pgvector, `/` liveness + `/readyz` DB probe), a
+  multi-stage `Dockerfile`, `.dockerignore`, `tsconfig.build.json` (emits `dist/`), and `npm run build`/`start`
+  (added `@types/node`). Terraform `cloudrun.tf` now runs `var.api_image` with the **Cloud SQL connector
+  volume**, the **DATABASE_URL secret env**, and a `/` startup probe. Verified locally against Postgres, then
+  **live in GCP**: image built (Cloud Shell `docker build` + push, and Cloud Build once the compute-default SA
+  got `cloudbuild.builds.builder` + `artifactregistry.writer`), `terraform apply -var api_image=...` rolled a
+  new revision, and authenticated curls returned `/readyz {db:up}`, a stored feedback record, and a computed
+  insight report (Love Index 100) — i.e. **real HTTP → domain logic → Cloud SQL round-trip in the cloud.**
+  Quirk: Google's front end special-cases the literal path `/healthz` (returns its own 404 before reaching the
+  container), so we dropped that name — `/`, `/health`, and `/readyz` all work. **Deploy loop:** `docker build`
+  + push to `us-central1-docker.pkg.dev/aaa-insights/aaa-insights/api:v1`, then
+  `terraform apply -var="api_image=...:v1"` in `infra/terraform`. NOTE: the currently-live revision predates
+  this tidy commit (it still has `/healthz` + no startup probe); the tidy version deploys on the next image
+  build. App-level admin auth is not yet wired in the deployed service (Cloud Run IAM is the outer gate — the
+  service is private, reached with an identity token). **Next:** rebuild+redeploy to pick up the tidy server;
+  then real auth (Identity Platform), Vertex (Claude) wiring, DLP/Cloud Armor; then Phase 5 VERIFY.
 - **2026-08-17 (Phase 4 — infrastructure tier: GCP walking skeleton STANDING)** — First live cloud footprint
   provisioned via Terraform (`infra/terraform/`) and verified end-to-end. Project **`aaa-insights`** (org
   `activeaiadvisors.com`, billing "My Billing Account", funded by the Google Developer Program Premium credit
