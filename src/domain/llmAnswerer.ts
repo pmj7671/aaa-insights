@@ -28,6 +28,8 @@ export interface LlmAnswererOptions {
   maxOutputTokens?: number;
   /** Optional output safety check; an unsafe verdict falls back to the baseline. */
   safety?: SafetyChecker;
+  /** Observability hook — called with the provider error before falling back. */
+  onError?: (err: unknown) => void;
 }
 
 function buildPrompt(query: string, evidence: readonly FeedbackRecord[]): string {
@@ -53,8 +55,10 @@ export function createLlmAnswerer(provider: LLMProvider, opts: LlmAnswererOption
         if (text.length === 0) return baselineAnswerer.compose(query, evidence);
         if (opts.safety && !opts.safety.check(text).safe) return baselineAnswerer.compose(query, evidence);
         return text;
-      } catch {
-        // Never let a model outage fail the query — fall back to the deterministic answer.
+      } catch (err) {
+        // Never let a model outage fail the query — fall back to the deterministic
+        // answer, but surface the reason so failures aren't silent.
+        opts.onError?.(err);
         return baselineAnswerer.compose(query, evidence);
       }
     },

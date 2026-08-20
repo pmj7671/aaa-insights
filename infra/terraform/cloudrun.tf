@@ -26,6 +26,18 @@ resource "google_cloud_run_v2_service" "api" {
         container_port = 8080
       }
 
+      # Headroom for the Vertex/Anthropic SDK + google-auth on the first (cold-start)
+      # Claude call — 512Mi OOM-killed the instance on its first live call. Startup CPU
+      # boost shortens cold starts.
+      resources {
+        limits = {
+          cpu    = "1"
+          memory = "1Gi"
+        }
+        cpu_idle          = true
+        startup_cpu_boost = true
+      }
+
       # DATABASE_URL comes from Secret Manager, never plaintext config (R-43/DPS-11).
       env {
         name = "AAA_DATABASE_URL"

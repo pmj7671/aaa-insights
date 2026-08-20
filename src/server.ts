@@ -63,7 +63,9 @@ async function chooseAnswerer(): Promise<GroundedAnswerer> {
     const { createVertexProvider } = await import('./infra/vertexProvider.js');
     const provider = createVertexProvider({ projectId, region, model });
     console.log(`[startup] LLM answerer: Claude via Vertex (${model} @ ${region})`);
-    return createLlmAnswerer(provider);
+    return createLlmAnswerer(provider, {
+      onError: (err) => console.warn('[llmAnswerer] Vertex call failed, used baseline:', (err as Error).message),
+    });
   } catch (e) {
     console.error('[startup] Vertex answerer init failed — using baseline:', (e as Error).message);
     return baselineAnswerer;

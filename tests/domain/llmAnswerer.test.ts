@@ -40,10 +40,14 @@ describe('createLlmAnswerer (R-17 wording via the LLM seam)', () => {
     expect(seenPrompt).toContain('only the feedback');
   });
 
-  it('falls back to the baseline when the provider throws', async () => {
-    const answerer = createLlmAnswerer(provider(async () => { throw new Error('vertex down'); }));
+  it('falls back to the baseline when the provider throws, and reports via onError', async () => {
+    let reported: unknown;
+    const answerer = createLlmAnswerer(provider(async () => { throw new Error('vertex down'); }), {
+      onError: (e) => { reported = e; },
+    });
     const out = await answerer.compose('checkout?', evidence);
     expect(out).toMatch(/Based on 1 response/); // baseline phrasing
+    expect((reported as Error).message).toBe('vertex down'); // failure surfaced, not silent
   });
 
   it('falls back when the model returns empty text', async () => {

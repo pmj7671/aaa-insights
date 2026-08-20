@@ -202,6 +202,32 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-20 (Phase 4 — Claude-via-Vertex DEPLOYED; blocked only on a model quota grant)** — Deployed the
+  Claude-backed grounded query to the live Cloud Run service (image `…/api:v2`, `llm_provider=vertex`,
+  `vertex_model=claude-sonnet-5`, SA has aiplatform.user, Vertex API enabled). **Everything works except the
+  model's quota.** Confirmed via a raw Vertex `rawPredict` call that the model/region/auth/code are all
+  correct — it returns **HTTP 429 RESOURCE_EXHAUSTED**: the default per-minute token quota for base model
+  `anthropic-claude-sonnet-5` is **0** until a quota-increase is requested (a standard Vertex gate for
+  newly-enabled Anthropic models). So every `/query` call errors and **falls back to the deterministic
+  baseline** — the live service keeps working (no downtime), it just isn't Claude's prose yet (tell: the
+  answer reads `"Based on N response(s)…"` and the call is instant instead of ~3–4s).
+  **RESUME = one user action (no code/deploy needed):** in the console Quotas page
+  (https://console.cloud.google.com/iam-admin/quotas?project=aaa-insights) the Vertex quotas live under
+  **"Agent Platform API"** (Vertex was renamed). Filter the **Dimensions** column for `sonnet` (note: the exact
+  label was NOT `anthropic-claude-sonnet-5` — filtering that string found nothing; `claude` alone returns 185
+  rows like `base_model: anthropic-claude-haiku`, so find the Sonnet row's real label), select the **"online
+  prediction input tokens per minute per base model"** row (and the output-tokens one) → **Edit Quota** →
+  request ~50,000/min → submit. Once granted, the live service starts returning real Claude answers
+  automatically. Also this session (committed, **pending push** from C:\Dev — commits `a965f0b`, `e47ff7a`):
+  **Cloud Run memory → 1 GiB + startup CPU boost** (fixes a cold-start OOM: the first live Claude call was
+  killed at 512Mi → the app's try/catch can't catch a process kill, so it 500'd once then worked; apply this
+  so it never recurs), and **llmAnswerer `onError` logging** (Vertex failures now log `[llmAnswerer] Vertex
+  call failed…` instead of silently falling back — ships on the next image rebuild). **Deploy loop:**
+  `docker build -t …/api:vN . && docker push …/api:vN`, then
+  `terraform apply -var="api_image=…:vN" -var="llm_provider=vertex" -var="vertex_model=claude-sonnet-5"`
+  (or create a local `terraform.tfvars` with those three so plain `terraform apply` works). Tests **242 green**
+  (unchanged; the Vertex path is tested with a mock). Next after quota: verify Claude live, then the
+  sentiment/emotion/aspect classifiers, real admin auth, Phase 5 VERIFY.
 - **2026-08-18 (Phase 4 — making the AI real: Claude via Vertex for the grounded query)** — Wired the first
   AI-dependent seam to a real model. `src/infra/vertexProvider.ts` implements the `LLMProvider` seam via the
   `@anthropic-ai/vertex-sdk` `AnthropicVertex` client (ADC auth — the runtime SA now has
