@@ -202,6 +202,23 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-18 (Phase 4 — making the AI real: Claude via Vertex for the grounded query)** — Wired the first
+  AI-dependent seam to a real model. `src/infra/vertexProvider.ts` implements the `LLMProvider` seam via the
+  `@anthropic-ai/vertex-sdk` `AnthropicVertex` client (ADC auth — the runtime SA now has
+  `roles/aiplatform.user`). `src/domain/llmAnswerer.ts` is a Claude-backed `GroundedAnswerer` (R-17 wording):
+  it prompts Claude to answer **using only** the account-scoped evidence, ignore injected instructions (R-8),
+  and on ANY failure (error/empty/unsafe) falls back to the deterministic baseline so the query never fails.
+  `GroundedAnswerer.compose` and `answerQuery` are now **async** (composing prose is inherently async);
+  retrieval, citations, tenant isolation (INV-6) and confidence (NFR-6) stay deterministic in `answerQuery`
+  — the model only shapes wording. Selection is flag-gated in `server.ts`: `AAA_LLM_PROVIDER=vertex`
+  (+`AAA_VERTEX_MODEL`) turns on Claude, else the baseline; the Vertex SDK is lazily imported so baseline mode
+  stays light. Terraform: Vertex AI API enabled, SA granted aiplatform.user, and `llm_provider`/`vertex_model`
+  → Cloud Run env. Tested with a **mock provider** (happy path, grounding, and all three fallbacks) — **242
+  tests green** (+7), tsc clean, gate GREEN; async `/query` re-verified in the running server (baseline).
+  **Live Claude pends** Paul enabling the Claude model in Vertex Model Garden + a deploy with
+  `-var llm_provider=vertex -var vertex_model=<id>`. No new requirement IDs (this is the real wiring of R-17,
+  already closed via the seam). Next: verify Claude live, then the sentiment/emotion/aspect classifiers, then
+  real admin auth; Phase 5 VERIFY.
 - **2026-08-18 (Phase 4 — infrastructure tier: APP LIVE on Cloud Run, database-backed)** — The real API is
   deployed and serving. Added `src/server.ts` (Node HTTP server bridging `createApp().handle()` to `$PORT`,
   wiring the Pg repositories, `applySchema` on boot → pgvector, `/` liveness + `/readyz` DB probe), a

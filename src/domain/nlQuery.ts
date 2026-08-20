@@ -40,9 +40,14 @@ export interface GroundedAnswer {
   caveat?: string;
 }
 
-/** The phrasing seam: compose an answer from evidence that is ALREADY account-scoped. */
+/**
+ * The phrasing seam: compose an answer from evidence that is ALREADY account-scoped.
+ * Async because composing prose is the model's job (Claude via Vertex in production;
+ * a deterministic baseline for tests/offline). The evidence handed in is always
+ * account-scoped, so no phrasing step can cross the tenant boundary (INV-6).
+ */
 export interface GroundedAnswerer {
-  compose(query: string, evidence: readonly FeedbackRecord[]): string;
+  compose(query: string, evidence: readonly FeedbackRecord[]): Promise<string>;
 }
 
 const STOP = new Set(['the', 'a', 'an', 'is', 'are', 'was', 'were', 'do', 'does', 'of', 'to', 'in', 'on', 'and', 'or', 'my', 'our', 'what', 'how', 'why', 'about', 'with', 'for']);
@@ -92,7 +97,7 @@ export function retrieveEvidence(
 
 /** A deterministic answerer — a real implementation of the seam for tests/offline. */
 export const baselineAnswerer: GroundedAnswerer = {
-  compose(query: string, evidence: readonly FeedbackRecord[]): string {
+  async compose(query: string, evidence: readonly FeedbackRecord[]): Promise<string> {
     if (evidence.length === 0) return 'The available data does not support an answer to that question.';
     return `Based on ${evidence.length} response(s) in your account: ${evidence.map((e) => `"${snippetOf(e.commentText ?? '', 80)}"`).join('; ')}.`;
   },
@@ -108,12 +113,12 @@ function confidenceFrom(n: number): number {
  * Returns citations and a confidence signal (NFR-6); when the data can't answer,
  * `supported` is false and a caveat says so (E-8).
  */
-export function answerQuery(
+export async function answerQuery(
   records: readonly FeedbackRecord[],
   accountId: string,
   query: string,
   answerer: GroundedAnswerer = baselineAnswerer,
-): GroundedAnswer {
+): Promise<GroundedAnswer> {
   const evidence = retrieveEvidence(records, accountId, query);
 
   if (evidence.length === 0) {
@@ -135,7 +140,7 @@ export function answerQuery(
   const citations = evidence.map(toCitation);
   const answer: GroundedAnswer = {
     accountId,
-    answer: answerer.compose(query, evidence),
+    answer: await answerer.compose(query, evidence),
     citations,
     confidence: confidenceFrom(evidence.length),
     supported: true,

@@ -13,3 +13,10 @@ resource "google_project_iam_member" "run_sa_cloudsql_client" {
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.run_sa.email}"
 }
+
+# Allow the API to call Claude on Vertex AI (used when llm_provider = "vertex").
+resource "google_project_iam_member" "run_sa_vertex_user" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "serviceAccount:${google_service_account.run_sa.email}"
+}

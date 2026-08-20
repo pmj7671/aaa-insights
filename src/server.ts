@@ -15,6 +15,8 @@ import { applySchema, PgFeedbackRepository } from './persistence/pgFeedbackRepos
 import { PgRecoveryCaseRepository } from './persistence/pgRecoveryCaseRepository.js';
 import { PgContactRepository } from './persistence/pgContactRepository.js';
 import { PgCompetitorRepository } from './persistence/pgCompetitorRepository.js';
+import { baselineAnswerer, type GroundedAnswerer } from './domain/nlQuery.js';
+import { createLlmAnswerer } from './domain/llmAnswerer.js';
 
 const PORT = Number(process.env.PORT ?? 8080);
 const DATABASE_URL = process.env.AAA_DATABASE_URL ?? '';
@@ -37,6 +39,37 @@ function readBody(req: http.IncomingMessage): Promise<string> {
   });
 }
 
+/**
+ * Pick the grounded-answer phrasing seam. `AAA_LLM_PROVIDER=vertex` uses Claude via
+ * Vertex (needs AAA_VERTEX_PROJECT + AAA_VERTEX_MODEL and the runtime SA's
+ * aiplatform.user role); anything else — or any misconfiguration — uses the
+ * deterministic baseline. The Vertex SDK is imported lazily so baseline mode never
+ * loads it.
+ */
+async function chooseAnswerer(): Promise<GroundedAnswerer> {
+  const mode = (process.env.AAA_LLM_PROVIDER ?? 'baseline').toLowerCase();
+  if (mode !== 'vertex') {
+    console.log('[startup] LLM answerer: baseline (deterministic)');
+    return baselineAnswerer;
+  }
+  const projectId = process.env.AAA_VERTEX_PROJECT ?? process.env.GOOGLE_CLOUD_PROJECT ?? '';
+  const region = process.env.AAA_VERTEX_REGION ?? 'us-central1';
+  const model = process.env.AAA_VERTEX_MODEL ?? '';
+  if (!projectId || !model) {
+    console.error('[startup] AAA_LLM_PROVIDER=vertex but AAA_VERTEX_PROJECT/MODEL unset — using baseline');
+    return baselineAnswerer;
+  }
+  try {
+    const { createVertexProvider } = await import('./infra/vertexProvider.js');
+    const provider = createVertexProvider({ projectId, region, model });
+    console.log(`[startup] LLM answerer: Claude via Vertex (${model} @ ${region})`);
+    return createLlmAnswerer(provider);
+  } catch (e) {
+    console.error('[startup] Vertex answerer init failed — using baseline:', (e as Error).message);
+    return baselineAnswerer;
+  }
+}
+
 async function main(): Promise<void> {
   const pool = new pg.Pool(DATABASE_URL ? { connectionString: DATABASE_URL } : {});
 
@@ -51,11 +84,14 @@ async function main(): Promise<void> {
     console.error('[startup] applySchema failed:', (e as Error).message);
   }
 
+  const answerer = await chooseAnswerer();
+
   const app: App = createApp({
     feedback: new PgFeedbackRepository(pool),
     cases: new PgRecoveryCaseRepository(pool),
     contacts: new PgContactRepository(pool),
     competitors: new PgCompetitorRepository(pool),
+    answerer,
   });
 
   const server = http.createServer((req, res) => {

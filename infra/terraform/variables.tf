@@ -36,3 +36,15 @@ variable "api_image" {
   type        = string
   default     = "us-docker.pkg.dev/cloudrun/container/hello"
 }
+
+variable "llm_provider" {
+  description = "Grounded-answer LLM: 'baseline' (deterministic) or 'vertex' (Claude via Vertex AI)."
+  type        = string
+  default     = "baseline"
+}
+
+variable "vertex_model" {
+  description = "Vertex Model Garden model id for Claude (e.g. 'claude-3-5-sonnet-v2@20241022'). Required when llm_provider = vertex."
+  type        = string
+  default     = ""
+}

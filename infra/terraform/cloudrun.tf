@@ -37,6 +37,24 @@ resource "google_cloud_run_v2_service" "api" {
         }
       }
 
+      # LLM configuration (non-secret). llm_provider=vertex turns on Claude via Vertex.
+      env {
+        name  = "AAA_LLM_PROVIDER"
+        value = var.llm_provider
+      }
+      env {
+        name  = "AAA_VERTEX_PROJECT"
+        value = var.project_id
+      }
+      env {
+        name  = "AAA_VERTEX_REGION"
+        value = var.region
+      }
+      env {
+        name  = "AAA_VERTEX_MODEL"
+        value = var.vertex_model
+      }
+
       # The Cloud SQL connector socket is mounted here; the DATABASE_URL points at it.
       volume_mounts {
         name       = "cloudsql"

@@ -197,7 +197,7 @@ export function createApp(deps: AppDeps): App {
     const query = typeof b.query === 'string' ? b.query.trim() : '';
     if (!query) return badRequest('query is required');
     const records = await deps.feedback.list(accountId); // INV-6: only this account's data
-    const answer = answerQuery(records, accountId, query, deps.answerer ?? baselineAnswerer);
+    const answer = await answerQuery(records, accountId, query, deps.answerer ?? baselineAnswerer);
     return ok(answer);
   });
 
