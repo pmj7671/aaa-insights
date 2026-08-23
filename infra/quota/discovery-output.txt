@@ -1,0 +1,461 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260823104214
+Username: AzureAD\PaulJamieson
+RunAs User: AzureAD\PaulJamieson
+Configuration Name: 
+Machine: PMJ-SURFACE (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -ExecutionPolicy Bypass -File C:\Dev\aaa-insights\infra\quota\discover-claude-quotas.ps1
+Process ID: 29492
+PSVersion: 5.1.26100.9168
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9168
+BuildVersion: 10.0.26100.9168
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Project: aaa-insights   Service: aiplatform.googleapis.com
+Listing quota infos (this can take ~30s)...
+Got 374 quota definitions.
+
+--- token quotas on this service ---
+
+=== quotaId: EmbedContentInputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/embed_content_input_tokens_per_minute_per_base_model
+    (no sonnet row among 82 combos; showing first 15)
+
+Dimensions                                              CurrentValue
+----------                                              ------------
+base_model=gemini-embedding,region=africa-south1        1000000     
+base_model=gemini-embedding,region=asia-east1           1000000     
+base_model=gemini-embedding,region=asia-east2           1000000     
+base_model=gemini-embedding,region=asia-northeast1      1000000     
+base_model=gemini-embedding,region=asia-northeast2      1000000     
+base_model=gemini-embedding,region=asia-northeast3      1000000     
+base_model=gemini-embedding,region=asia-south1          1000000     
+base_model=gemini-embedding,region=asia-southeast1      1000000     
+base_model=gemini-embedding,region=asia-southeast2      1000000     
+base_model=gemini-embedding,region=australia-southeast1 1000000     
+base_model=gemini-embedding,region=australia-southeast2 1000000     
+base_model=gemini-embedding,region=europe-central2      1000000     
+base_model=gemini-embedding,region=europe-north1        1000000     
+base_model=gemini-embedding,region=europe-southwest1    1000000     
+base_model=gemini-embedding,region=europe-west12        1000000
+
+=== quotaId: EuMultiRegionResponsesInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/eu_multi_region_responses_input_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: EuMultiRegionResponsesOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/eu_multi_region_responses_output_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: EuMultiRegionResponsesTotalTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/eu_multi_region_responses_total_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: EuOnlinePredictionInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/eu_multi_region_online_prediction_input_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+=== quotaId: EuOnlinePredictionOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/eu_multi_region_online_prediction_output_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+=== quotaId: GenerateContentInputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/generate_content_input_tokens_per_minute_per_base_model
+    (no sonnet row among 116 combos; showing first 15)
+
+Dimensions                                              CurrentValue
+----------                                              ------------
+base_model=gemini-1.5-flash,region=africa-south1        4000000     
+base_model=gemini-1.5-flash,region=asia-east1           4000000     
+base_model=gemini-1.5-flash,region=asia-east2           4000000     
+base_model=gemini-1.5-flash,region=asia-northeast1      4000000     
+base_model=gemini-1.5-flash,region=asia-northeast2      4000000     
+base_model=gemini-1.5-flash,region=asia-northeast3      4000000     
+base_model=gemini-1.5-flash,region=asia-south1          4000000     
+base_model=gemini-1.5-flash,region=asia-southeast1      4000000     
+base_model=gemini-1.5-flash,region=asia-southeast2      4000000     
+base_model=gemini-1.5-flash,region=australia-southeast1 4000000     
+base_model=gemini-1.5-flash,region=australia-southeast2 4000000     
+base_model=gemini-1.5-flash,region=europe-central2      4000000     
+base_model=gemini-1.5-flash,region=europe-north1        4000000     
+base_model=gemini-1.5-flash,region=europe-southwest1    4000000     
+base_model=gemini-1.5-flash,region=europe-west12        4000000
+
+=== quotaId: GenerateContentOutputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/generate_content_output_tokens_per_minute_per_base_model
+    (no sonnet row among 5 combos; showing first 15)
+
+Dimensions         CurrentValue
+----------         ------------
+region=asia-south1 -1          
+region=us-central1 -1          
+region=us-south1   -1          
+region=us-west1    -1          
+=                  -1
+
+=== quotaId: GlobalEmbedContentInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_embed_content_input_tokens_per_minute_per_base_model
+    (no sonnet row among 2 combos; showing first 15)
+
+Dimensions                    CurrentValue
+----------                    ------------
+base_model=gemini-embedding-2 10000000    
+=
+
+=== quotaId: GlobalGenerateContentInputTokensPerDayPerBaseModel
+    metric : aiplatform.googleapis.com/global_generate_content_input_tokens_per_minute_per_base_model
+    (no sonnet row among 8 combos; showing first 15)
+
+Dimensions                           CurrentValue
+----------                           ------------
+base_model=gemini-2.5-flash-ga       10000000000 
+base_model=gemini-2.5-pro-ga         1000000000  
+base_model=gemini-2.5-pro-latest     1000000000  
+base_model=gemini-3.0-flash          5000000000  
+base_model=gemini-3.5-flash-lite-qcd 5000000000  
+base_model=gemini-3.6-flash-qcd      5000000000  
+base_model=gemini-3.7-flash-qcd      5000000000  
+=                                    -1
+
+=== quotaId: GlobalGenerateContentInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_generate_content_input_tokens_per_minute_per_base_model
+    (no sonnet row among 15 combos; showing first 15)
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=gemini-1.5-flash            4000000     
+base_model=gemini-1.5-pro              4000000     
+base_model=gemini-3.0-flash            50000000    
+base_model=gemini-3.1-flash-lite-qcd   25000000    
+base_model=gemini-3.5-flash-lite-qcd   50000000    
+base_model=gemini-3.6-flash-qcd        50000000    
+base_model=gemini-3.7-flash-qcd        50000000    
+base_model=gemini-experimental         4000000     
+base_model=grok-4.1-fast-non-reasoning 220000      
+base_model=grok-4.1-fast-reasoning     220000      
+base_model=grok-4.20-non-reasoning     64000       
+base_model=grok-4.20-reasoning         64000       
+base_model=grok-4.3                    10000       
+base_model=grok-4.6                    47000       
+=                                      -1
+
+=== quotaId: GlobalGenerateContentOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_generate_content_output_tokens_per_minute_per_base_model
+    (no sonnet row among 7 combos; showing first 15)
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=grok-4.1-fast-non-reasoning 10000       
+base_model=grok-4.1-fast-reasoning     10000       
+base_model=grok-4.20-non-reasoning     9600        
+base_model=grok-4.20-reasoning         9600        
+base_model=grok-4.3                    3000        
+base_model=grok-4.6                    4000        
+=                                      -1
+
+=== quotaId: GlobalOnlinePredictionInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_online_prediction_input_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+=== quotaId: GlobalOnlinePredictionOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_online_prediction_output_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+=== quotaId: GlobalOnlinePredictionTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_online_prediction_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                      CurrentValue
+----------                      ------------
+base_model=claude-3-5-sonnet-v2             
+base_model=claude-3-7-sonnet
+
+=== quotaId: GlobalOpenapiInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_openapi_input_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=codex-olympus              10000       
+base_model=fake-openai-responses-test 10000       
+=
+
+=== quotaId: GlobalOpenapiOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_openapi_output_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=codex-olympus              3000        
+base_model=fake-openai-responses-test 3000        
+=
+
+=== quotaId: GlobalOpenapiTotalTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_openapi_total_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=codex-olympus              13000       
+base_model=fake-openai-responses-test 13000       
+=
+
+=== quotaId: GlobalResponsesInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_responses_input_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: GlobalResponsesOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_responses_output_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: GlobalResponsesTotalTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/global_responses_total_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: OnlinePredictionInputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/online_prediction_input_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                                                    CurrentValue
+----------                                                    ------------
+base_model=anthropic-claude-sonnet-4,region=europe-west1      15000       
+base_model=anthropic-claude-sonnet-4,region=us-east5          15000       
+base_model=anthropic-claude-sonnet-4-5,region=asia-southeast1             
+base_model=anthropic-claude-sonnet-4-5,region=europe-west1                
+base_model=anthropic-claude-sonnet-4-5,region=us-east5                    
+base_model=anthropic-claude-sonnet-4-6,region=asia-southeast1             
+base_model=anthropic-claude-sonnet-4-6,region=europe-west1                
+base_model=anthropic-claude-sonnet-4-6,region=us-east5
+
+=== quotaId: OnlinePredictionOutputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/online_prediction_output_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                                                    CurrentValue
+----------                                                    ------------
+base_model=anthropic-claude-sonnet-4,region=europe-west1      1500        
+base_model=anthropic-claude-sonnet-4,region=us-east5          1500        
+base_model=anthropic-claude-sonnet-4-5,region=asia-southeast1             
+base_model=anthropic-claude-sonnet-4-5,region=europe-west1                
+base_model=anthropic-claude-sonnet-4-5,region=us-east5                    
+base_model=anthropic-claude-sonnet-4-6,region=asia-southeast1             
+base_model=anthropic-claude-sonnet-4-6,region=europe-west1                
+base_model=anthropic-claude-sonnet-4-6,region=us-east5
+
+=== quotaId: OnlinePredictionTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/online_prediction_tokens_per_minute_per_base_model
+    (no sonnet row among 32 combos; showing first 15)
+
+Dimensions                                                 CurrentValue
+----------                                                 ------------
+base_model=anthropic-claude-3-5-haiku,region=europe-west1  15000       
+base_model=anthropic-claude-3-5-haiku,region=us-east5      15000       
+base_model=anthropic-claude-3-haiku,region=asia-southeast1 15000       
+base_model=anthropic-claude-3-haiku,region=europe-west1    15000       
+base_model=anthropic-claude-3-haiku,region=europe-west4    15000       
+base_model=anthropic-claude-3-haiku,region=us-central1     15000       
+base_model=anthropic-claude-3-haiku,region=us-east5        15000       
+base_model=anthropic-count-tokens,region=asia-east1        -1          
+base_model=anthropic-count-tokens,region=asia-southeast1   -1          
+base_model=anthropic-count-tokens,region=europe-north1     -1          
+base_model=anthropic-count-tokens,region=europe-west1      -1          
+base_model=anthropic-count-tokens,region=us-east1          -1          
+base_model=anthropic-count-tokens,region=us-east5          -1          
+base_model=anthropic-count-tokens,region=us-south1         -1          
+base_model=anthropic-count-tokens,region=us-west4          -1
+
+=== quotaId: OpenapiInputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/openapi_input_tokens_per_minute_per_base_model
+    (no sonnet row among 4 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=codex-olympus,region=us-central1              10000       
+base_model=fake-openai-responses-test,region=us-central1 10000       
+region=us-central1                                                   
+=
+
+=== quotaId: OpenapiOutputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/openapi_output_tokens_per_minute_per_base_model
+    (no sonnet row among 4 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=codex-olympus,region=us-central1              3000        
+base_model=fake-openai-responses-test,region=us-central1 3000        
+region=us-central1                                                   
+=
+
+=== quotaId: OpenapiTotalTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/openapi_total_tokens_per_minute_per_base_model
+    (no sonnet row among 4 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=codex-olympus,region=us-central1              13000       
+base_model=fake-openai-responses-test,region=us-central1 13000       
+region=us-central1                                                   
+=
+
+=== quotaId: ResponsesInputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/responses_input_tokens_per_minute_per_base_model
+    (no sonnet row among 5 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=fake-openai-responses-test,region=us-central1 13000       
+base_model=openai-staging-test,region=us-east1           13000       
+region=us-central1                                                   
+region=us-east1                                                      
+=
+
+=== quotaId: ResponsesOutputTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/responses_output_tokens_per_minute_per_base_model
+    (no sonnet row among 5 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=fake-openai-responses-test,region=us-central1 13000       
+base_model=openai-staging-test,region=us-east1           13000       
+region=us-central1                                                   
+region=us-east1                                                      
+=
+
+=== quotaId: ResponsesTotalTokensPerMinutePerRegionPerBaseModel
+    metric : aiplatform.googleapis.com/responses_total_tokens_per_minute_per_base_model
+    (no sonnet row among 5 combos; showing first 15)
+
+Dimensions                                               CurrentValue
+----------                                               ------------
+base_model=fake-openai-responses-test,region=us-central1 13000       
+base_model=openai-staging-test,region=us-east1           13000       
+region=us-central1                                                   
+region=us-east1                                                      
+=
+
+=== quotaId: UsMultiRegionResponsesInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/us_multi_region_responses_input_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: UsMultiRegionResponsesOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/us_multi_region_responses_output_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: UsMultiRegionResponsesTotalTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/us_multi_region_responses_total_tokens_per_minute_per_base_model
+    (no sonnet row among 3 combos; showing first 15)
+
+Dimensions                            CurrentValue
+----------                            ------------
+base_model=fake-openai-responses-test 13000       
+base_model=openai-staging-test        13000       
+=
+
+=== quotaId: UsOnlinePredictionInputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/us_multi_region_online_prediction_input_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+=== quotaId: UsOnlinePredictionOutputTokensPerMinutePerBaseModel
+    metric : aiplatform.googleapis.com/us_multi_region_online_prediction_output_tokens_per_minute_per_base_model
+    SONNET ROWS:
+
+Dimensions                             CurrentValue
+----------                             ------------
+base_model=anthropic-claude-sonnet-4-5             
+base_model=anthropic-claude-sonnet-4-6             
+base_model=anthropic-claude-sonnet-4               
+base_model=anthropic-claude-sonnet
+
+Done. Results saved to infra\quota\discovery-output.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260823104437
+**********************

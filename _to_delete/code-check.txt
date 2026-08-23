@@ -1,0 +1,91 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260823110348
+Username: AzureAD\PaulJamieson
+RunAs User: AzureAD\PaulJamieson
+Configuration Name: 
+Machine: PMJ-SURFACE (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -ExecutionPolicy Bypass -File C:\Dev\aaa-insights\check-code.ps1
+Process ID: 29168
+PSVersion: 5.1.26100.9168
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9168
+BuildVersion: 10.0.26100.9168
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Audit run at: 2026-08-23 11:03:48
+
+=== Oliver's OWN .py files (venv/site-packages excluded) ===
+  61 own script file(s) found
+
+  GOOGLE AUTH REFERENCES: 2
+   daily_pipeline.py:194  from google.cloud import logging as gcp_logging
+   sync_db.py:19  from google.cloud import storage
+
+=== top-level scripts (for context) ===
+
+Name                                LastWriteTime        
+----                                -------------        
+analyze_field_coverage.py           7/1/2026 10:36:20 AM 
+analyze_match_by_age.py             6/15/2026 2:01:03 PM 
+analyze_match_monthly.py            6/15/2026 2:03:10 PM 
+analyze_model_sensitivity.py        7/8/2026 11:15:23 AM 
+analyze_qc_and_scores.py            7/1/2026 10:37:32 AM 
+analyze_signal_lift.py              7/7/2026 10:13:46 AM 
+aspire_enrich.py                    4/29/2026 8:59:46 AM 
+backfill_aspire.py                  6/1/2026 8:18:23 AM  
+backfill_aspire_stubs.py            6/15/2026 2:12:47 PM 
+backfill_data_match.py              6/15/2026 12:50:55 PM
+backfill_snapshots.py               5/15/2026 8:00:02 AM 
+bootstrap_customers.py              7/29/2026 7:37:39 AM 
+bulk_contact_update.py              6/15/2026 12:41:21 PM
+bulk_lead_update.py                 6/17/2026 10:57:13 AM
+bulk_read_contacts.py               5/21/2026 2:28:02 PM 
+bulk_read_leads.py                  3/27/2026 2:30:36 PM 
+check_experiment_status.py          7/29/2026 7:58:44 AM 
+check_field_names.py                6/15/2026 3:09:20 PM 
+check_post_may15_scores.py          6/15/2026 2:17:27 PM 
+check_recent_hot_warm.py            6/17/2026 11:18:17 AM
+check_scoring_gap.py                6/15/2026 2:16:37 PM 
+check_webhook_db_gap.py             6/15/2026 2:19:08 PM 
+conversion_tracker.py               7/7/2026 9:57:00 AM  
+create_experiment_cohort.py         7/29/2026 7:59:12 AM 
+daily_lead_download.py              4/13/2026 12:06:28 PM
+daily_pipeline.py                   7/13/2026 11:02:40 AM
+db_aspire.py                        6/1/2026 8:17:46 AM  
+db_init.py                          7/7/2026 9:56:36 AM  
+export_csv.py                       6/1/2026 8:39:15 AM  
+fci_correction.py                   5/20/2026 8:27:23 PM 
+find_poc_lead.py                    6/15/2026 2:52:54 PM 
+generate_lead_profile.py            6/15/2026 3:02:47 PM 
+generate_profiles_batch.py          6/17/2026 10:57:23 AM
+patch_missing_customers.py          6/19/2026 5:22:19 PM 
+query_alexa_cason.py                6/19/2026 5:27:38 PM 
+query_conversion_counts.py          7/29/2026 7:24:04 AM 
+query_customer_rules_score.py       7/1/2026 10:25:55 AM 
+query_first_score_date.py           6/19/2026 5:03:15 PM 
+query_hamrick.py                    6/19/2026 5:17:07 PM 
+query_hot_conversions.py            6/17/2026 4:22:18 PM 
+query_june15_customers.py           6/19/2026 5:19:07 PM 
+query_paul_till_score.py            6/19/2026 6:18:52 PM 
+query_person.py                     6/19/2026 6:03:59 PM 
+query_scored_totals.py              6/17/2026 4:29:12 PM 
+query_unknown_ids.py                6/17/2026 4:26:20 PM 
+report_conversion_lift.py           5/15/2026 8:11:57 AM 
+report_customer_profile.py          5/15/2026 9:23:50 AM 
+report_may_model_performance.py     6/2/2026 10:40:12 AM 
+report_model_performance.py         8/5/2026 7:54:08 AM  
+report_pipeline_health.py           5/18/2026 8:27:09 AM 
+report_rules_pitch.py               7/1/2026 8:05:42 PM  
+report_sales_performance_summary.py 7/29/2026 7:50:01 AM 
+score_contacts_batch.py             5/21/2026 8:58:54 AM 
+sync_db.py                          6/17/2026 11:24:11 AM
+test_field_write.py                 6/15/2026 3:10:17 PM
+Done. Nothing modified.
+**********************
+Windows PowerShell transcript end
+End time: 20260823110351
+**********************

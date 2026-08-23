@@ -1,0 +1,875 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260823105848
+Username: AzureAD\PaulJamieson
+RunAs User: AzureAD\PaulJamieson
+Configuration Name: 
+Machine: PMJ-SURFACE (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -ExecutionPolicy Bypass -File C:\Dev\aaa-insights\check-adc.ps1
+Process ID: 29600
+PSVersion: 5.1.26100.9168
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9168
+BuildVersion: 10.0.26100.9168
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Audit run at: 2026-08-23 10:58:48
+
+=== 1. configurations ===
+NAME: aaa
+IS_ACTIVE: True
+ACCOUNT: paul@activeaiadvisors.com
+PROJECT: aaa-insights
+COMPUTE_DEFAULT_ZONE: 
+COMPUTE_DEFAULT_REGION: 
+
+NAME: default
+IS_ACTIVE: False
+ACCOUNT: oliver-pipeline@oliver-cdp.iam.gserviceaccount.com
+PROJECT: oliver-cdp
+COMPUTE_DEFAULT_ZONE: 
+COMPUTE_DEFAULT_REGION:
+=== 2. aaa config ===
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Your active configuration is: [aaa]
+[environment: untagged] Read more to tag: g.co/cloud/project-env-tag.
+[accessibility]
+screen_reader = True
+[ai]
+region (unset)
+[ai_platform]
+region (unset)
+[api_endpoint_overrides]
+accessapproval (unset)
+accesscontextmanager (unset)
+ai (unset)
+aiplatform (unset)
+anthosevents (unset)
+anthospolicycontrollerstatus_pa (unset)
+apigateway (unset)
+apigee (unset)
+appengine (unset)
+apphub (unset)
+appoptimize (unset)
+artifactregistry (unset)
+assuredworkloads (unset)
+auditmanager (unset)
+baremetalsolution (unset)
+bigtableadmin (unset)
+certificatemanager (unset)
+cloudapiregistry (unset)
+cloudasset (unset)
+cloudbilling (unset)
+cloudbuild (unset)
+cloudcommerceconsumerprocurement (unset)
+clouddebugger (unset)
+clouddeploy (unset)
+clouderrorreporting (unset)
+cloudfunctions (unset)
+cloudidentity (unset)
+cloudkms (unset)
+cloudlocationfinder (unset)
+cloudresourcemanager (unset)
+cloudscheduler (unset)
+cloudsecuritycompliance (unset)
+cloudtasks (unset)
+cloudtrace (unset)
+composer (unset)
+compute (unset)
+config (unset)
+container (unset)
+datacatalog (unset)
+dataflow (unset)
+datafusion (unset)
+datamigration (unset)
+datapipelines (unset)
+dataplex (unset)
+dataproc (unset)
+datastore (unset)
+datastream (unset)
+deploymentmanager (unset)
+developerconnect (unset)
+dns (unset)
+domains (unset)
+edgecontainer (unset)
+eventarc (unset)
+eventarcpublishing (unset)
+faultinjectiontesting (unset)
+faulttesting (unset)
+file (unset)
+firebasedataconnect (unset)
+firestore (unset)
+genomics (unset)
+gkemulticloud (unset)
+healthcare (unset)
+hypercomputecluster (unset)
+iam (unset)
+iamconnectors (unset)
+iamcredentials (unset)
+iap (unset)
+ids (unset)
+krmapihosting (unset)
+language (unset)
+logging (unset)
+looker (unset)
+managedidentities (unset)
+marketplacesolutions (unset)
+mediaasset (unset)
+memcache (unset)
+metastore (unset)
+monitoring (unset)
+netapp (unset)
+networkconnectivity (unset)
+networkmanagement (unset)
+networksecurity (unset)
+networkservices (unset)
+notebooks (unset)
+observability (unset)
+orgpolicy (unset)
+policyanalyzer (unset)
+privateca (unset)
+privilegedaccessmanager (unset)
+publicca (unset)
+pubsub (unset)
+recaptchaenterprise (unset)
+recommender (unset)
+redis (unset)
+run (unset)
+runtimeconfig (unset)
+sddc (unset)
+secretmanager (unset)
+securitycenter (unset)
+servicedirectory (unset)
+servicehealth (unset)
+servicemanagement (unset)
+sourcerepo (unset)
+spanner (unset)
+speech (unset)
+sql (unset)
+storage (unset)
+testing (unset)
+transfer (unset)
+transferappliance (unset)
+vectorsearch (unset)
+vision (unset)
+vmmigration (unset)
+vmwareengine (unset)
+workflowexecutions (unset)
+workflows (unset)
+workstations (unset)
+[app]
+cloud_build_timeout (unset)
+promote_by_default (unset)
+stop_previous_version (unset)
+use_runtime_builders (unset)
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Your active configuration is: [aaa]
+[artifacts]
+location (unset)
+repository (unset)
+[auth]
+access_token_file (unset)
+disable_credentials (unset)
+impersonate_service_account (unset)
+login_config_file (unset)
+service_account_disable_id_token_refresh (unset)
+service_account_use_self_signed_jwt (unset)
+token_host (unset)
+[batch]
+location (unset)
+[billing]
+quota_project (unset)
+[builds]
+kaniko_cache_ttl (unset)
+region (unset)
+timeout (unset)
+use_kaniko (unset)
+[colab]
+region (unset)
+[component_manager]
+additional_repositories (unset)
+disable_update_check (unset)
+[composer]
+location (unset)
+[compute]
+image_family_scope (unset)
+region (unset)
+use_new_list_usable_subnets_api (unset)
+zone (unset)
+[container]
+build_timeout (unset)
+cluster (unset)
+use_application_default_credentials (unset)
+use_client_certificate (unset)
+[container_attached]
+location (unset)
+[container_aws]
+location (unset)
+[container_azure]
+location (unset)
+[container_bare_metal]
+location (unset)
+[container_vmware]
+location (unset)
+[context_aware]
+use_client_certificate (unset)
+[core]
+account = paul@activeaiadvisors.com
+console_log_format (unset)
+custom_ca_certs_file (unset)
+default_format (unset)
+default_regional_backend_service (unset)
+disable_color (unset)
+disable_file_logging (unset)
+disable_prompts (unset)
+disable_usage_reporting = True
+format (unset)
+log_http (unset)
+max_log_days (unset)
+parse_error_details (unset)
+pass_credentials_to_gsutil (unset)
+project = aaa-insights
+show_structured_logs (unset)
+trace_token (unset)
+universe_domain (unset)
+user_output_enabled (unset)
+verbosity (unset)
+[dataflow]
+disable_public_ips (unset)
+enable_streaming_engine (unset)
+print_only (unset)
+[datafusion]
+location (unset)
+[datapipelines]
+disable_public_ips (unset)
+enable_streaming_engine (unset)
+[dataplex]
+asset (unset)
+lake (unset)
+location (unset)
+zone (unset)
+[dataproc]
+location (unset)
+region (unset)
+[deploy]
+delivery_pipeline (unset)
+region (unset)
+[deployment_manager]
+glob_imports (unset)
+[eventarc]
+location (unset)
+[filestore]
+location (unset)
+region (unset)
+zone (unset)
+[functions]
+gen2 (unset)
+region (unset)
+[gcloudignore]
+enabled (unset)
+[gkebackup]
+backup (unset)
+backup_plan (unset)
+location (unset)
+restore (unset)
+restore_plan (unset)
+[healthcare]
+dataset (unset)
+location (unset)
+[interactive]
+bottom_bindings_line (unset)
+bottom_status_line (unset)
+completion_menu_lines (unset)
+context (unset)
+fixed_prompt_position (unset)
+help_lines (unset)
+hidden (unset)
+justify_bottom_lines (unset)
+manpage_generator (unset)
+multi_column_completion_menu (unset)
+prompt (unset)
+show_help (unset)
+suggest (unset)
+[looker]
+region (unset)
+[lustre]
+location (unset)
+[media_asset]
+location (unset)
+[memcache]
+region (unset)
+[metastore]
+location (unset)
+tier (unset)
+[ml_engine]
+local_python (unset)
+polling_interval (unset)
+[mps]
+product (unset)
+[netapp]
+location (unset)
+[notebooks]
+location (unset)
+[privateca]
+location (unset)
+[proxy]
+address (unset)
+password (unset)
+port (unset)
+rdns (unset)
+type (unset)
+username (unset)
+[redis]
+region (unset)
+[regional]
+endpoint_mode (unset)
+[run]
+cluster (unset)
+cluster_location (unset)
+platform (unset)
+region (unset)
+[runapps]
+deployment_service_account (unset)
+[scc]
+organization (unset)
+parent (unset)
+[secrets]
+locations (unset)
+replication-policy (unset)
+[servicehealth]
+location (unset)
+[spanner]
+instance (unset)
+[ssh]
+putty_force_connect (unset)
+verify_internal_ip (unset)
+[storage]
+additional_headers (unset)
+base_retry_delay (unset)
+check_hashes (unset)
+check_mv_early_deletion_fee (unset)
+convert_incompatible_windows_path_characters (unset)
+copy_chunk_size (unset)
+download_chunk_size (unset)
+exponential_sleep_multiplier (unset)
+key_store_path (unset)
+max_retries (unset)
+max_retry_delay (unset)
+multipart_chunksize (unset)
+multipart_threshold (unset)
+parallel_composite_upload_compatibility_check (unset)
+parallel_composite_upload_component_prefix (unset)
+parallel_composite_upload_component_size (unset)
+parallel_composite_upload_enabled (unset)
+parallel_composite_upload_threshold (unset)
+process_count (unset)
+resumable_threshold (unset)
+rsync_files_directory (unset)
+rsync_list_chunk_size (unset)
+s3_endpoint_url (unset)
+sliced_object_download_component_size (unset)
+sliced_object_download_max_components (unset)
+sliced_object_download_threshold (unset)
+suggest_transfer (unset)
+thread_count (unset)
+tracker_files_directory (unset)
+upload_chunk_size (unset)
+use_gcloud_crc32c (unset)
+use_gsutil (unset)
+use_gsutil_rsync_delete_unmatched_destination_objects_behavior (unset)
+use_magicfile (unset)
+use_threading_local (unset)
+[survey]
+disable_prompts (unset)
+[vector_search]
+location (unset)
+[vmware]
+region (unset)
+[workstations]
+cluster (unset)
+config (unset)
+region (unset)
+[environment: untagged] Read more to tag: g.co/cloud/project-env-tag.
+=== 3. default config (Oliver) ===
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Your active configuration is: [default]
+[environment: untagged] Read more to tag: g.co/cloud/project-env-tag.
+[accessibility]
+screen_reader = True
+[ai]
+region (unset)
+[ai_platform]
+region (unset)
+[api_endpoint_overrides]
+accessapproval (unset)
+accesscontextmanager (unset)
+ai (unset)
+aiplatform (unset)
+anthosevents (unset)
+anthospolicycontrollerstatus_pa (unset)
+apigateway (unset)
+apigee (unset)
+appengine (unset)
+apphub (unset)
+appoptimize (unset)
+artifactregistry (unset)
+assuredworkloads (unset)
+auditmanager (unset)
+baremetalsolution (unset)
+bigtableadmin (unset)
+certificatemanager (unset)
+cloudapiregistry (unset)
+cloudasset (unset)
+cloudbilling (unset)
+cloudbuild (unset)
+cloudcommerceconsumerprocurement (unset)
+clouddebugger (unset)
+clouddeploy (unset)
+clouderrorreporting (unset)
+cloudfunctions (unset)
+cloudidentity (unset)
+cloudkms (unset)
+cloudlocationfinder (unset)
+cloudresourcemanager (unset)
+cloudscheduler (unset)
+cloudsecuritycompliance (unset)
+cloudtasks (unset)
+cloudtrace (unset)
+composer (unset)
+compute (unset)
+config (unset)
+container (unset)
+datacatalog (unset)
+dataflow (unset)
+datafusion (unset)
+datamigration (unset)
+datapipelines (unset)
+dataplex (unset)
+dataproc (unset)
+datastore (unset)
+datastream (unset)
+deploymentmanager (unset)
+developerconnect (unset)
+dns (unset)
+domains (unset)
+edgecontainer (unset)
+eventarc (unset)
+eventarcpublishing (unset)
+faultinjectiontesting (unset)
+faulttesting (unset)
+file (unset)
+firebasedataconnect (unset)
+firestore (unset)
+genomics (unset)
+gkemulticloud (unset)
+healthcare (unset)
+hypercomputecluster (unset)
+iam (unset)
+iamconnectors (unset)
+iamcredentials (unset)
+iap (unset)
+ids (unset)
+krmapihosting (unset)
+language (unset)
+logging (unset)
+looker (unset)
+managedidentities (unset)
+marketplacesolutions (unset)
+mediaasset (unset)
+memcache (unset)
+metastore (unset)
+monitoring (unset)
+netapp (unset)
+networkconnectivity (unset)
+networkmanagement (unset)
+networksecurity (unset)
+networkservices (unset)
+notebooks (unset)
+observability (unset)
+orgpolicy (unset)
+policyanalyzer (unset)
+privateca (unset)
+privilegedaccessmanager (unset)
+publicca (unset)
+pubsub (unset)
+recaptchaenterprise (unset)
+recommender (unset)
+redis (unset)
+run (unset)
+runtimeconfig (unset)
+sddc (unset)
+secretmanager (unset)
+securitycenter (unset)
+servicedirectory (unset)
+servicehealth (unset)
+servicemanagement (unset)
+sourcerepo (unset)
+spanner (unset)
+speech (unset)
+sql (unset)
+storage (unset)
+testing (unset)
+transfer (unset)
+transferappliance (unset)
+vectorsearch (unset)
+vision (unset)
+vmmigration (unset)
+vmwareengine (unset)
+workflowexecutions (unset)
+workflows (unset)
+workstations (unset)
+[app]
+cloud_build_timeout (unset)
+promote_by_default (unset)
+stop_previous_version (unset)
+use_runtime_builders (unset)
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Your active configuration is: [default]
+[artifacts]
+location (unset)
+repository (unset)
+[auth]
+access_token_file (unset)
+disable_credentials (unset)
+impersonate_service_account (unset)
+login_config_file (unset)
+service_account_disable_id_token_refresh (unset)
+service_account_use_self_signed_jwt (unset)
+token_host (unset)
+[batch]
+location (unset)
+[billing]
+quota_project = oliver-cdp
+[builds]
+kaniko_cache_ttl (unset)
+region (unset)
+timeout (unset)
+use_kaniko (unset)
+[colab]
+region (unset)
+[component_manager]
+additional_repositories (unset)
+disable_update_check (unset)
+[composer]
+location (unset)
+[compute]
+image_family_scope (unset)
+region (unset)
+use_new_list_usable_subnets_api (unset)
+zone (unset)
+[container]
+build_timeout (unset)
+cluster (unset)
+use_application_default_credentials (unset)
+use_client_certificate (unset)
+[container_attached]
+location (unset)
+[container_aws]
+location (unset)
+[container_azure]
+location (unset)
+[container_bare_metal]
+location (unset)
+[container_vmware]
+location (unset)
+[context_aware]
+use_client_certificate (unset)
+[core]
+account = oliver-pipeline@oliver-cdp.iam.gserviceaccount.com
+console_log_format (unset)
+custom_ca_certs_file (unset)
+default_format (unset)
+default_regional_backend_service (unset)
+disable_color (unset)
+disable_file_logging (unset)
+disable_prompts (unset)
+disable_usage_reporting = False
+format (unset)
+log_http (unset)
+max_log_days (unset)
+parse_error_details (unset)
+pass_credentials_to_gsutil (unset)
+project = oliver-cdp
+show_structured_logs (unset)
+trace_token (unset)
+universe_domain (unset)
+user_output_enabled (unset)
+verbosity (unset)
+[dataflow]
+disable_public_ips (unset)
+enable_streaming_engine (unset)
+print_only (unset)
+[datafusion]
+location (unset)
+[datapipelines]
+disable_public_ips (unset)
+enable_streaming_engine (unset)
+[dataplex]
+asset (unset)
+lake (unset)
+location (unset)
+zone (unset)
+[dataproc]
+location (unset)
+region (unset)
+[deploy]
+delivery_pipeline (unset)
+region (unset)
+[deployment_manager]
+glob_imports (unset)
+[eventarc]
+location (unset)
+[filestore]
+location (unset)
+region (unset)
+zone (unset)
+[functions]
+gen2 (unset)
+region (unset)
+[gcloudignore]
+enabled (unset)
+[gkebackup]
+backup (unset)
+backup_plan (unset)
+location (unset)
+restore (unset)
+restore_plan (unset)
+[healthcare]
+dataset (unset)
+location (unset)
+[interactive]
+bottom_bindings_line (unset)
+bottom_status_line (unset)
+completion_menu_lines (unset)
+context (unset)
+fixed_prompt_position (unset)
+help_lines (unset)
+hidden (unset)
+justify_bottom_lines (unset)
+manpage_generator (unset)
+multi_column_completion_menu (unset)
+prompt (unset)
+show_help (unset)
+suggest (unset)
+[looker]
+region (unset)
+[lustre]
+location (unset)
+[media_asset]
+location (unset)
+[memcache]
+region (unset)
+[metastore]
+location (unset)
+tier (unset)
+[ml_engine]
+local_python (unset)
+polling_interval (unset)
+[mps]
+product (unset)
+[netapp]
+location (unset)
+[notebooks]
+location (unset)
+[privateca]
+location (unset)
+[proxy]
+address (unset)
+password (unset)
+port (unset)
+rdns (unset)
+type (unset)
+username (unset)
+[redis]
+region (unset)
+[regional]
+endpoint_mode (unset)
+[run]
+cluster (unset)
+cluster_location (unset)
+platform (unset)
+region (unset)
+[runapps]
+deployment_service_account (unset)
+[scc]
+organization (unset)
+parent (unset)
+[secrets]
+locations (unset)
+replication-policy (unset)
+[servicehealth]
+location (unset)
+[spanner]
+instance (unset)
+[ssh]
+putty_force_connect (unset)
+verify_internal_ip (unset)
+[storage]
+additional_headers (unset)
+base_retry_delay (unset)
+check_hashes (unset)
+check_mv_early_deletion_fee (unset)
+convert_incompatible_windows_path_characters (unset)
+copy_chunk_size (unset)
+download_chunk_size (unset)
+exponential_sleep_multiplier (unset)
+key_store_path (unset)
+max_retries (unset)
+max_retry_delay (unset)
+multipart_chunksize (unset)
+multipart_threshold (unset)
+parallel_composite_upload_compatibility_check (unset)
+parallel_composite_upload_component_prefix (unset)
+parallel_composite_upload_component_size (unset)
+parallel_composite_upload_enabled (unset)
+parallel_composite_upload_threshold (unset)
+process_count (unset)
+resumable_threshold (unset)
+rsync_files_directory (unset)
+rsync_list_chunk_size (unset)
+s3_endpoint_url (unset)
+sliced_object_download_component_size (unset)
+sliced_object_download_max_components (unset)
+sliced_object_download_threshold (unset)
+suggest_transfer (unset)
+thread_count (unset)
+tracker_files_directory (unset)
+upload_chunk_size (unset)
+use_gcloud_crc32c (unset)
+use_gsutil (unset)
+use_gsutil_rsync_delete_unmatched_destination_objects_behavior (unset)
+use_magicfile (unset)
+use_threading_local (unset)
+[survey]
+disable_prompts (unset)
+[vector_search]
+location (unset)
+[vmware]
+region (unset)
+[workstations]
+cluster (unset)
+config (unset)
+region (unset)
+[environment: untagged] Read more to tag: g.co/cloud/project-env-tag.
+=== 4. credentialed accounts ===
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+To set the active account, run:
+    $ gcloud config set account `ACCOUNT`
+
+python.exe : 
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+To set the active account, run:
+    $ gcloud config set account `ACCOUNT`
+
+Credentialed Accounts
+
+ACTIVE: 
+ACCOUNT: oliver-pipeline@oliver-cdp.iam.gserviceaccount.com
+
+ACTIVE: *
+ACCOUNT: paul@activeaiadvisors.com
+=== 5. ADC file structure (names only, no values) ===
+keys present:
+   account
+   client_id
+   client_secret
+   refresh_token
+   type
+   universe_domain
+type              : authorized_user
+quota_project_id  : ''
+has client_id     : True
+has refresh_token : True
+
+=== 6. gcloud credential dir (recent writes) ===
+
+Name                                                           LastWriteTime         Length
+----                                                           -------------         ------
+config_sentinel                                                8/23/2026 10:55:34 AM      0
+active_config                                                  8/23/2026 10:55:34 AM      3
+aaa_configs.db                                                 8/23/2026 10:52:44 AM  12288
+gce                                                            8/23/2026 10:52:44 AM      5
+application_default_credentials.json                           8/23/2026 10:46:47 AM    358
+hidden_gcloud_config_universe_descriptor_data_cache_configs.db 8/23/2026 10:36:27 AM  12288
+.last_update_check.json                                        8/23/2026 10:35:17 AM    134
+credentials.db                                                 8/23/2026 10:34:07 AM  12288
+access_tokens.db                                               8/23/2026 10:34:07 AM  24576
+.last_survey_prompt.yaml                                       8/23/2026 10:30:38 AM     38
+=== 7. DOES ADC STILL WORK? (token discarded, not printed) ===
+python.exe : ERROR: (gcloud.auth.application-default.print-access-token) There was a problem refreshing your current 
+auth tokens: Reauthentication failed. cannot prompt during non-interactive execution.
+At C:\Users\PaulJamieson\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud.ps1:114 char:3
++   & "$cloudsdk_python" $run_args_array
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR: (gcloud....tive execution.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+Please run:
+
+  $ gcloud auth application-default login
+
+to obtain new credentials.
+  RESULT: ADC BROKEN OR NEEDS REAUTH (exit 1)
+
+=== 8. does Oliver code use Google auth at all? ===
+  2829 reference(s) found:
+   _chain.py:26
+   _chain.py:76
+   _constants.py:199
+   _constants.py:233
+   _types.py:52
+   __init__.py:3
+   __init__.py:38
+   _auth.py:8
+   _auth.py:20
+   _auth.py:23
+   _auth.py:42
+   _client.py:29
+   _client.py:123
+   _client.py:125
+   _client.py:127
+   _client.py:129
+   _client.py:287
+   _client.py:289
+   _client.py:291
+   _client.py:293
+
+Done. Nothing modified.
+**********************
+Windows PowerShell transcript end
+End time: 20260823110020
+**********************

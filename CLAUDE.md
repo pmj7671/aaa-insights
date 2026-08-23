@@ -202,6 +202,38 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-08-23 (Phase 4 — the Vertex blocker re-diagnosed: it is a REGION/MODEL mismatch, not just a quota)** —
+  Went to file the Sonnet quota increase and discovered the 2026-08-20 diagnosis was incomplete. Queried the
+  **Cloud Quotas API** directly (`gcloud alpha quotas info list --service=aiplatform.googleapis.com`, 374 quota
+  definitions, 35 token quotas) rather than hunting the console's Dimensions filter. Three findings:
+  1. **No Claude Sonnet model is served in `us-central1`.** Region-scoped Sonnet rows exist only for
+     `us-east5`, `europe-west1`, `asia-southeast1`. `src/server.ts` defaults `AAA_VERTEX_REGION` to
+     `us-central1` — so the deployed service points at a region that has no Sonnet at all. Only
+     `anthropic-claude-3-haiku` is offered in us-central1.
+  2. **There is no `anthropic-claude-sonnet-5` base_model anywhere.** Versioned labels stop at
+     `anthropic-claude-sonnet-4-6`. A bare `anthropic-claude-sonnet` label exists, but ONLY on the
+     US-multi-region / EU-multi-region / global quotas — never region-scoped. So `vertex_model=claude-sonnet-5`
+     was almost certainly resolving to a multi-region endpoint, which is why we saw 429 rather than 404.
+  3. **We already hold granted quota we are not using:** `base_model=anthropic-claude-sonnet-4, region=us-east5`
+     = **15,000 input / 1,500 output tokens per minute, granted.** Every other Sonnet row (4-5, 4-6, bare) is
+     blank = 0. `anthropic-claude-sonnet-4 @ europe-west1` is likewise 15,000/1,500.
+  **DECISION PENDING (Paul paused here):** whether to (a) point at **us-east5 + Sonnet 4** and get Claude live
+  on the next deploy with zero waiting, then request `sonnet-4-6 @ us-east5` to move up; or (b) go straight to
+  4-6 and wait for the grant. Either way `AAA_VERTEX_REGION` must be plumbed through Terraform (it is currently
+  only an env default in `server.ts`, not a `variable` in `infra/terraform/`). **DPS-9 note:** `us-east5` is US
+  soil so residency holds as written, but this splits Vertex from the us-central1 Cloud Run / Cloud SQL
+  footprint — record as a deployment fact in `architecture_overview.md`, no requirement version bump. Also
+  worth checking against NFR-2 (p95 <= 60 s) whether the cross-region hop is material.
+  **Tooling added** (`infra/quota/`): `discover-claude-quotas.ps1` (read-only; enumerates every token quota and
+  its base_model/region dimension values, writes `discovery-output.txt` + `raw-quota-list.json`) and
+  `request-sonnet-quota.ps1` (files a `gcloud alpha quotas preferences create`, prompts before submitting).
+  The console route is a dead end for an assistant — it forces an interactive Google password re-auth.
+  **Housekeeping:** commits `a965f0b` / `e47ff7a`, noted 2026-08-20 as "pending push", are confirmed **pushed**;
+  local `main` and `origin/main` are both at `b47d076`, clean. Separately, gcloud on the workstation now uses
+  **named configurations** — `default` = Oliver (`oliver-pipeline@oliver-cdp` / `oliver-cdp`), `aaa` =
+  (`paul@activeaiadvisors.com` / `aaa-insights`) — so the two projects stop overwriting each other's defaults.
+  Switch with `gcloud config configurations activate aaa|default`.
+
 - **2026-08-20 (Phase 4 — Claude-via-Vertex DEPLOYED; blocked only on a model quota grant)** — Deployed the
   Claude-backed grounded query to the live Cloud Run service (image `…/api:v2`, `llm_provider=vertex`,
   `vertex_model=claude-sonnet-5`, SA has aiplatform.user, Vertex API enabled). **Everything works except the
