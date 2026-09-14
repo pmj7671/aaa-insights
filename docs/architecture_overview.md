@@ -159,6 +159,23 @@ the runner changes. This is a one-time, mechanical translation and is expected.
 
 ---
 
+## Deployment facts (as-built)
+
+- **Regions — Vertex is split from the rest of the footprint.** Cloud Run, Cloud SQL, Secret Manager and
+  Artifact Registry all run in **us-central1**. Claude on Vertex is served from **us-east5** — because
+  **us-central1 serves no Claude Sonnet** (only Haiku); region-scoped Sonnet exists in us-east5 /
+  europe-west1 / asia-southeast1. The app carries this split as two independent settings: `AAA_VERTEX_REGION`
+  (Vertex) is a distinct Terraform variable (`vertex_region`) from `region` (everything else). The model is
+  `claude-sonnet-4@20250514` at us-east5, where the project already holds granted quota (15,000 input /
+  1,500 output tokens/min).
+- **DPS-9 (US data residency) holds.** us-east5 is US soil, so evidence sent to Claude never leaves the
+  United States. The split is a locality change *within* US residency, not a residency exception.
+- **NFR-2 (analysis p95 ≤ 60 s) — cross-region hop checked, not material.** The us-central1 → us-east5
+  round trip adds low-tens-of-ms of network latency, well inside the 60 s analysis budget; grounded-query
+  answers run ~3–4 s end to end. Watch it in the k6 load tests, but it is not a design risk. If it ever
+  mattered, the gateway makes co-locating (moving Cloud Run to us-east5, or Vertex to a multi-region
+  endpoint) a config change, not a redesign.
+
 ## Honest limitations of this design (v1)
 
 - **Not yet costed.** This names managed services but not a monthly bill. A rough cost model (per ~1,000
@@ -166,9 +183,11 @@ the runner changes. This is a one-time, mechanical translation and is expected.
   numbers.
 - **Some NFRs still "(confirm)".** The design targets NFR-2/3/8/9, but the specific numbers await your
   sign-off; the load tests (k6) will assert whatever is agreed.
-- **Vertex AI Claude availability.** Claude models are offered through Vertex AI, but exact model versions and
-  regional availability should be confirmed against Google's current catalog at build time; the gateway makes a
-  fallback to the Anthropic API a config change, not a redesign.
+- **Vertex AI Claude availability — now pinned (see Deployment facts).** Resolved at build time: the model is
+  `claude-sonnet-4@20250514` served from **us-east5** (us-central1 has no Sonnet). Sonnet 4 is marked
+  *deprecated* in Google's catalog but is served and already carries granted quota, so it takes Claude live
+  today; moving up to Sonnet 4.5/4.6 (or a global/multi-region endpoint) is a `vertex_model` / `vertex_region`
+  change, and a fallback to the Anthropic API stays a config change, not a redesign.
 - **Phase-1 collection is sketched, not designed.** Lawful public-review ingestion (robots.txt, provenance,
   the legal gate) needs its own mini-design before Phase 1; it is intentionally out of the MVP.
 

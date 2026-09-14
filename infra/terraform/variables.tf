@@ -44,7 +44,18 @@ variable "llm_provider" {
 }
 
 variable "vertex_model" {
-  description = "Vertex Model Garden model id for Claude (e.g. 'claude-3-5-sonnet-v2@20241022'). Required when llm_provider = vertex."
+  description = "Vertex Model Garden model id for Claude (e.g. 'claude-sonnet-4@20250514'). Required when llm_provider = vertex."
+  type        = string
+  default     = ""
+}
+
+variable "vertex_region" {
+  description = <<-EOT
+    Region that SERVES the Claude model on Vertex — deliberately separate from var.region
+    (Cloud Run + Cloud SQL). No Claude Sonnet is served in us-central1; Sonnet lives in
+    us-east5 / europe-west1 / asia-southeast1. us-east5 is US soil so DPS-9 residency holds.
+    Required when llm_provider = vertex; falls back to var.region when left blank.
+  EOT
   type        = string
   default     = ""
 }

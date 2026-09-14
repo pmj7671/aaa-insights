@@ -4,3 +4,11 @@
 # project_id = "aaa-insights"
 # region     = "us-central1"
 # db_tier    = "db-f1-micro"
+
+# --- Claude via Vertex (turn on the real AI answerer) ---
+# Copy these into terraform.tfvars to make `terraform apply` deploy Claude with no -var flags.
+# NOTE: vertex_region is deliberately NOT us-central1 — us-central1 serves no Claude Sonnet.
+# api_image     = "us-central1-docker.pkg.dev/aaa-insights/aaa-insights/api:v2"
+# llm_provider  = "vertex"
+# vertex_region = "us-east5"                 # Sonnet is served here (US soil, DPS-9 holds); has granted quota
+# vertex_model  = "claude-sonnet-4@20250514" # exact Vertex model id for Claude Sonnet 4

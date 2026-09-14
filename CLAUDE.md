@@ -202,6 +202,35 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-09-14 (Phase 4 — Option A: plumbed us-east5 + Sonnet 4 through Terraform; ready to deploy Claude live)** —
+  Executed the region/model fix the 2026-08-23 re-diagnosis called for. **No image rebuild needed** — the live
+  `…/api:v2` image already contains the Vertex code (`vertexProvider.ts` + async `llmAnswerer`); the fix is
+  **env-only**, delivered through Terraform. Changes:
+  1. **New `vertex_region` Terraform variable** (`infra/terraform/variables.tf`), deliberately separate from
+     `region` (Cloud Run + Cloud SQL = us-central1). `cloudrun.tf` now sets
+     `AAA_VERTEX_REGION = var.vertex_region != "" ? var.vertex_region : var.region` — so Vertex can point at a
+     region that actually serves Sonnet without moving the rest of the footprint. (Previously `AAA_VERTEX_REGION`
+     was hardwired to `var.region` = us-central1, which serves **no** Sonnet — the root cause of the 429.)
+  2. **Pinned the model id.** Confirmed against the official Claude-on-Vertex docs: the id is
+     **`claude-sonnet-4@20250514`**, served from **us-east5** (where we already hold 15,000/1,500 tokens/min
+     granted). Sonnet 4 is flagged *deprecated* in Google's catalog but is still served with our granted quota,
+     so it takes Claude live today; 4.5/4.6 is a later `vertex_model`/`vertex_region` bump.
+  3. **Docs.** `architecture_overview.md` gains a **"Deployment facts (as-built)"** section recording the
+     us-east5↔us-central1 split, that **DPS-9 residency holds** (us-east5 is US soil), and that the cross-region
+     hop is **immaterial to NFR-2** (low-tens-of-ms; answers run ~3–4 s). The old "Vertex availability
+     (confirm)" limitation is marked resolved.
+  Validated locally: `tofu fmt -check` clean (provider-level `validate` blocked — the OpenTofu registry is
+  firewalled in the sandbox — but the HCL parses and `var.vertex_region` resolves). **242 tests still green**
+  (Vertex path is mock-tested; no src change this session). **DEPLOY (Cloud Shell, env-only — no docker
+  build):** pull these `.tf` changes, then in `infra/terraform/`:
+  `terraform apply -var="api_image=us-central1-docker.pkg.dev/aaa-insights/aaa-insights/api:v2" -var="llm_provider=vertex" -var="vertex_region=us-east5" -var="vertex_model=claude-sonnet-4@20250514"`.
+  Terraform state lives in Cloud Shell's persistent $HOME (gitignored — holds the DB password); run in the same
+  Cloud Shell where the 20-resource apply already stands. **Verify:** an authenticated `/query` should return
+  fluent Claude prose (not `"Based on N response(s)…"`) in ~3–4 s, with the same deterministic citations +
+  confidence. If it still falls back, check the revision logs for `[llmAnswerer] Vertex call failed…`. After
+  Claude is confirmed live: wire the sentiment/emotion/aspect classifiers to Claude, real admin auth (Identity
+  Platform), then Phase 5 VERIFY.
+
 - **2026-08-23 (Phase 4 — the Vertex blocker re-diagnosed: it is a REGION/MODEL mismatch, not just a quota)** —
   Went to file the Sonnet quota increase and discovered the 2026-08-20 diagnosis was incomplete. Queried the
   **Cloud Quotas API** directly (`gcloud alpha quotas info list --service=aiplatform.googleapis.com`, 374 quota

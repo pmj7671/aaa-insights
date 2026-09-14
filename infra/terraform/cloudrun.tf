@@ -58,9 +58,12 @@ resource "google_cloud_run_v2_service" "api" {
         name  = "AAA_VERTEX_PROJECT"
         value = var.project_id
       }
+      # Vertex serves Claude from its OWN region (var.vertex_region), which is NOT the
+      # Cloud Run / Cloud SQL region (var.region = us-central1) — us-central1 serves no
+      # Sonnet. Fall back to var.region only when vertex_region is left blank.
       env {
         name  = "AAA_VERTEX_REGION"
-        value = var.region
+        value = var.vertex_region != "" ? var.vertex_region : var.region
       }
       env {
         name  = "AAA_VERTEX_MODEL"
