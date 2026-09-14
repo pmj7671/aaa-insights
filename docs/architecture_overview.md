@@ -166,8 +166,10 @@ the runner changes. This is a one-time, mechanical translation and is expected.
   **us-central1 serves no Claude Sonnet** (only Haiku); region-scoped Sonnet exists in us-east5 /
   europe-west1 / asia-southeast1. The app carries this split as two independent settings: `AAA_VERTEX_REGION`
   (Vertex) is a distinct Terraform variable (`vertex_region`) from `region` (everything else). The model is
-  `claude-sonnet-4@20250514` at us-east5, where the project already holds granted quota (15,000 input /
-  1,500 output tokens/min).
+  **`claude-sonnet-4-5@20250929`** (Claude Sonnet 4.5, GA) at us-east5. *(History: we first aimed at
+  `claude-sonnet-4@20250514`, but Sonnet 4 has been retired from us-east5 — it 404s — so the live target is
+  Sonnet 4.5, which had to be enabled in Model Garden and holds its own token quota for base_model
+  `anthropic-claude-sonnet-4-5` in us-east5.)*
 - **DPS-9 (US data residency) holds.** us-east5 is US soil, so evidence sent to Claude never leaves the
   United States. The split is a locality change *within* US residency, not a residency exception.
 - **NFR-2 (analysis p95 ≤ 60 s) — cross-region hop checked, not material.** The us-central1 → us-east5
@@ -183,11 +185,11 @@ the runner changes. This is a one-time, mechanical translation and is expected.
   numbers.
 - **Some NFRs still "(confirm)".** The design targets NFR-2/3/8/9, but the specific numbers await your
   sign-off; the load tests (k6) will assert whatever is agreed.
-- **Vertex AI Claude availability — now pinned (see Deployment facts).** Resolved at build time: the model is
-  `claude-sonnet-4@20250514` served from **us-east5** (us-central1 has no Sonnet). Sonnet 4 is marked
-  *deprecated* in Google's catalog but is served and already carries granted quota, so it takes Claude live
-  today; moving up to Sonnet 4.5/4.6 (or a global/multi-region endpoint) is a `vertex_model` / `vertex_region`
-  change, and a fallback to the Anthropic API stays a config change, not a redesign.
+- **Vertex AI Claude availability — pinned to Sonnet 4.5 (see Deployment facts).** Resolved at build time: the
+  model is **`claude-sonnet-4-5@20250929`** (GA) served from **us-east5** (us-central1 has no Sonnet). We first
+  targeted Sonnet 4, but it is retired in us-east5 (404), so 4.5 is the live model — enabled in Model Garden and
+  gated on its own token quota. Moving to a newer Sonnet or a global/multi-region endpoint is a `vertex_model` /
+  `vertex_region` change, and a fallback to the Anthropic API stays a config change, not a redesign.
 - **Phase-1 collection is sketched, not designed.** Lawful public-review ingestion (robots.txt, provenance,
   the legal gate) needs its own mini-design before Phase 1; it is intentionally out of the MVP.
 

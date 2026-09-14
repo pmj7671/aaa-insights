@@ -202,6 +202,46 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-09-14 (evening — DEPLOYED the region/model fix; Sonnet 4 is RETIRED, moved to Sonnet 4.5; quota filed, WAITING on grant)** —
+  Ran the Option A deploy live in Cloud Shell and discovered the plan had to change mid-flight. **The env-only
+  `terraform apply` worked perfectly** (`0 added, 1 changed, 0 destroyed`; it also picked up the 512Mi→1Gi +
+  startup-boost that the live revision was still missing). Startup log confirmed `Claude via Vertex
+  (claude-sonnet-4@20250514 @ us-east5)`. **But `/query` still fell back to baseline**, and a raw `rawPredict`
+  to Vertex told us why:
+  1. **`claude-sonnet-4@20250514` returns 404 in us-east5** — "not found or your project does not have access."
+     Sonnet 4 has been **retired** from us-east5 (Google's catalog flags it *deprecated*; the Aug-23 "15,000/1,500
+     granted" quota for `anthropic-claude-sonnet-4` is now moot — the model itself is gone). The catalog has moved
+     on to **Sonnet 5 / Opus 5 / Fable 5.1** since August.
+  2. **Listed the models the project can actually see in us-east5** (`GET .../publishers/anthropic/models`, with
+     header `x-goog-user-project: aaa-insights`): only `claude-3-opus` and **`claude-sonnet-4-5`**. The model
+     detail gives the exact id **`claude-sonnet-4-5@20250929`** (launchStage **GA**), but its `supportedActions`
+     carried a **`requestAccess`** gate → the project had never enabled it.
+  3. **Enabled Claude Sonnet 4.5** via Model Garden ("successfully purchased" — Anthropic ToS accepted by Paul in
+     the console; an agreement-acceptance, so it had to be his click). Re-test then returned **429** (reachable!
+     enablement worked), i.e. the only remaining gate is quota.
+  4. **Filed two quota-increase requests** for base_model **`anthropic-claude-sonnet-4-5` @ us-east5** via
+     `gcloud alpha quotas preferences create`: input `OnlinePredictionInputTokensPerMinutePerRegionPerBaseModel`
+     = **50,000/min** (pref-id `aaa-sonnet45-input-us-east5`), output
+     `OnlinePredictionOutputTokensPerMinutePerRegionPerBaseModel` = **10,000/min**
+     (pref-id `aaa-sonnet45-output-us-east5`). Both `reconciling: true`, `grantedValue: 0` — **submitted, pending
+     Google approval.** *(CLI friction resolved for future ref: needed `gcloud services enable
+     cloudquotas.googleapis.com`, ADC via `gcloud auth application-default login`, and — the actual fix —
+     `gcloud config set billing/quota_project aaa-insights`. Device bridge to C:\Dev was down all session — a
+     Sept-8 Windows update broke Claude's local workspace VM — so all edits go via SendUserFile + device_commit
+     or GitHub.)*
+
+  **▶ RESUME TOMORROW (after the quota grants):**
+  1. **Check the grant** (Cloud Shell): re-run the `rawPredict` to `claude-sonnet-4-5@20250929` — a **200/real
+     reply** (instead of 429) means quota is live. (Or watch for the Google Cloud quota-decision email to
+     paul@activeaiadvisors.com; or `gcloud alpha quotas preferences list --service=aiplatform.googleapis.com`.)
+  2. **Redeploy with the corrected model id** (env-only, no image build; region stays us-east5):
+     `terraform apply -var="api_image=us-central1-docker.pkg.dev/aaa-insights/aaa-insights/api:v2" -var="llm_provider=vertex" -var="vertex_region=us-east5" -var="vertex_model=claude-sonnet-4-5@20250929"` → `yes`.
+  3. **Verify** `/query` returns fluent Claude prose (~3–4 s) instead of `"Based on N response(s)…"`.
+  4. Then: sentiment/emotion/aspect classifiers → Claude, real admin auth (Identity Platform), Phase 5 VERIFY.
+  **NOTE:** the model is now **Sonnet 4.5 (`claude-sonnet-4-5@20250929`)**, NOT Sonnet 4 — the entry below and
+  the deploy-facts in `architecture_overview.md` were written for `claude-sonnet-4@20250514`; treat 4.5 as the
+  live target. No downtime meanwhile — the service keeps answering via the deterministic baseline.
+
 - **2026-09-14 (Phase 4 — Option A: plumbed us-east5 + Sonnet 4 through Terraform; ready to deploy Claude live)** —
   Executed the region/model fix the 2026-08-23 re-diagnosis called for. **No image rebuild needed** — the live
   `…/api:v2` image already contains the Vertex code (`vertexProvider.ts` + async `llmAnswerer`); the fix is
