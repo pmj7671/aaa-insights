@@ -202,6 +202,45 @@ Edit `docs/01_requirements.md` as the source of truth, mirror changes into `buil
 
 ## 8. Change log
 
+- **2026-09-15 (Vertex quota DENIED at any amount → DECISION: route Claude through the Anthropic API directly)** —
+  Checked the pending Sonnet 4.5 quota. It was **denied**, not pending. The Cloud Quotas preference
+  `aaa-sonnet45-input-us-east5` reads `stateDetail: "Quota request denied"`, `grantedValue: 0`, and the deny
+  landed **3 seconds** after the request (createTime 22:40:37 → updateTime 22:40:40) — an automated policy
+  rejection, not a human review. Ruled out the obvious causes: the billing account `016ACA-1C1E1B-2F37A9`
+  ("My Billing Account", the one `aaa-insights` bills to — NOT the ActiveAI/CoffeeAM accounts under Paul's
+  other Google login) **already has a card on Postpay**, so it is payment-backed and in good standing.
+  Re-requested a smaller **15,000** tokens/min via the Cloud Quotas REST API (PATCH the existing preference;
+  it needs `service`, `quotaId`, `dimensions`, `contactEmail` all set) — **also denied.** Conclusion:
+  **self-service Vertex quota for base_model `anthropic-claude-sonnet-4-5` in us-east5 is closed for this
+  project at any amount**, almost certainly because the project has no real spend history (everything is
+  covered by Developer-Program promo credit). No amount of self-service re-filing changes it.
+  **DECISION (Paul, 2026-09-15): go with the Anthropic API directly** — the provider swap the architecture
+  already anticipated ("a fallback to the Anthropic API stays a config change, not a redesign", DPS-9). This
+  gets Claude live without the Vertex quota gate.
+
+  **▶ RESUME (Anthropic-API path — Claude live without Vertex quota):**
+  1. **Paul:** create an **Anthropic API key** at console.anthropic.com and add a little credit. Store it in
+     **Secret Manager** as `aaa-anthropic-api-key` (Paul enters the key value himself — Claude never handles
+     it). Grant the runtime SA `aaa-insights-run@…` `secretAccessor` on that secret (a Terraform add, mirrors
+     the existing `database_url` secret wiring).
+  2. **Claude builds** `src/infra/anthropicProvider.ts` — implements the existing `LLMProvider` seam via the
+     `@anthropic-ai/sdk` `Anthropic` client (`apiKey` from env), model `claude-sonnet-4-5` (Anthropic API id,
+     no `@date` and no Vertex). Selected by `AAA_LLM_PROVIDER=anthropic` in `server.ts` (add the branch next
+     to the existing `vertex` one). Keep the deterministic baseline as the fallback (onError logging stays).
+     Add mock-provider tests to match the vertexProvider pattern. Run the gate (`npm test`, tsc, gate GREEN).
+  3. **Terraform:** add the `aaa-anthropic-api-key` secret + reader grant + a Cloud Run env
+     `AAA_ANTHROPIC_API_KEY` from that secret (never plaintext, R-43/DPS-11). Deploy: `terraform apply` with
+     `-var="llm_provider=anthropic"` (+ the existing `api_image=…:v2`; rebuild the image only if the SDK dep
+     is new — it is, so this path DOES need one image rebuild with `@anthropic-ai/sdk` added to package.json).
+  4. **Verify** `/query` returns fluent Claude prose (~3–4 s) instead of `"Based on N response(s)…"`.
+  **Residency note (DPS-9):** the Anthropic API is US-hosted, so US residency holds, but customer feedback
+  text now leaves the GCP project boundary to reach Anthropic's API (vs staying in-GCP via Vertex). Record as
+  a deployment fact in `architecture_overview.md`; confirm a design partner's comfort before real customer
+  data. **Optional parallel track:** file a *formal* Google quota request (support case) so Vertex becomes
+  available later and we can swap back — the gateway makes that a config change. Left un-filed for now.
+  *(Housekeeping: the denied Vertex preference `aaa-sonnet45-input-us-east5` now sits at preferred 15000 /
+  granted 0; harmless, leave it. `aaa-sonnet45-output-us-east5` likewise denied.)*
+
 - **2026-09-14 (evening — DEPLOYED the region/model fix; Sonnet 4 is RETIRED, moved to Sonnet 4.5; quota filed, WAITING on grant)** —
   Ran the Option A deploy live in Cloud Shell and discovered the plan had to change mid-flight. **The env-only
   `terraform apply` worked perfectly** (`0 added, 1 changed, 0 destroyed`; it also picked up the 512Mi→1Gi +
