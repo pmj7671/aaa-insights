@@ -24,6 +24,7 @@ understanding customers, brands, and markets.
 | Brand Love & emotional attachment | Wardani & Gustia (2016), *Brand Experience/Satisfaction/Trust → Attachment* | Journal (SEM) | Evidence that satisfaction ≠ attachment; trust is the bridge. |
 | Brand Love & emotional attachment | Fetscherin (2014), *What type of relationship do we have with loved brands?* | Journal (JCM) | Brand love is a one-directional (parasocial) bond; love precedes loyalty and drives WOM. |
 | Brand Love & emotional attachment | Maheshwari, Lodorfos & Jacobsen (2014), *Determinants of Brand Loyalty* | Journal (IJBA) | Emotional (affective) experience drives loyalty; lock-in (continuance) does not. |
+| Brand Love & emotional attachment | Ellitan (2023), *Increasing Brand Loyalty Through Brand Image, Love & Experience* | Journal review (IJMRAP) | Secondary/corroborating: Love → Trust → Loyalty with trust as mediator. Low-tier venue, weak-sourced — a supporting voice, not a pillar. |
 | Brand Trust | Chaudhuri & Holbrook (2001); Mayer et al. (1995); Delgado-Ballester; Morgan & Hunt (1994) | References (to source) | Ground the v3 Trust extension: trust drivers and trust → loyalty. |
 | Loyalty & customer expectations | BCG (2024), *Loyalty Programs Are Growing…* | Industry study | Differentiation now lives in understanding what customers value. |
 | Search, discovery & marketing trends (GEO) | YouTube/Google (2026), *3 Marketing Opportunities* | Practitioner (Google) | Creators, commerce & AI reshape discovery and word of mouth. |
@@ -169,6 +170,27 @@ R-46), and the four experience dimensions are a useful lens for the aspects behi
 (O-18, R-48). Overall it reinforces measuring **emotion and attachment, not inertia or satisfaction**, as the
 signals that predict durable loyalty (INV-12).
 
+### Ellitan, L. (2023). *Increasing Brand Loyalty Through Brand Image, Brand Love and Brand Experience.* International Journal of Multidisciplinary Research and Publications, 6(2), 220–224.
+`Ellitan_2023_Increasing-Brand-Loyalty-Image-Love-Experience_IJMRAP.pdf`
+
+A narrative literature review (not new empirical work) that assembles a single chain from prior studies:
+**brand image and brand love build brand trust**, **brand experience contributes more weakly**, and
+**brand trust is the mediator that drives brand loyalty**. Its spine is two Indonesian SEM studies —
+Hartono & Rodhiah (2021, Yamaha owners) and Margaretha et al. (2023, brand love → loyalty via self-esteem
+and trust) — and it defines brand love via Carroll & Ahuvia (2006). **Read it as a secondary, corroborating
+source, not a pillar:** IJMRAP is a low-selectivity journal, the paper is a review rather than primary
+research, and most supporting citations are student-thesis-level. Its evidential weight is modest — one more
+voice, not proof.
+
+**Product implications.** Its usable contribution is corroboration of the **Love → Trust → Loyalty** chain
+with **trust as the mediator** — an independent (if lightweight) echo of keeping **Love and Trust as distinct
+indicators** (**INV-12**) and of the **Love × Trust** segmentation (**R-33**). It also foregrounds **brand
+image** as a driver of trust/loyalty — a construct our library doesn't yet cover and one outside the MVP
+focus; parked below as a candidate, not a commitment. Most valuably, it points to two stronger primary
+sources worth grabbing over the review itself: **Carroll & Ahuvia (2006)** (already on the backlog) and
+**Huang (2017)**, *Management Decision* — a better-cited empirical study of brand experience → love/trust
+(added to the backlog).
+
 ---
 
 ## Theme: Brand Trust
@@ -258,9 +280,11 @@ Research-driven ideas captured but **not yet in the spec or the build**. Revisit
 - **Validated EA battery** as an optional survey template (deploy the peer-reviewed 10-item scale). Relates to R-2. — *Thomson et al. (2005).*
 - **Price-premium / pricing-power read** as a business-value outcome in the insight report. Relates to R-18/R-19. — *Thomson et al. (2005); Ahuvia (2023).*
 - **Category-relative attachment benchmarking** (attachment is category-dependent), extending the trust rule E-16. — *Thomson et al. (2005).*
+- **Brand image as a driver read** — corporate / user / product-image perceptions as an antecedent of trust and loyalty, a construct AAA Insights doesn't currently measure. Low priority and thinly sourced; revisit only if a design partner asks for it. — *Ellitan (2023).*
 
 ## To add next (the backlog — more research coming)
 - **Carroll & Ahuvia (2006)** — the first brand‑love scale (primary source).
+- **Huang (2017), *Management Decision*** — brand experience → brand love and trust; the better-cited empirical source behind Ellitan (2023).
 - **Fournier (1998)** — consumer–brand relationships (the relationship metaphor; primary).
 - **Fetscherin & Heinrich** — brand hate / the negative relationship quadrants (primary).
 - **Reichheld / NPS literature** — loyalty measurement, and its critiques.
